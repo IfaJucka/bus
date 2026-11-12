@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: smart-bus-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: "*"
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: VAPID_PUBLIC_KEY
+        value: BM_l6FZ9X7AXHfMyz5IHbz8PzlvssEtlAqWOCLitPV-dv4lDSGWZcM_pMb7PxNl3MdakifE2zxTPWEu4OmYoakw
+      - key: VAPID_PRIVATE_KEY
+        value: Okh52QW5Ey7G0rCVNy053ermrM8e8Zp_hRszg-P6Uhc
+      - key: VAPID_SUBJECT
+        value: mailto:admin@anjuman.edu

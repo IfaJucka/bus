@@ -30,8 +30,8 @@ async function bootstrap() {
   MonitoringWorker.start(4000);
 
   // Start Listening
-  httpServer.listen(config.port, () => {
-    console.log(`[HTTP] REST API Server listening on http://localhost:${config.port}`);
+  httpServer.listen(config.port, '0.0.0.0', () => {
+    console.log(`[HTTP] REST API Server listening on http://0.0.0.0:${config.port}`);
     console.log(`[Socket] Socket.IO real-time engine ready on port ${config.port}`);
     console.log(`[PWA] Web Push VAPID Public Key: ${config.vapid.publicKey.slice(0, 16)}...`);
     console.log(`[Database] Database engine active in [${db.mode.toUpperCase()}] mode`);
