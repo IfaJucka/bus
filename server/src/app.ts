@@ -18,20 +18,41 @@ import { db } from './database';
 const app = express();
 
 // CORS configuration
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow local development and mobile devices
-      callback(null, true);
-    },
-    credentials: true,
-  })
-);
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    // Allow non-browser requests
+    if (!origin) return callback(null, true);
+    if (
+      origin === 'https://bus-nine-ashen.vercel.app' ||
+      origin.endsWith('.vercel.app') ||
+      origin === 'http://localhost:5173' ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1')
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check
+// Root and Health Check Endpoints
+app.get('/', (req: Request, res: Response) => {
+  res.json({ status: 'ok', message: 'Smart Bus API running' });
+});
+
+app.get('/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok', message: 'Smart Bus API running' });
+});
+
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({
     status: 'online',

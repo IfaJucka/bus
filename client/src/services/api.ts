@@ -12,8 +12,9 @@ import {
   User,
 } from '../types';
 
-const RAW_API_URL = import.meta.env.VITE_API_URL as string | undefined;
-const API_BASE = RAW_API_URL ? `${RAW_API_URL.replace(/\/+$/, '')}/api` : '/api';
+const DEFAULT_API_URL = 'https://smart-bus-backend-1mjy.onrender.com';
+const RAW_API_URL = (import.meta.env.VITE_API_URL || DEFAULT_API_URL) as string;
+const API_BASE = `${RAW_API_URL.replace(/\/+$/, '')}/api`;
 
 function getAuthHeader(): Record<string, string> {
   const token = localStorage.getItem('smart_bus_token');

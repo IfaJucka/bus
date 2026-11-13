@@ -5,23 +5,17 @@ class SocketService {
 
   public connect(): Socket {
     if (!this.socket) {
-      // Connect to configured production backend or relative host (works with Vite proxy in dev)
-      const socketTarget = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || '') as string;
-      const cleanTarget = socketTarget ? socketTarget.replace(/\/+$/, '') : undefined;
+      // Connect to configured production backend or live Render backend
+      const DEFAULT_BACKEND_URL = 'https://smart-bus-backend-1mjy.onrender.com';
+      const socketTarget = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || DEFAULT_BACKEND_URL) as string;
+      const cleanTarget = socketTarget ? socketTarget.replace(/\/+$/, '') : DEFAULT_BACKEND_URL;
 
-      this.socket = cleanTarget
-        ? io(cleanTarget, {
-            path: '/socket.io',
-            transports: ['websocket', 'polling'],
-            reconnectionAttempts: 10,
-            reconnectionDelay: 2000,
-          })
-        : io({
-            path: '/socket.io',
-            transports: ['websocket', 'polling'],
-            reconnectionAttempts: 10,
-            reconnectionDelay: 2000,
-          });
+      this.socket = io(cleanTarget, {
+        path: '/socket.io',
+        transports: ['websocket', 'polling'],
+        reconnectionAttempts: 10,
+        reconnectionDelay: 2000,
+      });
 
       this.socket.on('connect', () => {
         console.log('[Socket.IO] Connected to real-time server with ID:', this.socket?.id);
