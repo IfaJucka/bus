@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import { API_URL } from '../config';
 
 class SocketService {
   private socket: Socket | null = null;
@@ -6,9 +7,8 @@ class SocketService {
   public connect(): Socket {
     if (!this.socket) {
       // Connect to configured production backend or live Render backend
-      const DEFAULT_BACKEND_URL = 'https://smart-bus-backend-1mjy.onrender.com';
-      const socketTarget = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || DEFAULT_BACKEND_URL) as string;
-      const cleanTarget = socketTarget ? socketTarget.replace(/\/+$/, '') : DEFAULT_BACKEND_URL;
+      const socketTarget = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || API_URL) as string;
+      const cleanTarget = socketTarget ? socketTarget.replace(/\/+$/, '') : API_URL;
 
       this.socket = io(cleanTarget, {
         path: '/socket.io',

@@ -18,14 +18,19 @@ import { db } from './database';
 const app = express();
 
 // CORS configuration
-const corsOptions: cors.CorsOptions = {
+const allowedOrigins = [
+  "https://bus-nine-ashen.vercel.app",
+  "https://bus-3ul2vc9fk-elfajuckaa-6777.vercel.app",
+  "http://localhost:5173"
+];
+
+app.use(cors({
   origin: (origin, callback) => {
     // Allow non-browser requests
     if (!origin) return callback(null, true);
     if (
-      origin === 'https://bus-nine-ashen.vercel.app' ||
+      allowedOrigins.includes(origin) ||
       origin.endsWith('.vercel.app') ||
-      origin === 'http://localhost:5173' ||
       origin.includes('localhost') ||
       origin.includes('127.0.0.1')
     ) {
@@ -34,12 +39,10 @@ const corsOptions: cors.CorsOptions = {
     return callback(null, true);
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+app.options("*", cors());
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -65,6 +68,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 app.use('/api/buses', busRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/routes', routeRoutes);

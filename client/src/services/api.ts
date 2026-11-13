@@ -12,9 +12,8 @@ import {
   User,
 } from '../types';
 
-const DEFAULT_API_URL = 'https://smart-bus-backend-1mjy.onrender.com';
-const RAW_API_URL = (import.meta.env.VITE_API_URL || DEFAULT_API_URL) as string;
-const API_BASE = `${RAW_API_URL.replace(/\/+$/, '')}/api`;
+import { API_URL, API_BASE } from '../config';
+export { API_URL, API_BASE };
 
 function getAuthHeader(): Record<string, string> {
   const token = localStorage.getItem('smart_bus_token');

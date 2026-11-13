@@ -4,10 +4,19 @@ import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth';
 
 const router = Router();
 
-// POST /api/auth/login
+// POST /api/auth/login and /api/login
 router.post('/login', async (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
   try {
-    const { username, password, portal } = req.body;
+    const { username, password, portal } = req.body || {};
+    console.log('[LOGIN ATTEMPT]', {
+      username: username || '(missing)',
+      portal: portal || '(none)',
+      origin: req.headers.origin || '(no-origin)',
+      ip: req.ip,
+      timestamp: new Date().toISOString()
+    });
+
     if (!username || !password) {
       res.status(400).json({ success: false, error: 'Username and password required' });
       return;
@@ -15,17 +24,21 @@ router.post('/login', async (req: Request, res: Response) => {
 
     const result = await AuthService.authenticate(username, password, portal);
     if (!result) {
+      console.warn('[LOGIN FAILED] Invalid credentials for:', username);
       res.status(401).json({ success: false, error: 'Invalid credentials. Please verify your username and password.' });
       return;
     }
 
     if ('error' in result) {
+      console.warn('[LOGIN FAILED] Portal mismatch for:', username, result.error);
       res.status(403).json({ success: false, error: result.error });
       return;
     }
 
+    console.log('[LOGIN SUCCESS] User authenticated:', { id: result.user.id, username: result.user.username, role: result.user.role });
     res.json({ success: true, token: result.token, user: result.user });
   } catch (err: any) {
+    console.error('[LOGIN ERROR]', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
