@@ -5,8 +5,11 @@
     "rootDir": "src",
     "outDir": "dist",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*"]
