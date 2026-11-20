@@ -160,10 +160,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user ? (
             <div className="flex items-center gap-2 pl-1 border-l border-brand-secondary">
               <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-xs font-bold text-brand-navy shadow-inner">
-                {user.fullName ? user.fullName.charAt(0) : 'U'}
+                {user.role === 'driver' ? 'D' : user.fullName ? user.fullName.charAt(0) : 'U'}
               </div>
               <div className="hidden sm:block text-left text-xs">
-                <p className="font-bold text-brand-navy leading-none">{user.fullName}</p>
+                <p className="font-bold text-brand-navy leading-none">
+                  {user.role === 'driver' ? 'Driver' : user.fullName}
+                </p>
                 <p className="text-[10px] text-brand-gray uppercase font-semibold capitalize">{user.role}</p>
               </div>
               <button
