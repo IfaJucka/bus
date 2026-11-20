@@ -47,6 +47,12 @@ export class TripService {
     const route = await RouteService.getRouteById(data.routeId);
     if (!route) throw new Error('Route not found');
 
+    // Prevent duplicate active trips for the same bus
+    const existingActive = await this.getActiveTripForBus(data.busId);
+    if (existingActive) {
+      return existingActive;
+    }
+
     const now = new Date();
     const dateStr = now.toISOString().split('T')[0];
     const timeStr = now.toISOString();
@@ -579,13 +585,13 @@ export class TripService {
   public static async getActiveTripForBus(busId: number): Promise<ActiveTrip | null> {
     if (db.mode === 'mysql' && db.getPool()) {
       const rows: any = await db.query(
-        'SELECT * FROM trips WHERE bus_id = ? AND status = "in_progress" ORDER BY id DESC LIMIT 1',
+        'SELECT * FROM trips WHERE bus_id = ? AND status IN ("in_progress", "active") ORDER BY id DESC LIMIT 1',
         [busId]
       );
       return rows[0] || null;
     }
     const trips = db.getTable<ActiveTrip>('trips');
-    return trips.find((t) => t.bus_id === busId && t.status === 'in_progress') || null;
+    return trips.find((t) => Number(t.bus_id) === Number(busId) && (t.status === 'in_progress' || (t.status as string) === 'active')) || null;
   }
 
   public static async getTripById(tripId: number): Promise<ActiveTrip | null> {

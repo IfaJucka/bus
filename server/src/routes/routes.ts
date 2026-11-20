@@ -49,7 +49,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 // POST /api/routes (Admin only)
 router.post('/', authenticateJWT, requireRole(['admin']), async (req: Request, res: Response) => {
   try {
-    const { route_name, start_point, destination, operating_days, estimated_duration_mins, total_distance_km, stops } = req.body;
+    const { route_name, start_point, destination, operating_days, estimated_duration_mins, total_distance_km, road_geometry, stops, bus_id } = req.body;
     if (!route_name || !start_point || !destination) {
       res.status(400).json({ success: false, error: 'Route name, start point, and destination are required' });
       return;
@@ -62,7 +62,9 @@ router.post('/', authenticateJWT, requireRole(['admin']), async (req: Request, r
       operating_days,
       estimated_duration_mins,
       total_distance_km,
+      road_geometry,
       stops,
+      bus_id: bus_id ? parseInt(bus_id, 10) : undefined,
     });
 
     res.status(201).json({ success: true, route });

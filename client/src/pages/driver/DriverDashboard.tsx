@@ -172,15 +172,20 @@ export const DriverDashboard: React.FC = () => {
         // If logged in as driver, prioritize assigned vehicle
         if (user?.assignedBusId) {
           setSelectedBusId(user.assignedBusId);
-          const assignedBus = busList.find((b) => b.id === user.assignedBusId);
+          const assignedBus = busList.find((b) => Number(b.id) === Number(user.assignedBusId));
           if (assignedBus?.assigned_route_id) {
             setSelectedRouteId(assignedBus.assigned_route_id);
+          } else if (routeList.length > 0) {
+            setSelectedRouteId(routeList[0].id);
           }
         } else if (busList.length > 0) {
           setSelectedBusId(busList[0].id);
-        }
-
-        if (routeList.length > 0 && !user?.assignedBusId) {
+          if (busList[0].assigned_route_id) {
+            setSelectedRouteId(busList[0].assigned_route_id);
+          } else if (routeList.length > 0) {
+            setSelectedRouteId(routeList[0].id);
+          }
+        } else if (routeList.length > 0) {
           setSelectedRouteId(routeList[0].id);
         }
       } catch (e: any) {
@@ -195,7 +200,7 @@ export const DriverDashboard: React.FC = () => {
     const checkActive = async () => {
       try {
         const res = await api.tracking.getBusTracking(selectedBusId);
-        if (res.activeTrip && res.activeTrip.status === 'in_progress') {
+        if (res.activeTrip && (res.activeTrip.status === 'in_progress' || (res.activeTrip.status as string) === 'active')) {
           setIsTripActive(true);
           setActiveTripId(res.activeTrip.id);
           if (!watchIdRef.current && !demoIntervalRef.current) {
@@ -209,18 +214,54 @@ export const DriverDashboard: React.FC = () => {
         // No active trip
       }
     };
-    checkActive();
+    if (selectedBusId) {
+      checkActive();
+    }
   }, [selectedBusId]);
 
   // Handle Trip Start
   const handleStartTrip = async () => {
+    if (!selectedBusId) {
+      alert('Please select a bus before starting the trip.');
+      return;
+    }
+    if (!selectedRouteId) {
+      alert('Please select an assigned route before starting the trip.');
+      return;
+    }
+
     try {
+      // Prompt/verify geolocation permission if running live tracking
+      if (!isDemoMode && 'geolocation' in navigator) {
+        setGpsStatus('acquiring');
+        try {
+          const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0,
+            });
+          });
+          setCurrentCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          setGpsStatus('active');
+        } catch (geoErr: any) {
+          if (geoErr.code === geoErr.PERMISSION_DENIED) {
+            setGpsStatus('denied');
+            setGpsErrorMsg('Location permission was denied. Please allow location access in your browser address bar/settings.');
+            alert('Location permission was denied. Please enable location permissions in your browser address bar.');
+            return;
+          }
+          console.warn('[Driver] Initial GPS fix timeout, acquiring in background:', geoErr.message);
+        }
+      }
+
       const res = await api.tracking.start({
         busId: selectedBusId,
         driverId: user?.driverId || 1,
         routeId: selectedRouteId,
         isDemo: isDemoMode,
       });
+
       setIsTripActive(true);
       setActiveTripId(res.trip?.id || 1);
       startGpsTracking();
@@ -231,9 +272,9 @@ export const DriverDashboard: React.FC = () => {
 
   // Handle Trip End
   const handleEndTrip = async () => {
-    if (!activeTripId) return;
+    if (!activeTripId && !selectedBusId) return;
     try {
-      await api.tracking.stop({ tripId: activeTripId, busId: selectedBusId });
+      await api.tracking.stop({ tripId: activeTripId || undefined, busId: selectedBusId });
       setIsTripActive(false);
       setActiveTripId(null);
       stopGpsTracking();
@@ -486,7 +527,14 @@ export const DriverDashboard: React.FC = () => {
             <select
               value={selectedBusId}
               disabled={isTripActive || user?.role === 'driver'}
-              onChange={(e) => setSelectedBusId(parseInt(e.target.value, 10))}
+              onChange={(e) => {
+                const bId = parseInt(e.target.value, 10);
+                setSelectedBusId(bId);
+                const matched = buses.find((b) => Number(b.id) === Number(bId));
+                if (matched?.assigned_route_id) {
+                  setSelectedRouteId(matched.assigned_route_id);
+                }
+              }}
               className="w-full px-3 py-2 text-xs border border-brand-primary rounded-xl bg-brand-cream/40 font-bold text-brand-navy disabled:opacity-85 disabled:cursor-not-allowed"
             >
               {buses.map((b) => (

@@ -1,5 +1,6 @@
 import { db } from '../database';
 import { calculateRoadNetworkRoute } from '../utils/geo';
+import { BusService } from './busService';
 
 export interface RouteStopDetail {
   id: number;
@@ -61,15 +62,15 @@ export class RouteService {
 
     return routes.map((r) => {
       const stops = routeStops
-        .filter((rs) => rs.route_id === r.id)
+        .filter((rs) => Number(rs.route_id) === Number(r.id))
         .sort((a, b) => a.stop_sequence - b.stop_sequence)
         .map((rs) => {
-          const pp = pickupPoints.find((p) => p.id === rs.pickup_point_id);
+          const pp = pickupPoints.find((p) => Number(p.id) === Number(rs.pickup_point_id));
           return {
             ...rs,
             stop_name: pp?.name || 'Unknown Stop',
-            latitude: pp?.latitude || 0,
-            longitude: pp?.longitude || 0,
+            latitude: Number(pp?.latitude) || 0,
+            longitude: Number(pp?.longitude) || 0,
             landmark: pp?.landmark || '',
           };
         });
@@ -92,6 +93,7 @@ export class RouteService {
     total_distance_km?: number;
     road_geometry?: [number, number][];
     stops?: Array<{ pickup_point_id: number; stop_sequence: number; scheduled_arrival_time: string; scheduled_departure_time: string; distance_from_prev_km?: number }>;
+    bus_id?: number;
   }): Promise<RouteDetail> {
     const allPoints = await this.getAllPickupPoints();
     let computedDistance = data.total_distance_km || 0.0;
@@ -100,7 +102,7 @@ export class RouteService {
 
     if (data.stops && data.stops.length >= 2) {
       const stopCoords = data.stops
-        .map((s) => allPoints.find((p) => p.id === s.pickup_point_id))
+        .map((s) => allPoints.find((p) => Number(p.id) === Number(s.pickup_point_id)))
         .filter((p): p is any => Boolean(p))
         .map((p) => ({ latitude: Number(p.latitude), longitude: Number(p.longitude) }));
 
@@ -175,6 +177,11 @@ export class RouteService {
       }
     }
 
+    // Link route to the selected bus if specified
+    if (data.bus_id) {
+      await BusService.updateBus(Number(data.bus_id), { assigned_route_id: newRouteId });
+    }
+
     return (await this.getRouteById(newRouteId))!;
   }
 
@@ -184,7 +191,7 @@ export class RouteService {
 
     if (Array.isArray(updates.stops) && updates.stops.length >= 2) {
       const stopCoords = updates.stops
-        .map((s: any) => allPoints.find((p: any) => p.id === s.pickup_point_id))
+        .map((s: any) => allPoints.find((p: any) => Number(p.id) === Number(s.pickup_point_id)))
         .filter((p: any): p is any => Boolean(p))
         .map((p: any) => ({ latitude: Number(p.latitude), longitude: Number(p.longitude) }));
 
@@ -249,8 +256,11 @@ export class RouteService {
       db.updateRecord('routes', id, updates);
 
       if (Array.isArray(updates.stops)) {
+        if (db.supabaseClient) {
+          await db.supabaseClient.from('route_stops').delete().eq('route_id', id);
+        }
         const allStops = db.getTable<any>('route_stops');
-        const filtered = allStops.filter((rs) => rs.route_id !== id);
+        const filtered = allStops.filter((rs) => Number(rs.route_id) !== Number(id));
         (db as any).embeddedData['route_stops'] = filtered;
         for (let idx = 0; idx < updates.stops.length; idx++) {
           const stop = updates.stops[idx];
@@ -267,6 +277,11 @@ export class RouteService {
       }
     }
 
+    // Link route to the selected bus if specified
+    if (updates.bus_id) {
+      await BusService.updateBus(Number(updates.bus_id), { assigned_route_id: id });
+    }
+
     return this.getRouteById(id);
   }
 
@@ -274,11 +289,24 @@ export class RouteService {
     if (db.mode === 'mysql' && db.getPool()) {
       await db.query('DELETE FROM route_stops WHERE route_id = ?', [id]);
       await db.query('DELETE FROM routes WHERE id = ?', [id]);
-      return true;
+    } else {
+      if (db.supabaseClient) {
+        await db.supabaseClient.from('route_stops').delete().eq('route_id', id);
+      }
+      const allStops = db.getTable<any>('route_stops');
+      (db as any).embeddedData['route_stops'] = allStops.filter((rs) => Number(rs.route_id) !== Number(id));
+      db.deleteRecord('routes', id);
     }
-    const allStops = db.getTable<any>('route_stops');
-    (db as any).embeddedData['route_stops'] = allStops.filter((rs) => rs.route_id !== id);
-    return db.deleteRecord('routes', id);
+
+    // Unassign this route from any buses that had it assigned
+    const buses = await BusService.getAllBuses(true);
+    for (const b of buses) {
+      if (Number(b.assigned_route_id) === Number(id)) {
+        await BusService.updateBus(b.id, { assigned_route_id: null });
+      }
+    }
+
+    return true;
   }
 
   // Pickup Points CRUD

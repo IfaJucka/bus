@@ -183,12 +183,14 @@ export const LiveBusMap: React.FC<LiveBusMapProps> = ({
       stopMarkersRef.current.push(marker);
     });
 
-    // Fit map bounds to route ONLY on initial load or when route ID actually changes (prevents zooming out during tracking)
-    if (stopCoords.length > 0 && routeFittedIdRef.current !== route.id) {
-      map.fitBounds(L.latLngBounds(stopCoords), { padding: [50, 50] });
+    // Fit map bounds to route on initial load or when stop count changes
+    if (stopCoords.length > 0 && (routeFittedIdRef.current !== route.id || !bus)) {
+      try {
+        map.fitBounds(L.latLngBounds(stopCoords), { padding: [40, 40] });
+      } catch (err) {}
       routeFittedIdRef.current = route.id;
     }
-  }, [route?.id, selectedStopId]);
+  }, [route?.id, route?.stops?.length, (route as any)?.road_geometry, selectedStopId]);
 
   // Update Bus Marker with Real-time GPS Position
   useEffect(() => {

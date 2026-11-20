@@ -117,13 +117,13 @@
     {
       "id": 2,
       "user_id": 3,
-      "full_name": "Suresh Naik",
+      "full_name": "suresh",
       "phone": "+91 98452 67890",
-      "employee_id": "DRV-102",
+      "employee_id": "DRV-25",
       "license_number": "KA-47-2018-00982",
       "status": "active",
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:20.397+00:00"
     },
     {
       "id": 1,
@@ -134,7 +134,7 @@
       "license_number": "KA-47-2015-00431",
       "status": "active",
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T13:03:59.525+00:00"
     }
   ],
   "routes": [
@@ -175,9 +175,9 @@
       "longitude": 74.4899,
       "landmark": "Near Temple Arch, NH 66",
       "address": "National Highway 66, Murdeshwar, Karnataka 581350",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:37.319+00:00"
     },
     {
       "id": 2,
@@ -186,9 +186,9 @@
       "longitude": 74.551,
       "landmark": "Main KSRTC Bus Stand",
       "address": "Near Shamsuddin Circle, Bhatkal, Karnataka 581320",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:40.894+00:00"
     },
     {
       "id": 3,
@@ -197,9 +197,9 @@
       "longitude": 74.5262,
       "landmark": "Near Al-Kausar Hospital",
       "address": "NH 66, Shirali, Karnataka 581354",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:43.714+00:00"
     },
     {
       "id": 4,
@@ -208,9 +208,9 @@
       "longitude": 74.575,
       "landmark": "Anjuman College Campus Entrance",
       "address": "Anjumanabad, Bhatkal, Karnataka 581320",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:47.244+00:00"
     },
     {
       "id": 5,
@@ -219,9 +219,9 @@
       "longitude": 74.4215,
       "landmark": "Opposite Post Office",
       "address": "Main Road, Kumta, Karnataka 581343",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:50.058+00:00"
     },
     {
       "id": 6,
@@ -230,9 +230,9 @@
       "longitude": 74.4442,
       "landmark": "Sharavathi Bridge Junction",
       "address": "Honnavar Town Circle, Karnataka 581334",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:54.602+00:00"
     },
     {
       "id": 7,
@@ -241,9 +241,9 @@
       "longitude": 74.468,
       "landmark": "Near NH Toll Gate",
       "address": "NH 66, Manki, Karnataka 581348",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:41:59.263+00:00"
     },
     {
       "id": 8,
@@ -252,9 +252,9 @@
       "longitude": 74.5428,
       "landmark": "Tengingundi Coastal Road Cross",
       "address": "NH 66 Junction, Bhatkal Taluk, Karnataka 581320",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:42:03.321+00:00"
     },
     {
       "id": 9,
@@ -263,9 +263,108 @@
       "longitude": 74.495909,
       "landmark": "near silver sands school",
       "address": "",
-      "is_active": 1,
+      "is_active": 0,
       "created_at": "2026-11-14T04:10:32.594+00:00",
-      "updated_at": "2026-11-14T04:10:33.555692+00:00"
+      "updated_at": "2026-11-20T12:42:07.03+00:00"
+    },
+    {
+      "id": 10,
+      "name": "honnavar",
+      "latitude": 14.276528,
+      "longitude": 74.447222,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:43:30.773+00:00",
+      "updated_at": "2026-11-20T12:43:31.572935+00:00"
+    },
+    {
+      "id": 11,
+      "name": "manki",
+      "latitude": 14.05,
+      "longitude": 74.52,
+      "landmark": "",
+      "address": "",
+      "is_active": 0,
+      "created_at": "2026-11-20T12:43:46.418+00:00",
+      "updated_at": "2026-11-20T12:43:51.778+00:00"
+    },
+    {
+      "id": 12,
+      "name": "manki",
+      "latitude": 14.195579,
+      "longitude": 74.481211,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:44:43.701+00:00",
+      "updated_at": "2026-11-20T12:44:43.89577+00:00"
+    },
+    {
+      "id": 13,
+      "name": "hussain masjid",
+      "latitude": 14.105206,
+      "longitude": 74.496768,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:47:13.322+00:00",
+      "updated_at": "2026-11-20T12:47:14.105401+00:00"
+    },
+    {
+      "id": 14,
+      "name": "noor masjid",
+      "latitude": 14.1048,
+      "longitude": 74.495609,
+      "landmark": "near silversands school",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:48:20.635+00:00",
+      "updated_at": "2026-11-20T12:48:21.304899+00:00"
+    },
+    {
+      "id": 15,
+      "name": "iqra school",
+      "latitude": 14.10326,
+      "longitude": 74.496156,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:49:30.769+00:00",
+      "updated_at": "2026-11-20T12:49:31.117313+00:00"
+    },
+    {
+      "id": 16,
+      "name": "fathima masjid",
+      "latitude": 14.100965,
+      "longitude": 74.491366,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:50:45.223+00:00",
+      "updated_at": "2026-11-20T12:50:45.9097+00:00"
+    },
+    {
+      "id": 17,
+      "name": "anfal super market",
+      "latitude": 14.001581,
+      "longitude": 74.541357,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:53:38.393+00:00",
+      "updated_at": "2026-11-20T12:53:39.351063+00:00"
+    },
+    {
+      "id": 18,
+      "name": "aitm",
+      "latitude": 13.997079,
+      "longitude": 74.557632,
+      "landmark": "",
+      "address": "",
+      "is_active": 1,
+      "created_at": "2026-11-20T12:54:50.756+00:00",
+      "updated_at": "2026-11-20T12:54:51.43107+00:00"
     }
   ],
   "route_stops": [
@@ -362,9 +461,9 @@
     {
       "id": 2,
       "bus_number": "KA-47-B-5678",
-      "bus_name": "College Bus 02",
+      "bus_name": "college bus 25",
       "registration_number": "KA47B5678",
-      "capacity": 52,
+      "capacity": 30,
       "assigned_driver_id": 2,
       "assigned_route_id": 2,
       "status": "not_started",
@@ -376,7 +475,7 @@
       "last_gps_timestamp": null,
       "is_active": 1,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-12T17:11:32.117288+00:00"
+      "updated_at": "2026-11-20T12:40:22.948+00:00"
     },
     {
       "id": 1,
@@ -388,14 +487,14 @@
       "assigned_route_id": 1,
       "status": "trip_completed",
       "gps_status": "offline",
-      "last_latitude": 14.106242,
-      "last_longitude": 74.492966,
+      "last_latitude": 14.055,
+      "last_longitude": 74.515,
       "last_speed": 0,
-      "last_heading": 0,
-      "last_gps_timestamp": "2026-11-20T12:05:47.539+00:00",
+      "last_heading": 170,
+      "last_gps_timestamp": "2026-11-20T13:53:42.756Z",
       "is_active": 1,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-20T12:06:17.235+00:00"
+      "updated_at": "2026-11-20T13:53:43.181Z"
     }
   ],
   "route_schedules": [
@@ -454,7 +553,7 @@
       "user_id": 7,
       "student_identifier": "Student",
       "bus_id": 1,
-      "route_id": 1,
+      "route_id": null,
       "pickup_point_id": 2,
       "notification_5min_enabled": 1,
       "notification_delay_enabled": 1,
@@ -467,7 +566,7 @@
       "user_id": 8,
       "student_identifier": "2ab24ci025",
       "bus_id": 1,
-      "route_id": 1,
+      "route_id": null,
       "pickup_point_id": 2,
       "notification_5min_enabled": 1,
       "notification_delay_enabled": 1,
@@ -478,12 +577,27 @@
   ],
   "notifications": [
     {
+      "id": 19,
+      "user_id": null,
+      "student_identifier": "4AI21CS045",
+      "bus_id": 1,
+      "route_id": null,
+      "trip_id": null,
+      "pickup_point_id": 2,
+      "title": "🚌 Bus Arriving in ~5 Minutes",
+      "message": "Bus KA-47-A-1234 (College Bus 01) will reach Bhatkal Bus Stand at approximately 3:43 AM.",
+      "category": "5min_arrival",
+      "is_read": 1,
+      "metadata": "{\"etaMinutes\":4,\"targetStopName\":\"Bhatkal Bus Stand\"}",
+      "created_at": "2026-11-14T03:39:54.882+00:00"
+    },
+    {
       "id": 16,
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 12,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -497,8 +611,8 @@
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 13,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -512,8 +626,8 @@
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 16,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -523,27 +637,12 @@
       "created_at": "2026-11-14T03:56:17.3+00:00"
     },
     {
-      "id": 19,
-      "user_id": null,
-      "student_identifier": "4AI21CS045",
-      "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 15,
-      "pickup_point_id": 2,
-      "title": "🚌 Bus Arriving in ~5 Minutes",
-      "message": "Bus KA-47-A-1234 (College Bus 01) will reach Bhatkal Bus Stand at approximately 3:43 AM.",
-      "category": "5min_arrival",
-      "is_read": 1,
-      "metadata": "{\"etaMinutes\":4,\"targetStopName\":\"Bhatkal Bus Stand\"}",
-      "created_at": "2026-11-14T03:39:54.882+00:00"
-    },
-    {
       "id": 21,
       "user_id": 4,
       "student_identifier": "4AI21CS045",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 16,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": 2,
       "title": "Your College Bus Is Almost Here!",
       "message": "Bus KA-47-A-1234 will arrive at Bhatkal Bus Stand in approx 6 minutes (4:02 AM). Please be ready at the stop!",
@@ -557,8 +656,8 @@
       "user_id": 4,
       "student_identifier": "4AI21CS045",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 17,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": 2,
       "title": "Your College Bus Is Almost Here!",
       "message": "Bus KA-47-A-1234 will arrive at Bhatkal Bus Stand in approx 6 minutes (6:00 AM). Please be ready at the stop!",
@@ -572,8 +671,8 @@
       "user_id": 4,
       "student_identifier": "4AI21CS045",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 18,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": 2,
       "title": "Your College Bus Is Almost Here!",
       "message": "Bus KA-47-A-1234 will arrive at Bhatkal Bus Stand in approx 6 minutes (6:14 AM). Please be ready at the stop!",
@@ -587,8 +686,8 @@
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 18,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -602,8 +701,8 @@
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 19,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -617,8 +716,8 @@
       "user_id": 4,
       "student_identifier": "4AI21CS045",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 19,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": 2,
       "title": "Your College Bus Is Almost Here!",
       "message": "Bus KA-47-A-1234 will arrive at Bhatkal Bus Stand in approx 6 minutes (3:22 AM). Please be ready at the stop!",
@@ -632,8 +731,8 @@
       "user_id": 4,
       "student_identifier": "4AI21CS045",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 20,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": 2,
       "title": "Your College Bus Is Almost Here!",
       "message": "Bus KA-47-A-1234 will arrive at Bhatkal Bus Stand in approx 6 minutes (5:49 AM). Please be ready at the stop!",
@@ -647,8 +746,8 @@
       "user_id": null,
       "student_identifier": "*",
       "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 21,
+      "route_id": null,
+      "trip_id": null,
       "pickup_point_id": null,
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
@@ -656,6 +755,36 @@
       "is_read": 0,
       "metadata": null,
       "created_at": "2026-11-20T12:05:47.556+00:00"
+    },
+    {
+      "id": 31,
+      "user_id": null,
+      "student_identifier": "*",
+      "bus_id": 1,
+      "route_id": 1,
+      "trip_id": 22,
+      "pickup_point_id": null,
+      "title": "Bus KA-47-A-1234 Started Trip",
+      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
+      "category": "trip_started",
+      "is_read": 0,
+      "metadata": null,
+      "created_at": "2026-11-20T13:43:09.728+00:00"
+    },
+    {
+      "user_id": null,
+      "student_identifier": "*",
+      "bus_id": 1,
+      "route_id": 3,
+      "trip_id": 23,
+      "pickup_point_id": null,
+      "title": "Bus KA-47-A-1234 Started Trip",
+      "message": "College Bus 01 has departed from honnavar towards aitm. Live GPS tracking is active.",
+      "category": "trip_started",
+      "is_read": 0,
+      "metadata": null,
+      "id": 32,
+      "created_at": "2026-11-20T13:53:42.735Z"
     }
   ],
   "push_subscriptions": [],
@@ -839,1060 +968,13 @@
   ],
   "trips": [
     {
-      "id": 7,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-05",
-      "start_time": "2026-11-05T07:30:00+00:00",
-      "end_time": "2026-11-05T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": 5,
-      "delay_reason": "Peak morning highway traffic",
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-05T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 6,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-06",
-      "start_time": "2026-11-06T07:30:00+00:00",
-      "end_time": "2026-11-06T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": 2,
-      "delay_reason": "Peak morning highway traffic",
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-06T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 5,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-07",
-      "start_time": "2026-11-07T07:30:00+00:00",
-      "end_time": "2026-11-07T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-07T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 3,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-09",
-      "start_time": "2026-11-09T07:30:00+00:00",
-      "end_time": "2026-11-09T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": 3,
-      "delay_reason": "Peak morning highway traffic",
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-09T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 2,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-10",
-      "start_time": "2026-11-10T07:30:00+00:00",
-      "end_time": "2026-11-10T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": 7,
-      "delay_reason": "Peak morning highway traffic",
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-10T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 1,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-11",
-      "start_time": "2026-11-11T07:30:00+00:00",
-      "end_time": "2026-11-11T08:28:00+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 13.9782,
-      "end_lng": 74.575,
-      "delay_mins": -1,
-      "delay_reason": null,
-      "route_snapshot": {
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "stops_count": 4
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-11T07:30:00+00:00",
-      "updated_at": null
-    },
-    {
-      "id": 8,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-12",
-      "start_time": "2026-11-12T15:56:04.543+00:00",
-      "end_time": "2026-11-12T15:56:04.567+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 14.094,
-      "end_lng": 74.4899,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 1,
-      "created_at": "2026-11-12T15:56:04.543+00:00",
-      "updated_at": "2026-11-12T15:56:04.567+00:00"
-    },
-    {
-      "id": 14,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-13",
-      "start_time": "2026-11-13T10:09:22.137+00:00",
-      "end_time": "2026-11-13T10:09:25.694+00:00",
-      "status": "completed",
-      "start_lat": 14.106242,
-      "start_lng": 74.492966,
-      "end_lat": 14.106242,
-      "end_lng": 74.492966,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-13T10:09:22.137+00:00",
-      "updated_at": "2026-11-13T10:09:25.694+00:00"
-    },
-    {
-      "id": 15,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-14",
-      "start_time": "2026-11-14T03:39:48.349+00:00",
-      "end_time": "2026-11-14T03:56:12.936+00:00",
-      "status": "completed",
-      "start_lat": 14.106242,
-      "start_lng": 74.492966,
-      "end_lat": 13.996316,
-      "end_lng": 74.552737,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-14T03:39:48.349+00:00",
-      "updated_at": "2026-11-14T03:56:12.936+00:00"
-    },
-    {
-      "id": 9,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-12",
-      "start_time": "2026-11-12T15:56:06.643+00:00",
-      "end_time": "2026-11-12T15:56:06.663+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 14.094,
-      "end_lng": 74.4899,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 1,
-      "created_at": "2026-11-12T15:56:06.643+00:00",
-      "updated_at": "2026-11-12T15:56:06.663+00:00"
-    },
-    {
-      "id": 10,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-12",
-      "start_time": "2026-11-12T17:26:44.598+00:00",
-      "end_time": "2026-11-12T17:26:44.624+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 14.094,
-      "end_lng": 74.4899,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 1,
-      "created_at": "2026-11-12T17:26:44.599+00:00",
-      "updated_at": "2026-11-12T17:26:44.624+00:00"
-    },
-    {
-      "id": 11,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-12",
-      "start_time": "2026-11-12T17:26:54.484+00:00",
-      "end_time": "2026-11-12T17:26:54.498+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 14.094,
-      "end_lng": 74.4899,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 1,
-      "created_at": "2026-11-12T17:26:54.484+00:00",
-      "updated_at": "2026-11-12T17:26:54.498+00:00"
-    },
-    {
-      "id": 12,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-12",
-      "start_time": "2026-11-12T18:43:24.678+00:00",
-      "end_time": "2026-11-13T10:08:42.668+00:00",
-      "status": "completed",
-      "start_lat": 14.094,
-      "start_lng": 74.4899,
-      "end_lat": 14.106242,
-      "end_lng": 74.492966,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-12T18:43:24.679+00:00",
-      "updated_at": "2026-11-13T10:08:42.668+00:00"
-    },
-    {
-      "id": 13,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-13",
-      "start_time": "2026-11-13T10:08:46.118+00:00",
-      "end_time": "2026-11-13T10:09:20.191+00:00",
-      "status": "completed",
-      "start_lat": 14.106242,
-      "start_lng": 74.492966,
-      "end_lat": 14.106242,
-      "end_lng": 74.492966,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-13T10:08:46.118+00:00",
-      "updated_at": "2026-11-13T10:09:20.191+00:00"
-    },
-    {
-      "id": 16,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-14",
-      "start_time": "2026-11-14T03:56:17.29+00:00",
-      "end_time": "2026-11-14T04:39:34.252+00:00",
-      "status": "completed",
-      "start_lat": 13.996316,
-      "start_lng": 74.552737,
-      "end_lat": 13.996316,
-      "end_lng": 74.552737,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-14T03:56:17.29+00:00",
-      "updated_at": "2026-11-14T04:39:34.252+00:00"
-    },
-    {
-      "id": 17,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-14",
-      "start_time": "2026-11-14T05:54:41.853+00:00",
-      "end_time": "2026-11-14T05:54:54.643+00:00",
-      "status": "completed",
-      "start_lat": 13.996316,
-      "start_lng": 74.552737,
-      "end_lat": 13.9963,
-      "end_lng": 74.55284,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-14T05:54:41.853+00:00",
-      "updated_at": "2026-11-14T05:54:54.643+00:00"
-    },
-    {
-      "id": 18,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-14",
-      "start_time": "2026-11-14T06:08:20.621+00:00",
-      "end_time": "2026-11-15T03:16:10.566+00:00",
-      "status": "completed",
-      "start_lat": 13.9963,
-      "start_lng": 74.55284,
-      "end_lat": 13.9963793,
-      "end_lng": 74.5531007,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-14T06:08:20.621+00:00",
-      "updated_at": "2026-11-15T03:16:10.566+00:00"
-    },
-    {
-      "id": 19,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-15",
-      "start_time": "2026-11-15T03:16:34.547+00:00",
-      "end_time": "2026-11-15T05:43:48.646+00:00",
-      "status": "completed",
-      "start_lat": 13.9963793,
-      "start_lng": 74.5531007,
-      "end_lat": 13.9963793,
-      "end_lng": 74.5531007,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-15T03:16:34.547+00:00",
-      "updated_at": "2026-11-15T05:43:48.646+00:00"
-    },
-    {
-      "id": 20,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-15",
-      "start_time": "2026-11-15T05:43:50.704+00:00",
-      "end_time": "2026-11-20T12:05:43.797+00:00",
-      "status": "completed",
-      "start_lat": 13.9963793,
-      "start_lng": 74.5531007,
-      "end_lat": 14.106242,
-      "end_lng": 74.492966,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-15T05:43:50.704+00:00",
-      "updated_at": "2026-11-20T12:05:43.797+00:00"
-    },
-    {
-      "id": 21,
+      "id": 22,
       "bus_id": 1,
       "driver_id": 1,
       "route_id": 1,
       "trip_date": "2026-11-20",
-      "start_time": "2026-11-20T12:05:47.539+00:00",
-      "end_time": "2026-11-20T12:06:17.232+00:00",
+      "start_time": "2026-11-20T13:43:09.689+00:00",
+      "end_time": "2026-11-20T13:43:09.736+00:00",
       "status": "completed",
       "start_lat": 14.106242,
       "start_lng": 74.492966,
@@ -1951,8 +1033,1544 @@
         "road_geometry": null
       },
       "is_demo": 0,
-      "created_at": "2026-11-20T12:05:47.539+00:00",
-      "updated_at": "2026-11-20T12:06:17.232+00:00"
+      "created_at": "2026-11-20T13:43:09.691+00:00",
+      "updated_at": "2026-11-20T13:43:09.74+00:00"
+    },
+    {
+      "bus_id": 1,
+      "driver_id": 1,
+      "route_id": 3,
+      "trip_date": "2026-11-20",
+      "start_time": "2026-11-20T13:53:42.699Z",
+      "end_time": "2026-11-20T13:53:42.768Z",
+      "status": "completed",
+      "start_lat": 14.094,
+      "start_lng": 74.4899,
+      "end_lat": 14.055,
+      "end_lng": 74.515,
+      "delay_mins": 0,
+      "delay_reason": null,
+      "is_demo": 0,
+      "route_snapshot": {
+        "route_id": 3,
+        "route_name": "Test Campus Express",
+        "start_point": "honnavar",
+        "destination": "aitm",
+        "version": 1,
+        "stops": [
+          {
+            "pickup_point_id": 10,
+            "stop_name": "honnavar",
+            "sequence": 1,
+            "scheduled_arrival_time": "07:30:00",
+            "scheduled_departure_time": "07:35:00",
+            "latitude": 14.276528,
+            "longitude": 74.447222,
+            "landmark": ""
+          },
+          {
+            "pickup_point_id": 12,
+            "stop_name": "manki",
+            "sequence": 2,
+            "scheduled_arrival_time": "07:50:00",
+            "scheduled_departure_time": "07:55:00",
+            "latitude": 14.195579,
+            "longitude": 74.481211,
+            "landmark": ""
+          },
+          {
+            "pickup_point_id": 13,
+            "stop_name": "hussain masjid",
+            "sequence": 3,
+            "scheduled_arrival_time": "08:15:00",
+            "scheduled_departure_time": "08:20:00",
+            "latitude": 14.105206,
+            "longitude": 74.496768,
+            "landmark": ""
+          }
+        ],
+        "road_geometry": [
+          [
+            14.277316,
+            74.44689
+          ],
+          [
+            14.277316,
+            74.44689
+          ],
+          [
+            14.277009,
+            74.446099
+          ],
+          [
+            14.276789,
+            74.445465
+          ],
+          [
+            14.276885,
+            74.445362
+          ],
+          [
+            14.276661,
+            74.445155
+          ],
+          [
+            14.27641,
+            74.445028
+          ],
+          [
+            14.275956,
+            74.444692
+          ],
+          [
+            14.275722,
+            74.444408
+          ],
+          [
+            14.275296,
+            74.443869
+          ],
+          [
+            14.273108,
+            74.441102
+          ],
+          [
+            14.26918,
+            74.436087
+          ],
+          [
+            14.268549,
+            74.435208
+          ],
+          [
+            14.268168,
+            74.434752
+          ],
+          [
+            14.267841,
+            74.434497
+          ],
+          [
+            14.267567,
+            74.434355
+          ],
+          [
+            14.267092,
+            74.434167
+          ],
+          [
+            14.266802,
+            74.434104
+          ],
+          [
+            14.266502,
+            74.434096
+          ],
+          [
+            14.265901,
+            74.434216
+          ],
+          [
+            14.265553,
+            74.434331
+          ],
+          [
+            14.264635,
+            74.434682
+          ],
+          [
+            14.26371,
+            74.434999
+          ],
+          [
+            14.262478,
+            74.435369
+          ],
+          [
+            14.261095,
+            74.43579
+          ],
+          [
+            14.260081,
+            74.436128
+          ],
+          [
+            14.25817,
+            74.436745
+          ],
+          [
+            14.255987,
+            74.437491
+          ],
+          [
+            14.254169,
+            74.438059
+          ],
+          [
+            14.252467,
+            74.43862
+          ],
+          [
+            14.250369,
+            74.439336
+          ],
+          [
+            14.24922,
+            74.439687
+          ],
+          [
+            14.248593,
+            74.43991
+          ],
+          [
+            14.248201,
+            74.440095
+          ],
+          [
+            14.247743,
+            74.440363
+          ],
+          [
+            14.247441,
+            74.440607
+          ],
+          [
+            14.246602,
+            74.441409
+          ],
+          [
+            14.245177,
+            74.442828
+          ],
+          [
+            14.244714,
+            74.443319
+          ],
+          [
+            14.244434,
+            74.443708
+          ],
+          [
+            14.244148,
+            74.444105
+          ],
+          [
+            14.243157,
+            74.44572
+          ],
+          [
+            14.242655,
+            74.446519
+          ],
+          [
+            14.242465,
+            74.446861
+          ],
+          [
+            14.242298,
+            74.447129
+          ],
+          [
+            14.242037,
+            74.447597
+          ],
+          [
+            14.24174,
+            74.448067
+          ],
+          [
+            14.241647,
+            74.448469
+          ],
+          [
+            14.241637,
+            74.448557
+          ],
+          [
+            14.2416,
+            74.448885
+          ],
+          [
+            14.241647,
+            74.449335
+          ],
+          [
+            14.241844,
+            74.450049
+          ],
+          [
+            14.242164,
+            74.451036
+          ],
+          [
+            14.24257,
+            74.452146
+          ],
+          [
+            14.242702,
+            74.452677
+          ],
+          [
+            14.242749,
+            74.453335
+          ],
+          [
+            14.24272,
+            74.453782
+          ],
+          [
+            14.242704,
+            74.453878
+          ],
+          [
+            14.242658,
+            74.454137
+          ],
+          [
+            14.242434,
+            74.454678
+          ],
+          [
+            14.24193,
+            74.455778
+          ],
+          [
+            14.2416,
+            74.456534
+          ],
+          [
+            14.241402,
+            74.456811
+          ],
+          [
+            14.241145,
+            74.457039
+          ],
+          [
+            14.240747,
+            74.457232
+          ],
+          [
+            14.24024,
+            74.457406
+          ],
+          [
+            14.239676,
+            74.4575
+          ],
+          [
+            14.238956,
+            74.457605
+          ],
+          [
+            14.238306,
+            74.45772
+          ],
+          [
+            14.238033,
+            74.457859
+          ],
+          [
+            14.237716,
+            74.458074
+          ],
+          [
+            14.237568,
+            74.458262
+          ],
+          [
+            14.237461,
+            74.458492
+          ],
+          [
+            14.237357,
+            74.458755
+          ],
+          [
+            14.237256,
+            74.459085
+          ],
+          [
+            14.237118,
+            74.459455
+          ],
+          [
+            14.236907,
+            74.459756
+          ],
+          [
+            14.236725,
+            74.459898
+          ],
+          [
+            14.236192,
+            74.460196
+          ],
+          [
+            14.235015,
+            74.46089
+          ],
+          [
+            14.23477,
+            74.461006
+          ],
+          [
+            14.234461,
+            74.461113
+          ],
+          [
+            14.234154,
+            74.461124
+          ],
+          [
+            14.233702,
+            74.461086
+          ],
+          [
+            14.233252,
+            74.461078
+          ],
+          [
+            14.232875,
+            74.461116
+          ],
+          [
+            14.232571,
+            74.461199
+          ],
+          [
+            14.232357,
+            74.461311
+          ],
+          [
+            14.232204,
+            74.461392
+          ],
+          [
+            14.23209,
+            74.461488
+          ],
+          [
+            14.231884,
+            74.461746
+          ],
+          [
+            14.231429,
+            74.462457
+          ],
+          [
+            14.23072,
+            74.463575
+          ],
+          [
+            14.230483,
+            74.463892
+          ],
+          [
+            14.230181,
+            74.464114
+          ],
+          [
+            14.229438,
+            74.464487
+          ],
+          [
+            14.229011,
+            74.464761
+          ],
+          [
+            14.228525,
+            74.465058
+          ],
+          [
+            14.228213,
+            74.465225
+          ],
+          [
+            14.22799,
+            74.465278
+          ],
+          [
+            14.227545,
+            74.465284
+          ],
+          [
+            14.226359,
+            74.46526
+          ],
+          [
+            14.225283,
+            74.465198
+          ],
+          [
+            14.224802,
+            74.465182
+          ],
+          [
+            14.224508,
+            74.465236
+          ],
+          [
+            14.224238,
+            74.465303
+          ],
+          [
+            14.223957,
+            74.465453
+          ],
+          [
+            14.223338,
+            74.465842
+          ],
+          [
+            14.222901,
+            74.466121
+          ],
+          [
+            14.222615,
+            74.466252
+          ],
+          [
+            14.222306,
+            74.466394
+          ],
+          [
+            14.221874,
+            74.466472
+          ],
+          [
+            14.221367,
+            74.466603
+          ],
+          [
+            14.221084,
+            74.46673
+          ],
+          [
+            14.220954,
+            74.466842
+          ],
+          [
+            14.220829,
+            74.467
+          ],
+          [
+            14.220725,
+            74.46718
+          ],
+          [
+            14.220626,
+            74.467464
+          ],
+          [
+            14.220569,
+            74.467762
+          ],
+          [
+            14.220522,
+            74.468256
+          ],
+          [
+            14.220468,
+            74.468889
+          ],
+          [
+            14.220366,
+            74.469237
+          ],
+          [
+            14.220262,
+            74.469487
+          ],
+          [
+            14.220091,
+            74.46972
+          ],
+          [
+            14.219862,
+            74.46994
+          ],
+          [
+            14.219586,
+            74.470066
+          ],
+          [
+            14.219017,
+            74.470184
+          ],
+          [
+            14.218208,
+            74.470334
+          ],
+          [
+            14.217369,
+            74.470506
+          ],
+          [
+            14.216958,
+            74.470651
+          ],
+          [
+            14.215993,
+            74.471171
+          ],
+          [
+            14.214974,
+            74.471828
+          ],
+          [
+            14.214498,
+            74.472107
+          ],
+          [
+            14.213885,
+            74.472376
+          ],
+          [
+            14.213175,
+            74.472665
+          ],
+          [
+            14.212657,
+            74.472888
+          ],
+          [
+            14.212298,
+            74.473105
+          ],
+          [
+            14.211877,
+            74.473451
+          ],
+          [
+            14.211583,
+            74.473735
+          ],
+          [
+            14.210988,
+            74.474524
+          ],
+          [
+            14.210182,
+            74.475624
+          ],
+          [
+            14.209623,
+            74.476184
+          ],
+          [
+            14.20915,
+            74.476517
+          ],
+          [
+            14.20877,
+            74.476737
+          ],
+          [
+            14.208284,
+            74.476911
+          ],
+          [
+            14.206773,
+            74.477415
+          ],
+          [
+            14.206198,
+            74.477582
+          ],
+          [
+            14.20572,
+            74.477721
+          ],
+          [
+            14.204397,
+            74.47804
+          ],
+          [
+            14.20365,
+            74.478266
+          ],
+          [
+            14.203026,
+            74.47858
+          ],
+          [
+            14.201822,
+            74.479108
+          ],
+          [
+            14.200364,
+            74.479776
+          ],
+          [
+            14.199805,
+            74.48002
+          ],
+          [
+            14.19937,
+            74.48021
+          ],
+          [
+            14.198593,
+            74.480546
+          ],
+          [
+            14.197503,
+            74.481015
+          ],
+          [
+            14.197004,
+            74.481165
+          ],
+          [
+            14.19613,
+            74.48138
+          ],
+          [
+            14.195566,
+            74.481466
+          ],
+          [
+            14.19501,
+            74.481538
+          ],
+          [
+            14.194266,
+            74.481573
+          ],
+          [
+            14.193413,
+            74.481525
+          ],
+          [
+            14.192451,
+            74.481503
+          ],
+          [
+            14.191918,
+            74.481541
+          ],
+          [
+            14.191497,
+            74.481581
+          ],
+          [
+            14.190958,
+            74.481672
+          ],
+          [
+            14.19015,
+            74.481943
+          ],
+          [
+            14.189317,
+            74.482251
+          ],
+          [
+            14.188405,
+            74.482624
+          ],
+          [
+            14.187692,
+            74.482943
+          ],
+          [
+            14.187237,
+            74.48319
+          ],
+          [
+            14.18679,
+            74.483507
+          ],
+          [
+            14.186114,
+            74.484039
+          ],
+          [
+            14.185778,
+            74.484303
+          ],
+          [
+            14.184985,
+            74.484942
+          ],
+          [
+            14.184364,
+            74.485441
+          ],
+          [
+            14.183922,
+            74.485823
+          ],
+          [
+            14.183857,
+            74.48572
+          ],
+          [
+            14.185066,
+            74.484749
+          ],
+          [
+            14.186226,
+            74.483802
+          ],
+          [
+            14.186949,
+            74.483257
+          ],
+          [
+            14.18745,
+            74.48293
+          ],
+          [
+            14.188309,
+            74.482552
+          ],
+          [
+            14.189583,
+            74.482058
+          ],
+          [
+            14.190332,
+            74.481771
+          ],
+          [
+            14.190849,
+            74.4816
+          ],
+          [
+            14.191445,
+            74.481474
+          ],
+          [
+            14.191993,
+            74.481399
+          ],
+          [
+            14.192737,
+            74.481366
+          ],
+          [
+            14.193769,
+            74.481425
+          ],
+          [
+            14.194617,
+            74.481452
+          ],
+          [
+            14.195392,
+            74.481404
+          ],
+          [
+            14.195606,
+            74.481364
+          ],
+          [
+            14.195792,
+            74.481329
+          ],
+          [
+            14.196268,
+            74.481235
+          ],
+          [
+            14.196877,
+            74.481074
+          ],
+          [
+            14.19736,
+            74.480908
+          ],
+          [
+            14.198078,
+            74.480634
+          ],
+          [
+            14.199181,
+            74.480162
+          ],
+          [
+            14.199733,
+            74.479918
+          ],
+          [
+            14.199805,
+            74.48002
+          ],
+          [
+            14.19937,
+            74.48021
+          ],
+          [
+            14.198593,
+            74.480546
+          ],
+          [
+            14.197503,
+            74.481015
+          ],
+          [
+            14.197004,
+            74.481165
+          ],
+          [
+            14.19613,
+            74.48138
+          ],
+          [
+            14.195566,
+            74.481466
+          ],
+          [
+            14.19501,
+            74.481538
+          ],
+          [
+            14.194266,
+            74.481573
+          ],
+          [
+            14.193413,
+            74.481525
+          ],
+          [
+            14.192451,
+            74.481503
+          ],
+          [
+            14.191918,
+            74.481541
+          ],
+          [
+            14.191497,
+            74.481581
+          ],
+          [
+            14.190958,
+            74.481672
+          ],
+          [
+            14.19015,
+            74.481943
+          ],
+          [
+            14.189317,
+            74.482251
+          ],
+          [
+            14.188405,
+            74.482624
+          ],
+          [
+            14.187692,
+            74.482943
+          ],
+          [
+            14.187237,
+            74.48319
+          ],
+          [
+            14.18679,
+            74.483507
+          ],
+          [
+            14.186114,
+            74.484039
+          ],
+          [
+            14.185778,
+            74.484303
+          ],
+          [
+            14.184985,
+            74.484942
+          ],
+          [
+            14.184364,
+            74.485441
+          ],
+          [
+            14.183922,
+            74.485823
+          ],
+          [
+            14.183849,
+            74.485886
+          ],
+          [
+            14.18364,
+            74.486038
+          ],
+          [
+            14.183339,
+            74.486256
+          ],
+          [
+            14.18297,
+            74.486524
+          ],
+          [
+            14.182299,
+            74.4869
+          ],
+          [
+            14.181412,
+            74.487396
+          ],
+          [
+            14.180315,
+            74.487983
+          ],
+          [
+            14.179145,
+            74.48867
+          ],
+          [
+            14.178648,
+            74.488968
+          ],
+          [
+            14.177688,
+            74.489681
+          ],
+          [
+            14.177635,
+            74.48972
+          ],
+          [
+            14.177194,
+            74.490041
+          ],
+          [
+            14.176643,
+            74.490411
+          ],
+          [
+            14.175936,
+            74.490821
+          ],
+          [
+            14.17488,
+            74.491406
+          ],
+          [
+            14.173618,
+            74.492066
+          ],
+          [
+            14.172797,
+            74.492538
+          ],
+          [
+            14.172206,
+            74.492825
+          ],
+          [
+            14.171561,
+            74.493085
+          ],
+          [
+            14.171138,
+            74.493222
+          ],
+          [
+            14.170503,
+            74.493358
+          ],
+          [
+            14.169814,
+            74.493431
+          ],
+          [
+            14.168914,
+            74.493506
+          ],
+          [
+            14.168118,
+            74.493664
+          ],
+          [
+            14.167744,
+            74.493753
+          ],
+          [
+            14.167499,
+            74.493839
+          ],
+          [
+            14.167244,
+            74.493967
+          ],
+          [
+            14.166966,
+            74.494167
+          ],
+          [
+            14.166832,
+            74.494294
+          ],
+          [
+            14.166659,
+            74.494447
+          ],
+          [
+            14.166467,
+            74.494617
+          ],
+          [
+            14.166202,
+            74.494893
+          ],
+          [
+            14.165845,
+            74.495407
+          ],
+          [
+            14.165625,
+            74.495726
+          ],
+          [
+            14.165351,
+            74.49613
+          ],
+          [
+            14.164942,
+            74.49676
+          ],
+          [
+            14.164566,
+            74.497162
+          ],
+          [
+            14.16401,
+            74.49765
+          ],
+          [
+            14.163489,
+            74.497923
+          ],
+          [
+            14.162893,
+            74.498138
+          ],
+          [
+            14.162494,
+            74.498264
+          ],
+          [
+            14.162088,
+            74.498366
+          ],
+          [
+            14.161769,
+            74.498446
+          ],
+          [
+            14.161141,
+            74.498677
+          ],
+          [
+            14.160958,
+            74.49876
+          ],
+          [
+            14.160641,
+            74.498903
+          ],
+          [
+            14.160103,
+            74.499233
+          ],
+          [
+            14.159351,
+            74.499866
+          ],
+          [
+            14.158657,
+            74.500482
+          ],
+          [
+            14.158067,
+            74.500989
+          ],
+          [
+            14.157593,
+            74.501239
+          ],
+          [
+            14.157099,
+            74.501469
+          ],
+          [
+            14.156605,
+            74.501566
+          ],
+          [
+            14.1555,
+            74.501706
+          ],
+          [
+            14.154462,
+            74.501829
+          ],
+          [
+            14.153731,
+            74.501888
+          ],
+          [
+            14.152561,
+            74.501842
+          ],
+          [
+            14.151869,
+            74.501837
+          ],
+          [
+            14.151367,
+            74.501899
+          ],
+          [
+            14.150673,
+            74.50206
+          ],
+          [
+            14.149676,
+            74.502352
+          ],
+          [
+            14.148849,
+            74.502567
+          ],
+          [
+            14.147726,
+            74.502816
+          ],
+          [
+            14.14706,
+            74.502945
+          ],
+          [
+            14.146733,
+            74.50298
+          ],
+          [
+            14.1461,
+            74.503049
+          ],
+          [
+            14.145748,
+            74.503107
+          ],
+          [
+            14.144784,
+            74.503264
+          ],
+          [
+            14.143676,
+            74.503422
+          ],
+          [
+            14.142873,
+            74.503505
+          ],
+          [
+            14.142287,
+            74.503548
+          ],
+          [
+            14.140935,
+            74.503618
+          ],
+          [
+            14.1388,
+            74.503822
+          ],
+          [
+            14.137122,
+            74.503972
+          ],
+          [
+            14.134966,
+            74.504101
+          ],
+          [
+            14.133631,
+            74.504144
+          ],
+          [
+            14.13314,
+            74.504133
+          ],
+          [
+            14.132513,
+            74.504031
+          ],
+          [
+            14.131355,
+            74.503717
+          ],
+          [
+            14.129282,
+            74.503087
+          ],
+          [
+            14.127889,
+            74.502648
+          ],
+          [
+            14.127766,
+            74.502609
+          ],
+          [
+            14.125644,
+            74.501958
+          ],
+          [
+            14.124429,
+            74.501647
+          ],
+          [
+            14.124104,
+            74.501577
+          ],
+          [
+            14.123737,
+            74.501537
+          ],
+          [
+            14.123282,
+            74.501577
+          ],
+          [
+            14.122634,
+            74.50166
+          ],
+          [
+            14.121456,
+            74.50184
+          ],
+          [
+            14.12035,
+            74.501934
+          ],
+          [
+            14.118711,
+            74.502041
+          ],
+          [
+            14.116748,
+            74.502151
+          ],
+          [
+            14.115158,
+            74.50225
+          ],
+          [
+            14.114873,
+            74.502277
+          ],
+          [
+            14.114154,
+            74.502347
+          ],
+          [
+            14.113205,
+            74.502505
+          ],
+          [
+            14.111496,
+            74.502888
+          ],
+          [
+            14.109571,
+            74.50328
+          ],
+          [
+            14.108494,
+            74.503508
+          ],
+          [
+            14.106629,
+            74.503905
+          ],
+          [
+            14.105836,
+            74.504083
+          ],
+          [
+            14.105674,
+            74.50412
+          ],
+          [
+            14.105206,
+            74.504187
+          ],
+          [
+            14.10454,
+            74.504297
+          ],
+          [
+            14.103655,
+            74.504393
+          ],
+          [
+            14.102974,
+            74.504417
+          ],
+          [
+            14.101884,
+            74.504495
+          ],
+          [
+            14.100908,
+            74.504575
+          ],
+          [
+            14.10077,
+            74.504583
+          ],
+          [
+            14.100767,
+            74.504484
+          ],
+          [
+            14.101272,
+            74.504449
+          ],
+          [
+            14.102196,
+            74.504385
+          ],
+          [
+            14.103374,
+            74.50428
+          ],
+          [
+            14.10351,
+            74.504269
+          ],
+          [
+            14.104293,
+            74.504203
+          ],
+          [
+            14.104959,
+            74.50412
+          ],
+          [
+            14.105578,
+            74.504039
+          ],
+          [
+            14.10584,
+            74.50398
+          ],
+          [
+            14.106043,
+            74.503926
+          ],
+          [
+            14.106631,
+            74.503787
+          ],
+          [
+            14.107729,
+            74.50357
+          ],
+          [
+            14.108722,
+            74.503372
+          ],
+          [
+            14.108645,
+            74.503215
+          ],
+          [
+            14.108375,
+            74.502787
+          ],
+          [
+            14.107775,
+            74.501703
+          ],
+          [
+            14.107608,
+            74.501424
+          ],
+          [
+            14.107296,
+            74.50136
+          ],
+          [
+            14.107047,
+            74.501059
+          ],
+          [
+            14.106818,
+            74.500716
+          ],
+          [
+            14.106702,
+            74.500453
+          ],
+          [
+            14.106648,
+            74.500329
+          ],
+          [
+            14.106476,
+            74.499938
+          ],
+          [
+            14.106308,
+            74.499557
+          ],
+          [
+            14.106236,
+            74.499392
+          ],
+          [
+            14.106171,
+            74.49916
+          ],
+          [
+            14.10612,
+            74.49898
+          ],
+          [
+            14.106048,
+            74.49872
+          ],
+          [
+            14.106013,
+            74.498525
+          ],
+          [
+            14.105942,
+            74.498128
+          ],
+          [
+            14.105874,
+            74.497747
+          ],
+          [
+            14.105796,
+            74.49734
+          ],
+          [
+            14.105717,
+            74.496931
+          ],
+          [
+            14.105667,
+            74.496673
+          ]
+        ]
+      },
+      "id": 23,
+      "created_at": "2026-11-20T13:53:42.700Z",
+      "updated_at": "2026-11-20T13:53:42.769Z"
     }
   ],
   "gps_locations": [
@@ -8990,25 +9608,26 @@
       "is_stale": 0,
       "timestamp": "2026-11-20T12:05:30.867+00:00",
       "created_at": "2026-11-20T12:06:16.015+00:00"
+    },
+    {
+      "trip_id": 23,
+      "bus_id": 1,
+      "latitude": 14.055,
+      "longitude": 74.515,
+      "speed": 44,
+      "heading": 170,
+      "accuracy": 4,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T13:53:42.756Z",
+      "id": 474,
+      "created_at": "2026-11-20T13:53:42.757Z"
     }
   ],
   "trip_stop_events": [
     {
-      "id": 66,
-      "trip_id": 21,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-20T12:05:47.548+00:00"
-    },
-    {
-      "id": 67,
-      "trip_id": 21,
+      "id": 71,
+      "trip_id": 22,
       "route_stop_id": 4,
       "pickup_point_id": 4,
       "scheduled_time": "08:25:00",
@@ -9017,349 +9636,11 @@
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-20T12:05:47.55+00:00"
+      "created_at": "2026-11-20T13:43:09.719+00:00"
     },
     {
-      "id": 1,
-      "trip_id": 7,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-05T07:30:00+00:00",
-      "actual_departure_time": "2026-11-05T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-05T07:30:00+00:00"
-    },
-    {
-      "id": 2,
-      "trip_id": 7,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": "2026-11-05T02:20:00+00:00",
-      "actual_departure_time": "2026-11-05T02:25:00+00:00",
-      "delay_minutes": 5,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-05T07:30:00+00:00"
-    },
-    {
-      "id": 3,
-      "trip_id": 7,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": "2026-11-05T02:30:00+00:00",
-      "actual_departure_time": "2026-11-05T02:30:00+00:00",
-      "delay_minutes": 5,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-05T07:30:00+00:00"
-    },
-    {
-      "id": 4,
-      "trip_id": 7,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-05T03:00:00+00:00",
-      "actual_departure_time": "2026-11-05T08:30:00+00:00",
-      "delay_minutes": 5,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-05T07:30:00+00:00"
-    },
-    {
-      "id": 5,
-      "trip_id": 6,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-06T07:30:00+00:00",
-      "actual_departure_time": "2026-11-06T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-06T07:30:00+00:00"
-    },
-    {
-      "id": 6,
-      "trip_id": 6,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": "2026-11-06T02:17:00+00:00",
-      "actual_departure_time": "2026-11-06T02:22:00+00:00",
-      "delay_minutes": 2,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-06T07:30:00+00:00"
-    },
-    {
-      "id": 7,
-      "trip_id": 6,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": "2026-11-06T02:27:00+00:00",
-      "actual_departure_time": "2026-11-06T02:30:00+00:00",
-      "delay_minutes": 2,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-06T07:30:00+00:00"
-    },
-    {
-      "id": 8,
-      "trip_id": 6,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-06T02:57:00+00:00",
-      "actual_departure_time": "2026-11-06T08:30:00+00:00",
-      "delay_minutes": 2,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-06T07:30:00+00:00"
-    },
-    {
-      "id": 9,
-      "trip_id": 5,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-07T07:30:00+00:00",
-      "actual_departure_time": "2026-11-07T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-07T07:30:00+00:00"
-    },
-    {
-      "id": 10,
-      "trip_id": 5,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "skipped",
-      "is_uncertain": 0,
-      "created_at": "2026-11-07T07:30:00+00:00"
-    },
-    {
-      "id": 11,
-      "trip_id": 5,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "skipped",
-      "is_uncertain": 0,
-      "created_at": "2026-11-07T07:30:00+00:00"
-    },
-    {
-      "id": 12,
-      "trip_id": 5,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-07T02:55:00+00:00",
-      "actual_departure_time": "2026-11-07T08:30:00+00:00",
-      "delay_minutes": 0,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-07T07:30:00+00:00"
-    },
-    {
-      "id": 13,
-      "trip_id": 3,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-09T07:30:00+00:00",
-      "actual_departure_time": "2026-11-09T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-09T07:30:00+00:00"
-    },
-    {
-      "id": 14,
-      "trip_id": 3,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": "2026-11-09T02:18:00+00:00",
-      "actual_departure_time": "2026-11-09T02:23:00+00:00",
-      "delay_minutes": 3,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-09T07:30:00+00:00"
-    },
-    {
-      "id": 15,
-      "trip_id": 3,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": "2026-11-09T02:28:00+00:00",
-      "actual_departure_time": "2026-11-09T02:30:00+00:00",
-      "delay_minutes": 3,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-09T07:30:00+00:00"
-    },
-    {
-      "id": 16,
-      "trip_id": 3,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-09T02:58:00+00:00",
-      "actual_departure_time": "2026-11-09T08:30:00+00:00",
-      "delay_minutes": 3,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-09T07:30:00+00:00"
-    },
-    {
-      "id": 17,
-      "trip_id": 2,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-10T07:30:00+00:00",
-      "actual_departure_time": "2026-11-10T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-10T07:30:00+00:00"
-    },
-    {
-      "id": 18,
-      "trip_id": 2,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": "2026-11-10T02:22:00+00:00",
-      "actual_departure_time": "2026-11-10T02:27:00+00:00",
-      "delay_minutes": 7,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-10T07:30:00+00:00"
-    },
-    {
-      "id": 19,
-      "trip_id": 2,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": "2026-11-10T02:32:00+00:00",
-      "actual_departure_time": "2026-11-10T02:30:00+00:00",
-      "delay_minutes": 7,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-10T07:30:00+00:00"
-    },
-    {
-      "id": 20,
-      "trip_id": 2,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-10T03:02:00+00:00",
-      "actual_departure_time": "2026-11-10T08:30:00+00:00",
-      "delay_minutes": 7,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-10T07:30:00+00:00"
-    },
-    {
-      "id": 21,
-      "trip_id": 1,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-11T07:30:00+00:00",
-      "actual_departure_time": "2026-11-11T07:35:00+00:00",
-      "delay_minutes": 0,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-11T07:30:00+00:00"
-    },
-    {
-      "id": 22,
-      "trip_id": 1,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": "2026-11-11T02:14:00+00:00",
-      "actual_departure_time": "2026-11-11T02:19:00+00:00",
-      "delay_minutes": -1,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-11T07:30:00+00:00"
-    },
-    {
-      "id": 23,
-      "trip_id": 1,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": "2026-11-11T02:24:00+00:00",
-      "actual_departure_time": "2026-11-11T02:30:00+00:00",
-      "delay_minutes": -1,
-      "status": "departed",
-      "is_uncertain": 0,
-      "created_at": "2026-11-11T07:30:00+00:00"
-    },
-    {
-      "id": 24,
-      "trip_id": 1,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": "2026-11-11T02:54:00+00:00",
-      "actual_departure_time": "2026-11-11T08:30:00+00:00",
-      "delay_minutes": -1,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-11T07:30:00+00:00"
-    },
-    {
-      "id": 25,
-      "trip_id": 8,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-12T15:56:04.562+00:00",
-      "actual_departure_time": null,
-      "delay_minutes": 60,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:04.546+00:00"
-    },
-    {
-      "id": 26,
-      "trip_id": 8,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:04.547+00:00"
-    },
-    {
-      "id": 27,
-      "trip_id": 8,
+      "id": 70,
+      "trip_id": 22,
       "route_stop_id": 3,
       "pickup_point_id": 2,
       "scheduled_time": "07:55:00",
@@ -9368,410 +9649,59 @@
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:04.549+00:00"
+      "created_at": "2026-11-20T13:43:09.71+00:00"
     },
     {
-      "id": 28,
-      "trip_id": 8,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
+      "id": 69,
+      "trip_id": 22,
+      "route_stop_id": 2,
+      "pickup_point_id": 3,
+      "scheduled_time": "07:45:00",
       "actual_arrival_time": null,
       "actual_departure_time": null,
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:04.552+00:00"
+      "created_at": "2026-11-20T13:43:09.704+00:00"
     },
     {
-      "id": 29,
-      "trip_id": 9,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
+      "trip_id": 23,
+      "route_stop_id": 9,
+      "pickup_point_id": 10,
       "scheduled_time": "07:30:00",
       "actual_arrival_time": null,
       "actual_departure_time": null,
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:06.645+00:00"
+      "id": 72,
+      "created_at": "2026-11-20T13:53:42.708Z"
     },
     {
-      "id": 30,
-      "trip_id": 9,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
+      "trip_id": 23,
+      "route_stop_id": 10,
+      "pickup_point_id": 12,
+      "scheduled_time": "07:50:00",
       "actual_arrival_time": null,
       "actual_departure_time": null,
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:06.647+00:00"
+      "id": 73,
+      "created_at": "2026-11-20T13:53:42.715Z"
     },
     {
-      "id": 31,
-      "trip_id": 9,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
+      "trip_id": 23,
+      "route_stop_id": 11,
+      "pickup_point_id": 13,
+      "scheduled_time": "08:15:00",
       "actual_arrival_time": null,
       "actual_departure_time": null,
       "delay_minutes": 0,
       "status": "scheduled",
       "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:06.649+00:00"
-    },
-    {
-      "id": 32,
-      "trip_id": 9,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T15:56:06.65+00:00"
-    },
-    {
-      "id": 33,
-      "trip_id": 10,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": "2026-11-12T17:26:44.619+00:00",
-      "actual_departure_time": null,
-      "delay_minutes": 60,
-      "status": "arrived",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:44.604+00:00"
-    },
-    {
-      "id": 34,
-      "trip_id": 10,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:44.605+00:00"
-    },
-    {
-      "id": 35,
-      "trip_id": 10,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:44.607+00:00"
-    },
-    {
-      "id": 36,
-      "trip_id": 10,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:44.608+00:00"
-    },
-    {
-      "id": 37,
-      "trip_id": 11,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:54.486+00:00"
-    },
-    {
-      "id": 38,
-      "trip_id": 11,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:54.487+00:00"
-    },
-    {
-      "id": 39,
-      "trip_id": 11,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:54.489+00:00"
-    },
-    {
-      "id": 40,
-      "trip_id": 11,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T17:26:54.491+00:00"
-    },
-    {
-      "id": 41,
-      "trip_id": 12,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T18:43:24.681+00:00"
-    },
-    {
-      "id": 42,
-      "trip_id": 12,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T18:43:24.682+00:00"
-    },
-    {
-      "id": 43,
-      "trip_id": 12,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T18:43:24.692+00:00"
-    },
-    {
-      "id": 44,
-      "trip_id": 12,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-12T18:43:24.693+00:00"
-    },
-    {
-      "id": 48,
-      "trip_id": 13,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-13T10:08:46.122+00:00"
-    },
-    {
-      "id": 45,
-      "trip_id": 13,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-13T10:08:46.119+00:00"
-    },
-    {
-      "id": 47,
-      "trip_id": 13,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-13T10:08:46.121+00:00"
-    },
-    {
-      "id": 46,
-      "trip_id": 13,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-13T10:08:46.12+00:00"
-    },
-    {
-      "id": 51,
-      "trip_id": 15,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-14T03:39:48.351+00:00"
-    },
-    {
-      "id": 50,
-      "trip_id": 15,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-14T03:39:48.351+00:00"
-    },
-    {
-      "id": 55,
-      "trip_id": 16,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-14T03:56:17.295+00:00"
-    },
-    {
-      "id": 53,
-      "trip_id": 16,
-      "route_stop_id": 1,
-      "pickup_point_id": 1,
-      "scheduled_time": "07:30:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-14T03:56:17.291+00:00"
-    },
-    {
-      "id": 54,
-      "trip_id": 16,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-14T03:56:17.293+00:00"
-    },
-    {
-      "id": 59,
-      "trip_id": 19,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-15T03:16:34.558+00:00"
-    },
-    {
-      "id": 58,
-      "trip_id": 19,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-15T03:16:34.556+00:00"
-    },
-    {
-      "id": 62,
-      "trip_id": 20,
-      "route_stop_id": 3,
-      "pickup_point_id": 2,
-      "scheduled_time": "07:55:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-15T05:43:50.712+00:00"
-    },
-    {
-      "id": 61,
-      "trip_id": 20,
-      "route_stop_id": 2,
-      "pickup_point_id": 3,
-      "scheduled_time": "07:45:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-15T05:43:50.709+00:00"
-    },
-    {
-      "id": 63,
-      "trip_id": 20,
-      "route_stop_id": 4,
-      "pickup_point_id": 4,
-      "scheduled_time": "08:25:00",
-      "actual_arrival_time": null,
-      "actual_departure_time": null,
-      "delay_minutes": 0,
-      "status": "scheduled",
-      "is_uncertain": 0,
-      "created_at": "2026-11-15T05:43:50.715+00:00"
+      "id": 74,
+      "created_at": "2026-11-20T13:53:42.723Z"
     }
   ],
   "delay_events": [],

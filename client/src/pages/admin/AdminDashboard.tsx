@@ -176,6 +176,7 @@ export const AdminDashboard: React.FC = () => {
   const [showRouteBuilder, setShowRouteBuilder] = useState<boolean>(false);
   const [builderRouteId, setBuilderRouteId] = useState<number | null>(null);
   const [builderRouteName, setBuilderRouteName] = useState<string>('');
+  const [builderBusId, setBuilderBusId] = useState<number | ''>('');
   const [builderStartPoint, setBuilderStartPoint] = useState<string>('');
   const [builderDestination, setBuilderDestination] = useState<string>('');
   const [builderOperatingDays, setBuilderOperatingDays] = useState<string>('Monday,Tuesday,Wednesday,Thursday,Friday,Saturday');
@@ -185,6 +186,11 @@ export const AdminDashboard: React.FC = () => {
   const [builderRoadGeometry, setBuilderRoadGeometry] = useState<[number, number][] | null>(null);
   const [isCalculatingRoute, setIsCalculatingRoute] = useState<boolean>(false);
   const [selectedAddStopId, setSelectedAddStopId] = useState<number | ''>('');
+  const [showMapPickerInBuilder, setShowMapPickerInBuilder] = useState<boolean>(false);
+  const [builderMapLat, setBuilderMapLat] = useState<number>(14.04);
+  const [builderMapLng, setBuilderMapLng] = useState<number>(74.52);
+  const [builderMapName, setBuilderMapName] = useState<string>('');
+  const [builderMapAddress, setBuilderMapAddress] = useState<string>('');
 
   // ================= SUPABASE SYNC STATE =================
   const [supabaseStatus, setSupabaseStatus] = useState<any>(null);
@@ -657,12 +663,16 @@ export const AdminDashboard: React.FC = () => {
   const openCreateRouteBuilder = () => {
     setBuilderRouteId(null);
     setBuilderRouteName('');
+    setBuilderBusId('');
     setBuilderStartPoint(pickupPoints[0]?.name || '');
     setBuilderDestination(pickupPoints[pickupPoints.length - 1]?.name || 'College Main Gate');
     setBuilderOperatingDays('Monday,Tuesday,Wednesday,Thursday,Friday,Saturday');
     setBuilderDistanceKm(28);
     setBuilderDurationMins(50);
     setBuilderRoadGeometry(null);
+    setShowMapPickerInBuilder(false);
+    setBuilderMapName('');
+    setBuilderMapAddress('');
 
     // Initialize with 2 default stops if available
     if (pickupPoints.length >= 2) {
@@ -707,6 +717,12 @@ export const AdminDashboard: React.FC = () => {
     setBuilderDistanceKm(route.total_distance_km);
     setBuilderDurationMins(route.estimated_duration_mins);
     setBuilderRoadGeometry(route.road_geometry || null);
+    setShowMapPickerInBuilder(false);
+    setBuilderMapName('');
+    setBuilderMapAddress('');
+
+    const linkedBus = buses.find((b) => Number(b.assigned_route_id) === Number(route.id));
+    setBuilderBusId(linkedBus ? linkedBus.id : '');
 
     const ordered = (route.stops || []).map((s) => ({
       pickup_point_id: s.pickup_point_id,
@@ -727,11 +743,11 @@ export const AdminDashboard: React.FC = () => {
 
   const handleAddStopToBuilder = () => {
     if (!selectedAddStopId) return;
-    const point = pickupPoints.find((p) => p.id === Number(selectedAddStopId));
+    const point = pickupPoints.find((p) => Number(p.id) === Number(selectedAddStopId));
     if (!point) return;
 
     // Check if already in stops
-    if (builderStops.some((s) => s.pickup_point_id === point.id)) {
+    if (builderStops.some((s) => Number(s.pickup_point_id) === Number(point.id))) {
       showToast('error', `Stop "${point.name}" is already in this route sequence.`);
       return;
     }
@@ -765,6 +781,67 @@ export const AdminDashboard: React.FC = () => {
     setBuilderStops(updated);
     setSelectedAddStopId('');
     recalculateRoadPath(updated);
+  };
+
+  const handleAddCustomPinToBuilder = async () => {
+    if (!builderMapName.trim()) {
+      showToast('error', 'Please enter a name for the new stop');
+      return;
+    }
+    const lat = Number(builderMapLat);
+    const lng = Number(builderMapLng);
+    if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+      showToast('error', 'Please select a valid location on the map');
+      return;
+    }
+
+    try {
+      const newPoint = await api.pickupPoints.create({
+        name: builderMapName.trim(),
+        latitude: lat,
+        longitude: lng,
+        address: builderMapAddress || '',
+        landmark: builderMapAddress ? builderMapAddress.slice(0, 50) : '',
+      });
+
+      setPickupPoints((prev) => [...prev, newPoint]);
+
+      const lastStop = builderStops[builderStops.length - 1];
+      let defaultArrival = '08:00:00';
+      let defaultDeparture = '08:05:00';
+      if (lastStop && lastStop.scheduled_departure_time) {
+        const parts = lastStop.scheduled_departure_time.split(':');
+        const h = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) + 15;
+        const newH = h + Math.floor(m / 60);
+        const newM = m % 60;
+        defaultArrival = `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}:00`;
+        defaultDeparture = `${String(newH).padStart(2, '0')}:${String(newM + 5).padStart(2, '0')}:00`;
+      }
+
+      const updated: BuilderStopItem[] = [
+        ...builderStops,
+        {
+          pickup_point_id: newPoint.id,
+          stop_name: newPoint.name,
+          landmark: newPoint.landmark || '',
+          latitude: newPoint.latitude,
+          longitude: newPoint.longitude,
+          scheduled_arrival_time: defaultArrival,
+          scheduled_departure_time: defaultDeparture,
+          distance_from_prev_km: 10.0,
+        },
+      ];
+
+      setBuilderStops(updated);
+      setBuilderMapName('');
+      setBuilderMapAddress('');
+      setShowMapPickerInBuilder(false);
+      recalculateRoadPath(updated);
+      showToast('success', `Added "${newPoint.name}" to route sequence!`);
+    } catch (e: any) {
+      showToast('error', `Failed adding stop: ${e.message}`);
+    }
   };
 
   const handleMoveStopUp = (index: number) => {
@@ -821,6 +898,7 @@ export const AdminDashboard: React.FC = () => {
       estimated_duration_mins: Number(builderDurationMins) || 45,
       road_geometry: builderRoadGeometry,
       stops: payloadStops,
+      bus_id: builderBusId ? Number(builderBusId) : undefined,
     };
 
     try {
@@ -3172,7 +3250,7 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="overflow-y-auto pr-1 flex-1 py-4 space-y-6">
               {/* Route General Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                 <div>
                   <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Route Name</label>
                   <input
@@ -3183,6 +3261,21 @@ export const AdminDashboard: React.FC = () => {
                     placeholder="e.g. Murdeshwar – Shirali – College"
                     className="w-full p-2.5 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-bold text-brand-navy"
                   />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Assign to Bus (Fleet Link)</label>
+                  <select
+                    value={builderBusId}
+                    onChange={(e) => setBuilderBusId(e.target.value ? Number(e.target.value) : '')}
+                    className="w-full p-2.5 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-bold text-brand-navy"
+                  >
+                    <option value="">-- No Bus Linked (Optional) --</option>
+                    {buses.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.bus_number} — {b.bus_name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Starting Point</label>
@@ -3206,17 +3299,42 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Add Stop Controls */}
-              <div className="p-4 bg-brand-cream/50 border border-brand-primary/40 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex-1">
-                  <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">
-                    Select Pickup Stop to Add:
-                  </label>
+              {/* Add Stop Controls (Master Stops List + Interactive Map Location Picker) */}
+              <div className="p-4 bg-brand-cream/50 border border-brand-primary/40 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowMapPickerInBuilder(false)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        !showMapPickerInBuilder
+                          ? 'bg-brand-navy text-white shadow-sm'
+                          : 'bg-brand-secondary/60 text-brand-navy hover:bg-brand-primary/40'
+                      }`}
+                    >
+                      Choose from Master Stops
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowMapPickerInBuilder(true)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                        showMapPickerInBuilder
+                          ? 'bg-brand-navy text-white shadow-sm'
+                          : 'bg-brand-secondary/60 text-brand-navy hover:bg-brand-primary/40'
+                      }`}
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>📍 Pick on Interactive Map / Search</span>
+                    </button>
+                  </div>
+                </div>
+
+                {!showMapPickerInBuilder ? (
                   <div className="flex items-center gap-2">
                     <select
                       value={selectedAddStopId}
                       onChange={(e) => setSelectedAddStopId(e.target.value ? Number(e.target.value) : '')}
-                      className="flex-1 p-2 text-xs bg-white border border-brand-primary/60 rounded-xl"
+                      className="flex-1 p-2.5 text-xs bg-white border border-brand-primary/60 rounded-xl"
                     >
                       <option value="">-- Choose from Master Pickup Points --</option>
                       {pickupPoints.map((p) => (
@@ -3229,12 +3347,79 @@ export const AdminDashboard: React.FC = () => {
                       type="button"
                       onClick={handleAddStopToBuilder}
                       disabled={!selectedAddStopId}
-                      className="px-3.5 py-2 bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50 whitespace-nowrap"
+                      className="px-4 py-2.5 bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50 whitespace-nowrap"
                     >
                       + Add Stop to Route
                     </button>
                   </div>
-                </div>
+                ) : (
+                  <div className="space-y-3 pt-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-brand-navy">
+                        Search address or click & drag pin on the interactive map:
+                      </span>
+                      <span className="font-mono text-[11px] text-brand-accent bg-white px-2 py-0.5 rounded border border-brand-primary/40">
+                        Lat: {builderMapLat.toFixed(5)}, Lng: {builderMapLng.toFixed(5)}
+                      </span>
+                    </div>
+
+                    <MapLocationPicker
+                      latitude={builderMapLat}
+                      longitude={builderMapLng}
+                      address={builderMapAddress}
+                      onChange={(lat, lng, addr) => {
+                        setBuilderMapLat(lat);
+                        setBuilderMapLng(lng);
+                        if (addr) {
+                          setBuilderMapAddress(addr);
+                          if (!builderMapName) {
+                            const shortName = addr.split(',')[0];
+                            setBuilderMapName(shortName);
+                          }
+                        }
+                      }}
+                      className="h-[220px]"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                      <div>
+                        <label className="block text-[10px] font-bold text-brand-navy uppercase mb-1">
+                          Stop / Landmark Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Shirali Cross / Noor Masjid"
+                          value={builderMapName}
+                          onChange={(e) => setBuilderMapName(e.target.value)}
+                          className="w-full p-2 text-xs bg-white border border-brand-primary/60 rounded-xl font-bold text-brand-navy"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold text-brand-navy uppercase mb-1">
+                          Address / Landmark Details
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Near NH 66 Circle"
+                          value={builderMapAddress}
+                          onChange={(e) => setBuilderMapAddress(e.target.value)}
+                          className="w-full p-2 text-xs bg-white border border-brand-primary/60 rounded-xl text-brand-navy"
+                        />
+                      </div>
+                      <div className="flex items-end">
+                        <button
+                          type="button"
+                          onClick={handleAddCustomPinToBuilder}
+                          className="w-full py-2 px-3 bg-brand-navy hover:bg-brand-navy/90 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>+ Add Map Pin as Route Stop</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Ordered Stops Sequence Table with Move Up / Move Down */}

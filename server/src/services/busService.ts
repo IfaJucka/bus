@@ -74,9 +74,9 @@ export class BusService {
     });
   }
 
-  public static async getBusById(id: number): Promise<BusRecord | null> {
-    const all = await this.getAllBuses();
-    return all.find((b) => b.id === id) || null;
+  public static async getBusById(id: number, includeInactive: boolean = true): Promise<BusRecord | null> {
+    const all = await this.getAllBuses(includeInactive);
+    return all.find((b) => Number(b.id) === Number(id)) || null;
   }
 
   public static async createBus(data: {
