@@ -53,4 +53,17 @@ router.get('/weekly-summary', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/history/day-route
+router.get('/day-route', async (req: Request, res: Response) => {
+  try {
+    const busId = parseInt((req.query.busId as string) || '1', 10);
+    const date = (req.query.date as string) || new Date().toISOString().split('T')[0];
+
+    const result = await HistoryService.getDayRoute(busId, date);
+    res.json({ success: true, ...result });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 export default router;

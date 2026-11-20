@@ -80,7 +80,7 @@ router.post('/preferences', async (req: Request, res: Response) => {
       return;
     }
 
-    const record = {
+    const record: any = {
       user_id: userId ? parseInt(userId, 10) : null,
       student_identifier: studentIdentifier,
       bus_id: busId ? parseInt(busId, 10) : null,
@@ -120,7 +120,8 @@ router.post('/preferences', async (req: Request, res: Response) => {
       const table = db.getTable('student_pickup_preferences');
       const idx = table.findIndex((p) => p.student_identifier === studentIdentifier);
       if (idx !== -1) {
-        table[idx] = { ...table[idx], ...record };
+        record.id = table[idx].id;
+        db.updateRecord('student_pickup_preferences', table[idx].id, record);
       } else {
         db.insertRecord('student_pickup_preferences', record);
       }

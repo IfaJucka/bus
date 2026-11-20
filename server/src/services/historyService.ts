@@ -225,6 +225,107 @@ export class HistoryService {
 
     return { rows, stats };
   }
+
+  /**
+   * Get historical route and GPS waypoints for a specific bus and single date
+   */
+  public static async getDayRoute(busId: number, dateStr: string): Promise<{
+    hasTrip: boolean;
+    isHoliday: boolean;
+    isNoTrip: boolean;
+    isMissingGps: boolean;
+    statusText: string;
+    message: string;
+    trip?: any;
+    routePath?: Array<{ lat: number; lng: number; speed: number; timestamp: string; stopName?: string }>;
+    stops?: any[];
+  }> {
+    const inputDate = new Date(dateStr);
+    const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][inputDate.getDay()];
+
+    if (dayOfWeek === 'Sunday') {
+      return {
+        hasTrip: false,
+        isHoliday: true,
+        isNoTrip: false,
+        isMissingGps: false,
+        statusText: 'College Holiday',
+        message: 'College Holiday – No bus service.',
+      };
+    }
+
+    let trip: any = null;
+    let locations: any[] = [];
+    let stops: any[] = [];
+
+    if (db.mode === 'mysql' && db.getPool()) {
+      const trips: any = await db.query('SELECT * FROM trips WHERE bus_id = ? AND trip_date = ? LIMIT 1', [busId, dateStr]);
+      if (trips && trips.length > 0) {
+        trip = trips[0];
+        locations = await db.query('SELECT * FROM gps_locations WHERE trip_id = ? ORDER BY timestamp ASC', [trip.id]);
+        stops = await db.query('SELECT tse.*, pp.name as stop_name FROM trip_stop_events tse JOIN pickup_points pp ON tse.pickup_point_id = pp.id WHERE tse.trip_id = ? ORDER BY tse.id ASC', [trip.id]);
+      }
+    } else {
+      const allTrips = db.getTable<any>('trips');
+      trip = allTrips.find((t) => t.bus_id === busId && t.trip_date === dateStr);
+      if (trip) {
+        const allGps = db.getTable<any>('gps_locations');
+        locations = allGps.filter((g) => g.trip_id === trip.id).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        const allEvents = db.getTable<any>('trip_stop_events');
+        const points = db.getTable<any>('pickup_points');
+        stops = allEvents
+          .filter((e) => e.trip_id === trip.id)
+          .map((e) => {
+            const pt = points.find((p) => p.id === e.pickup_point_id);
+            return { ...e, stop_name: pt?.name || 'Stop' };
+          });
+      }
+    }
+
+    if (!trip) {
+      return {
+        hasTrip: false,
+        isHoliday: false,
+        isNoTrip: true,
+        isMissingGps: false,
+        statusText: 'No Bus Trip Recorded',
+        message: 'No bus trip was recorded on this day.',
+      };
+    }
+
+    if (locations.length === 0) {
+      return {
+        hasTrip: true,
+        isHoliday: false,
+        isNoTrip: false,
+        isMissingGps: true,
+        statusText: 'Missing GPS Data',
+        message: 'Missing GPS telemetry data for this trip. The bus operated on schedule, but location streaming was unavailable.',
+        trip,
+        stops,
+      };
+    }
+
+    const routePath = locations.map((loc) => ({
+      lat: Number(loc.latitude),
+      lng: Number(loc.longitude),
+      speed: Number(loc.speed || 0),
+      timestamp: loc.timestamp,
+      stopName: loc.stop_name || undefined,
+    }));
+
+    return {
+      hasTrip: true,
+      isHoliday: false,
+      isNoTrip: false,
+      isMissingGps: false,
+      statusText: 'Trip Completed',
+      message: `Bus journey completed with ${routePath.length} recorded telemetry checkpoints.`,
+      trip,
+      routePath,
+      stops,
+    };
+  }
 }
 
 function formatTimeAMPM(time24: string): string {

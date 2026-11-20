@@ -17,20 +17,28 @@ import { useAuth } from '../../context/AuthContext';
 export const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user, isAuthenticated, login, logout } = useAuth();
+  const { user, isAuthenticated, login, register, logout } = useAuth();
 
   const urlPortal = (searchParams.get('portal') as 'student' | 'driver' | 'admin') || 'student';
   const [activePortal, setActivePortal] = useState<'student' | 'driver' | 'admin'>(urlPortal);
 
   // Form states for each separate portal
-  const [studentUsername, setStudentUsername] = useState<string>('student1');
-  const [studentPassword, setStudentPassword] = useState<string>('student123');
+  const [studentUsername, setStudentUsername] = useState<string>('Student');
+  const [studentPassword, setStudentPassword] = useState<string>('Student123');
 
-  const [driverUsername, setDriverUsername] = useState<string>('driver1');
-  const [driverPassword, setDriverPassword] = useState<string>('driver123');
+  // Student Registration mode
+  const [isStudentRegister, setIsStudentRegister] = useState<boolean>(false);
+  const [regFullName, setRegFullName] = useState<string>('');
+  const [regStudentId, setRegStudentId] = useState<string>('');
+  const [regPhone, setRegPhone] = useState<string>('');
+  const [regEmail, setRegEmail] = useState<string>('');
+  const [regStopId, setRegStopId] = useState<number>(2);
 
-  const [adminUsername, setAdminUsername] = useState<string>('admin');
-  const [adminPassword, setAdminPassword] = useState<string>('admin123');
+  const [driverUsername, setDriverUsername] = useState<string>('Driver');
+  const [driverPassword, setDriverPassword] = useState<string>('Driver786');
+
+  const [adminUsername, setAdminUsername] = useState<string>('Administrator');
+  const [adminPassword, setAdminPassword] = useState<string>('Hello@123');
 
   // Loading & error states
   const [loadingPortal, setLoadingPortal] = useState<'student' | 'driver' | 'admin' | null>(null);
@@ -83,6 +91,31 @@ export const LoginPage: React.FC = () => {
     }
   };
 
+  const handleStudentRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorPortal(null);
+    setLoadingPortal('student');
+
+    const res = await register({
+      username: studentUsername,
+      password: studentPassword,
+      fullName: regFullName,
+      studentId: regStudentId,
+      phone: regPhone,
+      email: regEmail,
+      preferredBusId: 1,
+      preferredPickupPointId: regStopId,
+    });
+
+    setLoadingPortal(null);
+    if (!res.success) {
+      setErrorPortal({ portal: 'student', message: res.error || 'Registration failed' });
+      return;
+    }
+
+    navigate('/');
+  };
+
   const getDashboardPath = (role?: string) => {
     if (role === 'admin') return '/admin';
     if (role === 'driver') return '/driver';
@@ -93,6 +126,11 @@ export const LoginPage: React.FC = () => {
     <div className="max-w-6xl mx-auto py-6 sm:py-10 px-4 animate-fadeIn">
       {/* Header Banner */}
       <div className="text-center mb-8 sm:mb-12">
+        <img
+          src="/college-logo.png"
+          alt="Anjuman Institute of Technology & Management"
+          className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto mb-3 drop-shadow-sm"
+        />
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-secondary/70 border border-brand-primary/60 rounded-full text-xs font-bold text-brand-navy mb-3">
           <Shield className="w-3.5 h-3.5 text-brand-accent" />
           <span>Role-Based Authentication & Fleet Security</span>
@@ -167,71 +205,191 @@ export const LoginPage: React.FC = () => {
             Live bus map, pickup stops, arrival ETAs, delay alerts & complaint lodging.
           </p>
 
+          {/* Sign In vs Register Toggle */}
+          <div className="flex rounded-xl bg-brand-cream/80 p-1 border border-brand-primary/40 mt-3 mb-2">
+            <button
+              type="button"
+              onClick={() => setIsStudentRegister(false)}
+              className={`flex-1 py-1 text-[11px] font-bold rounded-lg transition-all ${
+                !isStudentRegister
+                  ? 'bg-white text-brand-navy shadow-sm'
+                  : 'text-brand-gray hover:text-brand-navy'
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsStudentRegister(true)}
+              className={`flex-1 py-1 text-[11px] font-bold rounded-lg transition-all ${
+                isStudentRegister
+                  ? 'bg-white text-brand-navy shadow-sm'
+                  : 'text-brand-gray hover:text-brand-navy'
+              }`}
+            >
+              New Registration
+            </button>
+          </div>
+
           {/* Error inside this card */}
           {errorPortal?.portal === 'student' && (
-            <div className="mt-3 p-2.5 bg-red-50 border border-red-200 rounded-xl text-[11px] text-red-700 flex items-start gap-1.5 animate-fadeIn">
+            <div className="mt-2 p-2.5 bg-red-50 border border-red-200 rounded-xl text-[11px] text-red-700 flex items-start gap-1.5 animate-fadeIn">
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <span>{errorPortal.message}</span>
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={(e) => handlePortalLogin('student', e)} className="mt-5 space-y-3.5 flex-1 flex flex-col justify-end">
-            <div>
-              <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase tracking-wider">
-                Student Username
-              </label>
-              <div className="relative">
-                <UserIcon className="w-4 h-4 text-brand-gray absolute left-3 top-3" />
+          {!isStudentRegister ? (
+            <form onSubmit={(e) => handlePortalLogin('student', e)} className="mt-4 space-y-3.5 flex-1 flex flex-col justify-end">
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase tracking-wider">
+                  Student Username
+                </label>
+                <div className="relative">
+                  <UserIcon className="w-4 h-4 text-brand-gray absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    required
+                    value={studentUsername}
+                    onChange={(e) => setStudentUsername(e.target.value)}
+                    placeholder="e.g. Student"
+                    className="w-full pl-9 pr-3 py-2 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy placeholder-brand-gray/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase tracking-wider">
+                  Password
+                </label>
+                <div className="relative">
+                  <KeyRound className="w-4 h-4 text-brand-gray absolute left-3 top-3" />
+                  <input
+                    type="password"
+                    required
+                    value={studentPassword}
+                    onChange={(e) => setStudentPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full pl-9 pr-3 py-2 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy placeholder-brand-gray/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
+              </div>
+
+              {/* Quick Demo Hint */}
+              <div className="p-2 bg-brand-cream/60 rounded-lg text-[10px] text-brand-gray flex items-center justify-between">
+                <span>Demo login:</span>
+                <span className="font-mono font-bold text-brand-navy">Student / Student123</span>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loadingPortal === 'student'}
+                className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white transition-all shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
+              >
+                {loadingPortal === 'student' ? (
+                  <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-brand-navy"></span>
+                ) : (
+                  <>
+                    <span>Sign In as Student</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleStudentRegister} className="mt-3 space-y-2.5 flex-1 flex flex-col justify-end">
+              <div>
+                <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">Full Name</label>
                 <input
                   type="text"
                   required
-                  value={studentUsername}
-                  onChange={(e) => setStudentUsername(e.target.value)}
-                  placeholder="e.g. student1"
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy placeholder-brand-gray/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  value={regFullName}
+                  onChange={(e) => setRegFullName(e.target.value)}
+                  placeholder="e.g. Mohammed Zaid"
+                  className="w-full px-3 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
                 />
               </div>
-            </div>
 
-            <div>
-              <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase tracking-wider">
-                Password
-              </label>
-              <div className="relative">
-                <KeyRound className="w-4 h-4 text-brand-gray absolute left-3 top-3" />
-                <input
-                  type="password"
-                  required
-                  value={studentPassword}
-                  onChange={(e) => setStudentPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy placeholder-brand-gray/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
-                />
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">USN / Student ID</label>
+                  <input
+                    type="text"
+                    required
+                    value={regStudentId}
+                    onChange={(e) => setRegStudentId(e.target.value)}
+                    placeholder="e.g. 4AI24CS045"
+                    className="w-full px-2.5 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">Phone</label>
+                  <input
+                    type="tel"
+                    value={regPhone}
+                    onChange={(e) => setRegPhone(e.target.value)}
+                    placeholder="+91 99000 00000"
+                    className="w-full px-2.5 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Quick Demo Hint */}
-            <div className="p-2 bg-brand-cream/60 rounded-lg text-[10px] text-brand-gray flex items-center justify-between">
-              <span>Demo login:</span>
-              <span className="font-mono font-bold text-brand-navy">student1 / student123</span>
-            </div>
+              <div>
+                <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">Preferred Pickup Stop</label>
+                <select
+                  value={regStopId}
+                  onChange={(e) => setRegStopId(Number(e.target.value))}
+                  className="w-full px-2.5 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent font-medium"
+                >
+                  <option value={1}>Murdeshwar Bus Stand (07:30 AM)</option>
+                  <option value={3}>Shirali Bus Stop (07:45 AM)</option>
+                  <option value={2}>Bhatkal Bus Stand (07:55 AM)</option>
+                  <option value={4}>College Main Gate (08:25 AM)</option>
+                </select>
+              </div>
 
-            <button
-              type="submit"
-              disabled={loadingPortal === 'student'}
-              className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white transition-all shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
-            >
-              {loadingPortal === 'student' ? (
-                <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-brand-navy"></span>
-              ) : (
-                <>
-                  <span>Sign In as Student</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </>
-              )}
-            </button>
-          </form>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">Username</label>
+                  <input
+                    type="text"
+                    required
+                    value={studentUsername}
+                    onChange={(e) => setStudentUsername(e.target.value)}
+                    placeholder="Choose username"
+                    className="w-full px-2.5 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-brand-navy mb-0.5 uppercase tracking-wider">Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={studentPassword}
+                    onChange={(e) => setStudentPassword(e.target.value)}
+                    placeholder="Create password"
+                    className="w-full px-2.5 py-1.5 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loadingPortal === 'student'}
+                className="w-full py-2.5 px-4 mt-1 rounded-xl text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white transition-all shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
+              >
+                {loadingPortal === 'student' ? (
+                  <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-brand-navy"></span>
+                ) : (
+                  <>
+                    <span>Create Account & Sign In</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </form>
+          )}
         </div>
 
         {/* CARD 2: DRIVER LOGIN */}
@@ -305,7 +463,7 @@ export const LoginPage: React.FC = () => {
             {/* Quick Demo Hint */}
             <div className="p-2 bg-emerald-50/70 border border-emerald-100 rounded-lg text-[10px] text-emerald-800 flex items-center justify-between">
               <span>Demo login:</span>
-              <span className="font-mono font-bold">driver1 / driver123</span>
+              <span className="font-mono font-bold">Driver / Driver786</span>
             </div>
 
             <button
@@ -370,7 +528,7 @@ export const LoginPage: React.FC = () => {
                   required
                   value={adminUsername}
                   onChange={(e) => setAdminUsername(e.target.value)}
-                  placeholder="e.g. admin"
+                  placeholder="e.g. Administrator"
                   className="w-full pl-9 pr-3 py-2 text-xs bg-brand-cream/40 border border-brand-primary/60 rounded-xl text-brand-navy placeholder-brand-gray/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-navy"
                 />
               </div>
@@ -396,7 +554,7 @@ export const LoginPage: React.FC = () => {
             {/* Quick Demo Hint */}
             <div className="p-2 bg-brand-navy/5 rounded-lg text-[10px] text-brand-navy flex items-center justify-between">
               <span>Demo login:</span>
-              <span className="font-mono font-bold">admin / admin123</span>
+              <span className="font-mono font-bold">Administrator / Hello@123</span>
             </div>
 
             <button

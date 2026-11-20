@@ -18,6 +18,18 @@ import { api } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { Bus, Route } from '../../types';
 
+// Helper: Haversine distance in kilometers for accurate GPS speed calculation
+function calculateHaversineDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
 export const DriverDashboard: React.FC = () => {
   const { user } = useAuth();
   const [buses, setBuses] = useState<Bus[]>([]);
@@ -44,8 +56,9 @@ export const DriverDashboard: React.FC = () => {
   const demoIntervalRef = useRef<any>(null);
   const demoStepRef = useRef<number>(0);
 
-  // Geolocation Watch ID
+  // Geolocation Watch ID & Previous Position Ref for accurate speed computation
   const watchIdRef = useRef<number | null>(null);
+  const lastPositionRef = useRef<{ lat: number; lng: number; timestamp: number } | null>(null);
 
   // Delay Modal State
   const [showDelayModal, setShowDelayModal] = useState<boolean>(false);
@@ -256,12 +269,27 @@ export const DriverDashboard: React.FC = () => {
     const onPosSuccess = (pos: GeolocationPosition) => {
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
-      // Real speed: only report positive speed if device provides it, otherwise 0 km/h (no fake 35km/h)
-      const speedKmh = pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed > 0
-        ? Math.round(pos.coords.speed * 3.6)
-        : 0;
-      const heading = Math.round(pos.coords.heading || 0);
       const accuracy = Math.round(pos.coords.accuracy || 5);
+      const heading = Math.round(pos.coords.heading || 0);
+
+      // Real GPS Speed: use hardware speed if valid, otherwise calculate from successive positions and timestamps
+      let speedKmh = 0;
+      if (pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed >= 0) {
+        speedKmh = Math.round(pos.coords.speed * 3.6);
+      } else if (lastPositionRef.current) {
+        const prev = lastPositionRef.current;
+        const timeDiffSec = (pos.timestamp - prev.timestamp) / 1000;
+        if (timeDiffSec >= 1 && timeDiffSec <= 30) {
+          const distKm = calculateHaversineDistanceKm(prev.lat, prev.lng, lat, lng);
+          const computed = Math.round(distKm / (timeDiffSec / 3600));
+          if (distKm * 1000 < 3) {
+            speedKmh = 0; // Stationary jitter filter
+          } else {
+            speedKmh = Math.min(Math.max(computed, 0), 100);
+          }
+        }
+      }
+      lastPositionRef.current = { lat, lng, timestamp: pos.timestamp };
 
       setCurrentCoords({ lat, lng });
       setCurrentSpeed(speedKmh);
@@ -269,7 +297,12 @@ export const DriverDashboard: React.FC = () => {
       setCurrentAccuracy(accuracy);
       setLastUpdateTime(new Date().toLocaleTimeString());
       setGpsStatus('active');
-      setGpsErrorMsg(null);
+
+      if (accuracy > 50) {
+        setGpsErrorMsg(`Low GPS accuracy (±${accuracy}m). Please position phone near vehicle windshield.`);
+      } else {
+        setGpsErrorMsg(null);
+      }
 
       latestCoordsRef.current = { lat, lng, speed: speedKmh, heading, accuracy };
 
@@ -345,6 +378,8 @@ export const DriverDashboard: React.FC = () => {
     }
     setIsGpsTracking(false);
     setGpsStatus('idle');
+    lastPositionRef.current = null;
+    setCurrentSpeed(0);
   };
 
   // Demo Simulation Mode along NH 66 coordinates (Murdeshwar to College)

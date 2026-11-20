@@ -30,6 +30,7 @@ import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import { socketService } from '../../services/socket';
 import { LiveBusMap } from '../../components/map/LiveBusMap';
+import { HistoricalRouteMap, DayRouteData } from '../../components/map/HistoricalRouteMap';
 import { PushNotificationService } from '../../services/pushNotification';
 import {
   Bus,
@@ -70,6 +71,9 @@ export const StudentDashboard: React.FC = () => {
   const [historyRows, setHistoryRows] = useState<HistoricalArrivalRow[]>([]);
   const [historyStats, setHistoryStats] = useState<WeeklySummaryStats | null>(null);
   const [loadingHistory, setLoadingHistory] = useState<boolean>(false);
+  const [selectedHistoryDate, setSelectedHistoryDate] = useState<string | null>(null);
+  const [dayRouteData, setDayRouteData] = useState<DayRouteData | null>(null);
+  const [loadingDayRoute, setLoadingDayRoute] = useState<boolean>(false);
 
   // Complaint Submission State
   const [complaintCategory, setComplaintCategory] = useState<string>('bus_delay');
@@ -213,6 +217,12 @@ export const StudentDashboard: React.FC = () => {
         const res = await api.history.getArrivals(selectedBus.id, selectedStopId, 7);
         setHistoryRows(res.rows);
         setHistoryStats(res.stats);
+
+        // Auto-load most recent recorded operating day for interactive map
+        const firstActive = res.rows.find((r) => r.dayOfWeek !== 'Sunday' && r.actualArrival !== 'No recorded arrival') || res.rows[0];
+        if (firstActive) {
+          handleSelectHistoryDay(firstActive.date, firstActive.dayOfWeek);
+        }
       } catch (err: any) {
         console.error('[Student Dashboard] History load error:', err.message);
       } finally {
@@ -222,6 +232,19 @@ export const StudentDashboard: React.FC = () => {
 
     fetchHistory();
   }, [selectedBus?.id, selectedStopId]);
+
+  const handleSelectHistoryDay = async (date: string, dayOfWeek: string) => {
+    setSelectedHistoryDate(date);
+    setLoadingDayRoute(true);
+    try {
+      const res = await api.history.getDayRoute(selectedBus?.id || 1, date);
+      setDayRouteData({ ...res, date, dayOfWeek });
+    } catch (err: any) {
+      console.error('[Student Dashboard] Day route load error:', err.message);
+    } finally {
+      setLoadingDayRoute(false);
+    }
+  };
 
   // 4. Socket.IO Live Telemetry Listener
   useEffect(() => {
@@ -975,11 +998,18 @@ export const StudentDashboard: React.FC = () => {
                 <th className="p-3.5">Scheduled Arrival</th>
                 <th className="p-3.5">Actual Arrival</th>
                 <th className="p-3.5">Delay / Punctuality</th>
+                <th className="p-3.5 text-right">Route Map</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {historyRows.map((row, idx) => (
-                <tr key={idx} className="hover:bg-brand-cream/30 transition-colors">
+                <tr
+                  key={idx}
+                  onClick={() => handleSelectHistoryDay(row.date, row.dayOfWeek)}
+                  className={`hover:bg-brand-cream/40 transition-colors cursor-pointer ${
+                    selectedHistoryDate === row.date ? 'bg-brand-cream/60' : ''
+                  }`}
+                >
                   <td className="p-3.5 font-bold">{row.dayOfWeek}</td>
                   <td className="p-3.5 text-brand-gray">{row.date}</td>
                   <td className="p-3.5 font-mono">{row.scheduledArrival}</td>
@@ -1003,11 +1033,31 @@ export const StudentDashboard: React.FC = () => {
                       {row.delayText}
                     </span>
                   </td>
+                  <td className="p-3.5 text-right">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectHistoryDay(row.date, row.dayOfWeek);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl font-bold text-xs transition-all inline-flex items-center gap-1.5 ${
+                        selectedHistoryDate === row.date
+                          ? 'bg-brand-navy text-white shadow-sm ring-1 ring-brand-navy'
+                          : 'bg-brand-secondary hover:bg-brand-primary text-brand-navy'
+                      }`}
+                    >
+                      <Navigation className="w-3.5 h-3.5" />
+                      <span>{selectedHistoryDate === row.date ? 'Viewing Map' : 'Explore Route'}</span>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* Interactive 7-Day Historical Route Map & Checkpoint Inspector */}
+        <HistoricalRouteMap data={dayRouteData} isLoading={loadingDayRoute} />
       </section>
 
       {/* SECTION G: FEEDBACK AND COMPLAINT SYSTEM */}

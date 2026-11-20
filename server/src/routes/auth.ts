@@ -43,10 +43,10 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/auth/register-student
-router.post('/register-student', async (req: Request, res: Response) => {
+// POST /api/auth/register-student and /api/auth/register
+const registerHandler = async (req: Request, res: Response) => {
   try {
-    const { username, password, fullName, studentId, email, phone, collegeName } = req.body;
+    const { username, password, fullName, studentId, email, phone, collegeName, preferredBusId, preferredPickupPointId } = req.body;
     if (!username || !fullName) {
       res.status(400).json({ success: false, error: 'Username and Full Name are required' });
       return;
@@ -60,9 +60,46 @@ router.post('/register-student', async (req: Request, res: Response) => {
       email,
       phone,
       collegeName,
+      preferredBusId: preferredBusId ? Number(preferredBusId) : undefined,
+      preferredPickupPointId: preferredPickupPointId ? Number(preferredPickupPointId) : undefined,
     });
 
-    res.status(201).json({ success: true, token: result.token, user: result.user });
+    res.status(201).json({ success: true, token: result.token, user: result.user, profile: result.profile });
+  } catch (err: any) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+
+router.post('/register-student', registerHandler);
+router.post('/register', registerHandler);
+
+// GET /api/auth/profile
+router.get('/profile', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ success: false, error: 'Unauthorized' });
+      return;
+    }
+    const data = await AuthService.getUserProfile(req.user.id);
+    if (!data) {
+      res.status(404).json({ success: false, error: 'Profile not found' });
+      return;
+    }
+    res.json({ success: true, ...data });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// PUT /api/auth/profile
+router.put('/profile', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ success: false, error: 'Unauthorized' });
+      return;
+    }
+    const data = await AuthService.updateUserProfile(req.user.id, req.body);
+    res.json({ success: true, message: 'Profile updated successfully', ...data });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -75,12 +112,12 @@ router.get('/me', authenticateJWT, async (req: AuthenticatedRequest, res: Respon
       res.status(401).json({ success: false, error: 'Unauthorized' });
       return;
     }
-    const user = await AuthService.getUserById(req.user.id);
-    if (!user) {
+    const profileData = await AuthService.getUserProfile(req.user.id);
+    if (!profileData) {
       res.status(404).json({ success: false, error: 'User not found' });
       return;
     }
-    res.json({ success: true, user });
+    res.json({ success: true, user: profileData.user, profile: profileData.profile });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -97,6 +134,62 @@ router.get('/students', authenticateJWT, async (req: AuthenticatedRequest, res: 
     res.json({ success: true, count: students.length, students });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// GET /api/auth/drivers (Admin only)
+router.get('/drivers', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ success: false, error: 'Forbidden: Admin access required' });
+      return;
+    }
+    const drivers = await AuthService.getAllDrivers();
+    res.json({ success: true, count: drivers.length, drivers });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST /api/auth/admin/users (Admin only)
+router.post('/admin/users', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ success: false, error: 'Forbidden: Admin access required' });
+      return;
+    }
+    const created = await AuthService.adminCreateUser(req.body);
+    res.status(201).json({ success: true, message: 'User account created', user: created });
+  } catch (err: any) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+// PUT /api/auth/admin/users/:id (Admin only)
+router.put('/admin/users/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ success: false, error: 'Forbidden: Admin access required' });
+      return;
+    }
+    const updated = await AuthService.adminUpdateUser(Number(req.params.id), req.body);
+    res.json({ success: true, message: 'User updated', user: updated });
+  } catch (err: any) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+// DELETE /api/auth/admin/users/:id (Admin only)
+router.delete('/admin/users/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ success: false, error: 'Forbidden: Admin access required' });
+      return;
+    }
+    await AuthService.adminDeleteUser(Number(req.params.id));
+    res.json({ success: true, message: 'User account deleted' });
+  } catch (err: any) {
+    res.status(400).json({ success: false, error: err.message });
   }
 });
 

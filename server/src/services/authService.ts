@@ -98,10 +98,13 @@ export class AuthService {
     // Default seed credentials fallback & auto-healing if hash was corrupted
     if (!isMatch) {
       const defaultPasswords: Record<string, string> = {
-        admin: 'admin123',
-        driver1: 'driver123',
-        driver2: 'driver123',
-        student1: 'student123',
+        administrator: 'Hello@123',
+        driver: 'Driver786',
+        student: 'Student123',
+        admin: 'Hello@123',
+        driver1: 'Driver786',
+        driver2: 'Driver786',
+        student1: 'Student123',
       };
       const expectedPassword = defaultPasswords[userRecord.username.toLowerCase()];
       if (expectedPassword && expectedPassword === password) {
@@ -188,18 +191,31 @@ export class AuthService {
     email?: string;
     phone?: string;
     collegeName?: string;
-  }): Promise<{ token: string; user: UserPayload }> {
-    const password = data.password || 'student123';
+    preferredBusId?: number;
+    preferredPickupPointId?: number;
+  }): Promise<{ token: string; user: UserPayload; profile?: any }> {
+    const cleanUsername = data.username.trim();
+    const existingUsers = db.getTable<any>('users');
+    const duplicate = existingUsers.find(
+      (u) => u.username?.toLowerCase() === cleanUsername.toLowerCase() ||
+             (data.studentId && u.student_id?.toLowerCase() === data.studentId.trim().toLowerCase())
+    );
+
+    if (duplicate) {
+      throw new Error(`Account already exists with this username or student ID.`);
+    }
+
+    const password = data.password || 'Student123';
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = {
-      username: data.username,
+      username: cleanUsername,
       password_hash: passwordHash,
-      email: data.email || null,
+      email: data.email?.trim() || null,
       role: 'student' as const,
-      full_name: data.fullName,
-      student_id: data.studentId || null,
-      phone: data.phone || null,
+      full_name: data.fullName.trim(),
+      student_id: data.studentId?.trim() || `4AI24CS${Math.floor(100 + Math.random() * 900)}`,
+      phone: data.phone?.trim() || null,
       college_name: data.collegeName || 'Anjuman Institute of Technology & Management',
       is_active: 1,
     };
@@ -218,6 +234,20 @@ export class AuthService {
       createdId = saved.id;
     }
 
+    // Save initial pickup preferences if provided
+    const studentIdentifier = newUser.student_id || newUser.username;
+    const prefRecord = {
+      user_id: createdId,
+      student_identifier: studentIdentifier,
+      bus_id: data.preferredBusId || 1,
+      route_id: 1,
+      pickup_point_id: data.preferredPickupPointId || 2,
+      notification_5min_enabled: 1,
+      notification_delay_enabled: 1,
+      notification_trip_start_enabled: 1,
+    };
+    db.insertRecord('student_pickup_preferences', prefRecord);
+
     const payload: UserPayload = {
       id: createdId,
       username: newUser.username,
@@ -230,7 +260,246 @@ export class AuthService {
     };
 
     const token = this.generateToken(payload);
-    return { token, user: payload };
+    return {
+      token,
+      user: payload,
+      profile: {
+        ...payload,
+        preferredBusId: prefRecord.bus_id,
+        preferredPickupPointId: prefRecord.pickup_point_id,
+      }
+    };
+  }
+
+  public static async getUserProfile(userId: number): Promise<any | null> {
+    const user = await this.getUserById(userId);
+    if (!user) return null;
+
+    let preferences: any = null;
+    const allPrefs = db.getTable<any>('student_pickup_preferences');
+    preferences = allPrefs.find(
+      (p) => p.user_id === userId || (user.studentId && p.student_identifier === user.studentId) || p.student_identifier === user.username
+    );
+
+    if (!preferences && db.supabaseClient) {
+      try {
+        const { data } = await db.supabaseClient
+          .from('student_pickup_preferences')
+          .select('*')
+          .or(`user_id.eq.${userId},student_identifier.eq.${user.studentId || user.username}`)
+          .limit(1);
+        if (data && data.length > 0) preferences = data[0];
+      } catch (e: any) {
+        console.warn('[AuthService] Supabase pref lookup notice:', e.message);
+      }
+    }
+
+    return {
+      user,
+      profile: {
+        fullName: user.fullName,
+        studentId: user.studentId || '',
+        collegeName: user.collegeName || 'Anjuman Institute of Technology & Management',
+        phone: user.phone || '',
+        email: user.email || '',
+        selectedBusId: preferences?.bus_id || 1,
+        preferredPickupPointId: preferences?.pickup_point_id || 2,
+        notification5minEnabled: preferences?.notification_5min_enabled !== 0,
+        notificationDelayEnabled: preferences?.notification_delay_enabled !== 0,
+      }
+    };
+  }
+
+  public static async updateUserProfile(
+    userId: number,
+    data: {
+      fullName?: string;
+      studentId?: string;
+      phone?: string;
+      email?: string;
+      collegeName?: string;
+      selectedBusId?: number;
+      preferredPickupPointId?: number;
+      notification5minEnabled?: boolean;
+      notificationDelayEnabled?: boolean;
+    }
+  ): Promise<any> {
+    const user = await this.getUserById(userId);
+    if (!user) throw new Error('User not found');
+
+    const userUpdates: any = {};
+    if (data.fullName !== undefined) userUpdates.full_name = data.fullName;
+    if (data.studentId !== undefined) userUpdates.student_id = data.studentId;
+    if (data.phone !== undefined) userUpdates.phone = data.phone;
+    if (data.email !== undefined) userUpdates.email = data.email;
+    if (data.collegeName !== undefined) userUpdates.college_name = data.collegeName;
+
+    if (Object.keys(userUpdates).length > 0) {
+      db.updateRecord('users', userId, userUpdates);
+      if (db.supabaseClient) {
+        Promise.resolve(db.supabaseClient.from('users').update(userUpdates).eq('id', userId)).catch(() => {});
+      }
+    }
+
+    // Update preferences
+    const studentIdentifier = data.studentId || user.studentId || user.username;
+    const allPrefs = db.getTable<any>('student_pickup_preferences');
+    let prefRecord = allPrefs.find((p) => p.user_id === userId || p.student_identifier === studentIdentifier);
+
+    const prefUpdates: any = {
+      user_id: userId,
+      student_identifier: studentIdentifier,
+      bus_id: data.selectedBusId ?? prefRecord?.bus_id ?? 1,
+      pickup_point_id: data.preferredPickupPointId ?? prefRecord?.pickup_point_id ?? 2,
+      notification_5min_enabled: data.notification5minEnabled !== undefined ? (data.notification5minEnabled ? 1 : 0) : 1,
+      notification_delay_enabled: data.notificationDelayEnabled !== undefined ? (data.notificationDelayEnabled ? 1 : 0) : 1,
+    };
+
+    if (prefRecord) {
+      db.updateRecord('student_pickup_preferences', prefRecord.id, prefUpdates);
+      if (db.supabaseClient) {
+        Promise.resolve(db.supabaseClient.from('student_pickup_preferences').update(prefUpdates).eq('id', prefRecord.id)).catch(() => {});
+      }
+    } else {
+      const createdPref = db.insertRecord('student_pickup_preferences', prefUpdates);
+      if (db.supabaseClient) {
+        Promise.resolve(db.supabaseClient.from('student_pickup_preferences').upsert([createdPref])).catch(() => {});
+      }
+    }
+
+    return await this.getUserProfile(userId);
+  }
+
+  public static async adminCreateUser(data: {
+    username: string;
+    password?: string;
+    fullName: string;
+    role: 'student' | 'driver' | 'admin';
+    studentId?: string;
+    phone?: string;
+    email?: string;
+    licenseNumber?: string;
+    assignedBusId?: number;
+    preferredBusId?: number;
+    preferredPickupPointId?: number;
+  }): Promise<UserPayload> {
+    const cleanUsername = data.username.trim();
+    const existing = db.getTable<any>('users').find((u) => u.username?.toLowerCase() === cleanUsername.toLowerCase());
+    if (existing) {
+      throw new Error(`User with username '${cleanUsername}' already exists.`);
+    }
+
+    const defaultPassMap: Record<string, string> = {
+      admin: 'Hello@123',
+      driver: 'Driver786',
+      student: 'Student123',
+    };
+    const rawPassword = data.password || defaultPassMap[data.role] || 'Pass123';
+    const passwordHash = await bcrypt.hash(rawPassword, 10);
+
+    const newUserRecord = {
+      username: cleanUsername,
+      password_hash: passwordHash,
+      email: data.email || null,
+      role: data.role,
+      full_name: data.fullName,
+      student_id: data.studentId || (data.role === 'student' ? `4AI24CS${Math.floor(100 + Math.random() * 900)}` : null),
+      phone: data.phone || null,
+      college_name: 'Anjuman Institute of Technology & Management',
+      is_active: 1,
+    };
+
+    const savedUser = db.insertRecord('users', newUserRecord);
+
+    if (data.role === 'driver') {
+      const driverRecord = {
+        user_id: savedUser.id,
+        full_name: data.fullName,
+        phone: data.phone || '+91 98451 00000',
+        employee_id: `DRV-${savedUser.id + 100}`,
+        license_number: data.licenseNumber || 'KA-47-DL-TEMP',
+        status: 'active',
+      };
+      const savedDriver = db.insertRecord('drivers', driverRecord);
+
+      if (data.assignedBusId) {
+        db.updateRecord('buses', data.assignedBusId, { assigned_driver_id: savedDriver.id });
+      }
+    } else if (data.role === 'student') {
+      db.insertRecord('student_pickup_preferences', {
+        user_id: savedUser.id,
+        preferred_bus_id: data.preferredBusId || null,
+        preferred_pickup_point_id: data.preferredPickupPointId || null,
+        notify_5_min_before: 1,
+        notify_delay_alerts: 1,
+        notify_bus_started: 1,
+      });
+    }
+
+    return {
+      id: savedUser.id,
+      username: savedUser.username,
+      role: savedUser.role,
+      fullName: savedUser.full_name,
+      studentId: savedUser.student_id,
+      phone: savedUser.phone,
+      email: savedUser.email,
+    };
+  }
+
+  public static async adminUpdateUser(
+    id: number,
+    data: {
+      fullName?: string;
+      phone?: string;
+      email?: string;
+      studentId?: string;
+      isActive?: number;
+      password?: string;
+      preferredBusId?: number | null;
+      preferredPickupPointId?: number | null;
+    }
+  ): Promise<any> {
+    const userUpdates: any = {};
+    if (data.fullName !== undefined) userUpdates.full_name = data.fullName;
+    if (data.phone !== undefined) userUpdates.phone = data.phone;
+    if (data.email !== undefined) userUpdates.email = data.email;
+    if (data.studentId !== undefined) userUpdates.student_id = data.studentId;
+    if (data.isActive !== undefined) userUpdates.is_active = data.isActive;
+    if (data.password) {
+      userUpdates.password_hash = await bcrypt.hash(data.password, 10);
+    }
+
+    const updated = db.updateRecord('users', id, userUpdates);
+
+    if (data.preferredBusId !== undefined || data.preferredPickupPointId !== undefined) {
+      const existingPref = db.getTable<any>('student_pickup_preferences').find((p) => p.user_id === id);
+      if (existingPref) {
+        const prefUpdates: any = {};
+        if (data.preferredBusId !== undefined) prefUpdates.preferred_bus_id = data.preferredBusId;
+        if (data.preferredPickupPointId !== undefined) prefUpdates.preferred_pickup_point_id = data.preferredPickupPointId;
+        db.updateRecord('student_pickup_preferences', existingPref.id, prefUpdates);
+      } else {
+        db.insertRecord('student_pickup_preferences', {
+          user_id: id,
+          preferred_bus_id: data.preferredBusId || null,
+          preferred_pickup_point_id: data.preferredPickupPointId || null,
+          notify_5_min_before: 1,
+          notify_delay_alerts: 1,
+          notify_bus_started: 1,
+        });
+      }
+    }
+
+    return updated;
+  }
+
+  public static async adminDeleteUser(id: number): Promise<boolean> {
+    const prefs = db.getTable<any>('student_pickup_preferences').filter((p) => p.user_id === id);
+    for (const p of prefs) {
+      db.deleteRecord('student_pickup_preferences', p.id);
+    }
+    return db.deleteRecord('users', id);
   }
 
   public static async getUserById(id: number): Promise<UserPayload | null> {
@@ -326,13 +595,13 @@ export class AuthService {
       return rows;
     }
 
-    const users = db.getTable('users').filter((u) => u.role === 'student');
-    const prefs = db.getTable('student_preferences');
-    const buses = db.getTable('buses');
-    const points = db.getTable('pickup_points');
+    const users = db.getTable<any>('users').filter((u) => u.role === 'student');
+    const prefs = db.getTable<any>('student_pickup_preferences');
+    const buses = db.getTable<any>('buses');
+    const points = db.getTable<any>('pickup_points');
 
     return users.map((u) => {
-      const pref = prefs.find((p) => p.student_identifier === u.student_id);
+      const pref = prefs.find((p) => p.user_id === u.id || p.student_identifier === u.student_id || p.student_identifier === u.username);
       const bus = pref ? buses.find((b) => b.id === pref.bus_id) : null;
       const point = pref ? points.find((p) => p.id === pref.pickup_point_id) : null;
       return {
@@ -350,6 +619,33 @@ export class AuthService {
         bus_number: bus?.bus_number || null,
         bus_name: bus?.bus_name || null,
         pickup_point_name: point?.name || null,
+      };
+    });
+  }
+
+  public static async getAllDrivers(): Promise<any[]> {
+    const users = db.getTable<any>('users').filter((u) => u.role === 'driver');
+    const drivers = db.getTable<any>('drivers');
+    const buses = db.getTable<any>('buses');
+
+    return users.map((u) => {
+      const driver = drivers.find((d) => d.user_id === u.id || d.full_name.toLowerCase() === u.full_name.toLowerCase());
+      const bus = driver ? buses.find((b) => b.assigned_driver_id === driver.id) : null;
+      return {
+        id: u.id,
+        driver_id: driver?.id || null,
+        username: u.username,
+        full_name: u.full_name,
+        phone: u.phone || driver?.phone,
+        email: u.email,
+        employee_id: driver?.employee_id || 'DRV-' + u.id,
+        license_number: driver?.license_number || 'KA-47-DL-TEMP',
+        status: driver?.status || 'active',
+        is_active: u.is_active,
+        assigned_bus_id: bus?.id || null,
+        assigned_bus_name: bus?.bus_name || null,
+        assigned_bus_number: bus?.bus_number || null,
+        created_at: u.created_at,
       };
     });
   }

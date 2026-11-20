@@ -11,17 +11,18 @@ interface AuthContextType {
   isStudent: boolean;
   studentProfile: StudentProfile;
   login: (username: string, password: string, portal?: 'student' | 'driver' | 'admin') => Promise<{ success: boolean; error?: string; user?: User }>;
+  register: (data: any) => Promise<{ success: boolean; error?: string; user?: User }>;
   logout: () => void;
-  updateStudentProfile: (profile: Partial<StudentProfile>) => void;
+  updateStudentProfile: (profile: Partial<StudentProfile>) => Promise<void>;
   isLoading: boolean;
 }
 
 const DEFAULT_PROFILE: StudentProfile = {
-  fullName: 'Mohammed Zaid',
+  fullName: 'Student',
   studentId: '4AI21CS045',
   collegeName: 'Anjuman Institute of Technology & Management',
   phone: '+91 99024 29066',
-  email: 'mohammed.student@anjuman.edu',
+  email: 'student@anjuman.edu',
   selectedBusId: 1,
   preferredPickupPointId: 2, // Bhatkal Bus Stand
 };
@@ -52,20 +53,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const res = await api.auth.me();
           setUser(res.user);
           if (res.user.role === 'student') {
-            setStudentProfile((prev) => ({
-              ...prev,
-              fullName: res.user.fullName || prev.fullName,
-              studentId: res.user.studentId || prev.studentId,
-              email: res.user.email || prev.email,
-              phone: res.user.phone || prev.phone,
-              collegeName: res.user.collegeName || prev.collegeName,
-            }));
+            const dbProf = res.profile || {};
+            const loadedProfile: StudentProfile = {
+              fullName: res.user.fullName || dbProf.fullName || DEFAULT_PROFILE.fullName,
+              studentId: res.user.studentId || dbProf.studentId || DEFAULT_PROFILE.studentId,
+              email: res.user.email || dbProf.email || DEFAULT_PROFILE.email,
+              phone: res.user.phone || dbProf.phone || DEFAULT_PROFILE.phone,
+              collegeName: res.user.collegeName || dbProf.collegeName || DEFAULT_PROFILE.collegeName,
+              selectedBusId: dbProf.selectedBusId ? Number(dbProf.selectedBusId) : 1,
+              preferredPickupPointId: dbProf.preferredPickupPointId ? Number(dbProf.preferredPickupPointId) : 2,
+            };
+            setStudentProfile(loadedProfile);
+            localStorage.setItem('smart_bus_student_profile', JSON.stringify(loadedProfile));
           }
         } catch {
           // Token expired or invalid
           setToken(null);
           setUser(null);
           localStorage.removeItem('smart_bus_token');
+          localStorage.removeItem('smart_bus_student_profile');
         }
       }
       setIsLoading(false);
@@ -86,16 +92,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(res.user);
 
       if (res.user.role === 'student') {
-        const updated = {
-          ...studentProfile,
-          fullName: res.user.fullName || studentProfile.fullName,
-          studentId: res.user.studentId || studentProfile.studentId,
-          email: res.user.email || studentProfile.email,
-          phone: res.user.phone || studentProfile.phone,
-          collegeName: res.user.collegeName || studentProfile.collegeName,
-        };
-        setStudentProfile(updated);
-        localStorage.setItem('smart_bus_student_profile', JSON.stringify(updated));
+        try {
+          const profRes = await api.auth.getProfile();
+          const p = profRes.profile || {};
+          const loadedProfile: StudentProfile = {
+            fullName: res.user.fullName || p.fullName || DEFAULT_PROFILE.fullName,
+            studentId: res.user.studentId || p.studentId || DEFAULT_PROFILE.studentId,
+            email: res.user.email || p.email || DEFAULT_PROFILE.email,
+            phone: res.user.phone || p.phone || DEFAULT_PROFILE.phone,
+            collegeName: res.user.collegeName || p.collegeName || DEFAULT_PROFILE.collegeName,
+            selectedBusId: p.selectedBusId ? Number(p.selectedBusId) : 1,
+            preferredPickupPointId: p.preferredPickupPointId ? Number(p.preferredPickupPointId) : 2,
+          };
+          setStudentProfile(loadedProfile);
+          localStorage.setItem('smart_bus_student_profile', JSON.stringify(loadedProfile));
+        } catch {
+          const fallbackProfile: StudentProfile = {
+            fullName: res.user.fullName || DEFAULT_PROFILE.fullName,
+            studentId: res.user.studentId || DEFAULT_PROFILE.studentId,
+            email: res.user.email || DEFAULT_PROFILE.email,
+            phone: res.user.phone || DEFAULT_PROFILE.phone,
+            collegeName: res.user.collegeName || DEFAULT_PROFILE.collegeName,
+            selectedBusId: 1,
+            preferredPickupPointId: 2,
+          };
+          setStudentProfile(fallbackProfile);
+          localStorage.setItem('smart_bus_student_profile', JSON.stringify(fallbackProfile));
+        }
       }
 
       return { success: true, user: res.user };
@@ -104,18 +127,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('smart_bus_token');
-    setToken(null);
-    setUser(null);
+  const register = async (data: any): Promise<{ success: boolean; error?: string; user?: User }> => {
+    try {
+      const res = await api.auth.registerStudent(data);
+      localStorage.setItem('smart_bus_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+
+      const p = res.profile || {};
+      const newProf: StudentProfile = {
+        fullName: res.user.fullName || data.fullName,
+        studentId: res.user.studentId || data.studentId,
+        email: res.user.email || data.email,
+        phone: res.user.phone || data.phone,
+        collegeName: res.user.collegeName || 'Anjuman Institute of Technology & Management',
+        selectedBusId: data.preferredBusId ? Number(data.preferredBusId) : (p.selectedBusId ? Number(p.selectedBusId) : 1),
+        preferredPickupPointId: data.preferredPickupPointId ? Number(data.preferredPickupPointId) : (p.preferredPickupPointId ? Number(p.preferredPickupPointId) : 2),
+      };
+      setStudentProfile(newProf);
+      localStorage.setItem('smart_bus_student_profile', JSON.stringify(newProf));
+
+      return { success: true, user: res.user };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Registration failed' };
+    }
   };
 
-  const updateStudentProfile = (updates: Partial<StudentProfile>) => {
+  const logout = () => {
+    localStorage.removeItem('smart_bus_token');
+    localStorage.removeItem('smart_bus_student_profile');
+    setToken(null);
+    setUser(null);
+    setStudentProfile(DEFAULT_PROFILE);
+  };
+
+  const updateStudentProfile = async (updates: Partial<StudentProfile>) => {
     const updated = { ...studentProfile, ...updates };
     setStudentProfile(updated);
     localStorage.setItem('smart_bus_student_profile', JSON.stringify(updated));
 
-    // Sync preference with backend
+    try {
+      await api.auth.updateProfile({
+        fullName: updated.fullName,
+        studentId: updated.studentId,
+        phone: updated.phone,
+        email: updated.email,
+        collegeName: updated.collegeName,
+        selectedBusId: updated.selectedBusId,
+        preferredPickupPointId: updated.preferredPickupPointId,
+      });
+    } catch (err: any) {
+      console.warn('[AuthContext] Profile server update notice:', err.message);
+    }
+
+    // Also sync notification preference
     api.notifications.savePreferences({
       studentIdentifier: updated.studentId || 'default_student',
       busId: updated.selectedBusId,
@@ -134,6 +199,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isStudent: user?.role === 'student',
     studentProfile,
     login,
+    register,
     logout,
     updateStudentProfile,
     isLoading,

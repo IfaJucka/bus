@@ -39,17 +39,31 @@ export const api = {
       });
       return handleResponse(res);
     },
-    registerStudent: async (payload: any): Promise<{ token: string; user: User }> => {
-      const res = await fetch(`${API_BASE}/auth/register-student`, {
+    registerStudent: async (payload: any): Promise<{ token: string; user: User; profile?: any }> => {
+      const res = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       return handleResponse(res);
     },
-    me: async (): Promise<{ user: User }> => {
+    me: async (): Promise<{ user: User; profile?: any }> => {
       const res = await fetch(`${API_BASE}/auth/me`, {
         headers: getAuthHeader(),
+      });
+      return handleResponse(res);
+    },
+    getProfile: async (): Promise<{ user: User; profile: any }> => {
+      const res = await fetch(`${API_BASE}/auth/profile`, {
+        headers: getAuthHeader(),
+      });
+      return handleResponse(res);
+    },
+    updateProfile: async (payload: any): Promise<{ user: User; profile: any; message: string }> => {
+      const res = await fetch(`${API_BASE}/auth/profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        body: JSON.stringify(payload),
       });
       return handleResponse(res);
     },
@@ -317,6 +331,10 @@ export const api = {
       const data = await handleResponse<{ stats: WeeklySummaryStats }>(res);
       return data.stats;
     },
+    getDayRoute: async (busId: number, date: string): Promise<any> => {
+      const res = await fetch(`${API_BASE}/history/day-route?busId=${busId}&date=${encodeURIComponent(date)}`);
+      return handleResponse(res);
+    },
   },
 
   // Notifications
@@ -441,6 +459,43 @@ export const api = {
       const res = await fetch(`${API_BASE}/admin/supabase-pull`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+      });
+      return handleResponse(res);
+    },
+    getStudents: async (): Promise<any[]> => {
+      const res = await fetch(`${API_BASE}/auth/students`, {
+        headers: getAuthHeader(),
+      });
+      const data = await handleResponse<{ students: any[] }>(res);
+      return data.students;
+    },
+    getDrivers: async (): Promise<any[]> => {
+      const res = await fetch(`${API_BASE}/auth/drivers`, {
+        headers: getAuthHeader(),
+      });
+      const data = await handleResponse<{ drivers: any[] }>(res);
+      return data.drivers;
+    },
+    createUser: async (payload: any): Promise<any> => {
+      const res = await fetch(`${API_BASE}/auth/admin/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        body: JSON.stringify(payload),
+      });
+      return handleResponse(res);
+    },
+    updateUser: async (id: number, payload: any): Promise<any> => {
+      const res = await fetch(`${API_BASE}/auth/admin/users/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        body: JSON.stringify(payload),
+      });
+      return handleResponse(res);
+    },
+    deleteUser: async (id: number): Promise<any> => {
+      const res = await fetch(`${API_BASE}/auth/admin/users/${id}`, {
+        method: 'DELETE',
+        headers: getAuthHeader(),
       });
       return handleResponse(res);
     },

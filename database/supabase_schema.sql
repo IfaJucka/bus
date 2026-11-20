@@ -328,11 +328,14 @@ CREATE POLICY anon_read_drivers ON public.drivers FOR SELECT TO anon, authentica
 
 INSERT INTO public.users (id, username, password_hash, email, role, full_name, student_id, phone, college_name)
 VALUES
-  (1, 'admin', '$2a$10$wkIP2u0rEacoFXAvOPTQd.fykV3dMIokdEy39SdbsEEgNMm/V5ixi', 'admin@anjuman.edu', 'admin', 'System Administrator', 'ADM-001', '+91 99024 29000', 'Anjuman Institute of Technology & Management'),
-  (2, 'driver1', '$2a$10$QXoXDtpvAe/xXomtLr/Ag.UvDFoz0TrouAKpEGXfAJgZo.CZE2eGG', 'ramesh.driver@anjuman.edu', 'driver', 'Ramesh Kumar', 'DRV-101', '+91 98451 12345', 'Anjuman Institute of Technology & Management'),
-  (3, 'driver2', '$2a$10$QXoXDtpvAe/xXomtLr/Ag.UvDFoz0TrouAKpEGXfAJgZo.CZE2eGG', 'suresh.driver@anjuman.edu', 'driver', 'Suresh Naik', 'DRV-102', '+91 98452 67890', 'Anjuman Institute of Technology & Management'),
-  (4, 'student1', '$2a$10$IYoJ9p3HrZRN1CdLhX7P2uxJVmo2iTZPU5i2RQI8Vu8Xpbb2FGj9u', 'mohammed.student@anjuman.edu', 'student', 'Mohammed Zaid', '4AI21CS045', '+91 99024 29066', 'Anjuman Institute of Technology & Management')
-ON CONFLICT (id) DO UPDATE SET password_hash = EXCLUDED.password_hash;
+  (1, 'Administrator', '$2a$10$KXuCuFRDVRHRZx/0MQJS.uupXrbREno9HYJBJxsawSiAvRHZMMq0u', 'admin@anjuman.edu', 'admin', 'System Administrator', 'ADM-001', '+91 99024 29000', 'Anjuman Institute of Technology & Management'),
+  (2, 'Driver', '$2a$10$SrZKoWU7LPQH88dzcH8vAeryGOWP16P6XcMN5ADhu2wuXDqA2HYjq', 'driver@anjuman.edu', 'driver', 'Ramesh Kumar', 'DRV-101', '+91 98451 12345', 'Anjuman Institute of Technology & Management'),
+  (3, 'Student', '$2a$10$ylrvcup/ZMJfpPLlmM7.aOK1QtUg95h13U9G2cdal1szUtvOiFo62', 'student@anjuman.edu', 'student', 'Mohammed Zaid', '4AI21CS045', '+91 99024 29066', 'Anjuman Institute of Technology & Management')
+ON CONFLICT (id) DO UPDATE SET 
+  username = EXCLUDED.username,
+  password_hash = EXCLUDED.password_hash,
+  role = EXCLUDED.role,
+  full_name = EXCLUDED.full_name;
 
 INSERT INTO public.drivers (id, user_id, full_name, phone, employee_id, license_number, status)
 VALUES

@@ -46,8 +46,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-          <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center text-brand-navy shadow-sm group-hover:bg-brand-accent group-hover:text-white transition-all">
-            <Bus className="w-5 h-5 transition-transform group-hover:scale-110" />
+          <div className="w-10 h-10 rounded-xl bg-white border border-brand-primary/50 flex items-center justify-center p-1 shadow-sm group-hover:border-brand-accent transition-all overflow-hidden">
+            <img
+              src="/college-logo.png"
+              alt="Anjuman College Logo"
+              className="w-full h-full object-contain transition-transform group-hover:scale-105"
+            />
           </div>
           <div>
             <span className="font-extrabold text-brand-navy text-lg tracking-tight flex items-center gap-1.5">

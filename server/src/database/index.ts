@@ -134,6 +134,7 @@ class DatabaseManager {
       'trips',
       'trip_stop_events',
       'gps_locations',
+      'student_pickup_preferences',
       'notifications',
       'push_subscriptions',
       'complaints',
@@ -170,6 +171,7 @@ class DatabaseManager {
       'buses',
       'trips',
       'trip_stop_events',
+      'student_pickup_preferences',
       'notifications',
       'push_subscriptions',
       'complaints',
@@ -249,18 +251,23 @@ class DatabaseManager {
       if (userRows[0]?.count > 0) return;
 
       console.log('[DB] Seeding MySQL database with initial data...');
-      const adminPass = await bcrypt.hash('admin123', 10);
-      const driverPass = await bcrypt.hash('driver123', 10);
-      const studentPass = await bcrypt.hash('student123', 10);
+      const adminPass = await bcrypt.hash('Hello@123', 10);
+      const driverPass = await bcrypt.hash('Driver786', 10);
+      const studentPass = await bcrypt.hash('Student123', 10);
+      const legacyAdminPass = await bcrypt.hash('admin123', 10);
+      const legacyDriverPass = await bcrypt.hash('driver123', 10);
+      const legacyStudentPass = await bcrypt.hash('student123', 10);
 
       // Seed Users
       await this.pool.query(
         `INSERT IGNORE INTO users (id, username, password_hash, email, role, full_name, student_id, phone, college_name) VALUES
-        (1, 'admin', ?, 'admin@anjuman.edu', 'admin', 'System Administrator', 'ADM-001', '+91 99024 29000', 'Anjuman Institute of Technology & Management'),
-        (2, 'driver1', ?, 'ramesh.driver@anjuman.edu', 'driver', 'Ramesh Kumar', 'DRV-101', '+91 98451 12345', 'Anjuman Institute of Technology & Management'),
-        (3, 'driver2', ?, 'suresh.driver@anjuman.edu', 'driver', 'Suresh Naik', 'DRV-102', '+91 98452 67890', 'Anjuman Institute of Technology & Management'),
-        (4, 'student1', ?, 'mohammed.student@anjuman.edu', 'student', 'Mohammed Zaid', '4AI21CS045', '+91 99024 29066', 'Anjuman Institute of Technology & Management')`,
-        [adminPass, driverPass, driverPass, studentPass]
+        (1, 'Administrator', ?, 'admin@anjuman.edu', 'admin', 'System Administrator', 'ADM-001', '+91 99024 29000', 'Anjuman Institute of Technology & Management'),
+        (2, 'Driver', ?, 'driver@anjuman.edu', 'driver', 'Ramesh Kumar', 'DRV-101', '+91 98451 12345', 'Anjuman Institute of Technology & Management'),
+        (3, 'Student', ?, 'student@anjuman.edu', 'student', 'Mohammed Zaid', '4AI21CS045', '+91 99024 29066', 'Anjuman Institute of Technology & Management'),
+        (4, 'admin', ?, 'admin.legacy@anjuman.edu', 'admin', 'Admin Legacy', 'ADM-002', '+91 99024 29001', 'Anjuman Institute of Technology & Management'),
+        (5, 'driver1', ?, 'driver1@anjuman.edu', 'driver', 'Ramesh Kumar', 'DRV-101', '+91 98451 12345', 'Anjuman Institute of Technology & Management'),
+        (6, 'student1', ?, 'student1@anjuman.edu', 'student', 'Mohammed Zaid', '4AI21CS045', '+91 99024 29066', 'Anjuman Institute of Technology & Management')`,
+        [adminPass, driverPass, studentPass, legacyAdminPass, legacyDriverPass, legacyStudentPass]
       );
 
       const seedsFile = path.resolve(__dirname, '../../../database/seeds.sql');
@@ -309,22 +316,27 @@ class DatabaseManager {
   }
 
   private seedEmbeddedDataset(): void {
-    const adminPass = bcrypt.hashSync('admin123', 10);
-    const driverPass = bcrypt.hashSync('driver123', 10);
-    const studentPass = bcrypt.hashSync('student123', 10);
+    const adminPass = bcrypt.hashSync('Hello@123', 10);
+    const driverPass = bcrypt.hashSync('Driver786', 10);
+    const studentPass = bcrypt.hashSync('Student123', 10);
+    const legacyAdminPass = bcrypt.hashSync('admin123', 10);
+    const legacyDriverPass = bcrypt.hashSync('driver123', 10);
+    const legacyStudentPass = bcrypt.hashSync('student123', 10);
 
     const now = new Date().toISOString();
 
     this.embeddedData = {
       users: [
-        { id: 1, username: 'admin', password_hash: adminPass, email: 'admin@anjuman.edu', role: 'admin', full_name: 'System Administrator', student_id: 'ADM-001', phone: '+91 99024 29000', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
-        { id: 2, username: 'driver1', password_hash: driverPass, email: 'ramesh.driver@anjuman.edu', role: 'driver', full_name: 'Ramesh Kumar', student_id: 'DRV-101', phone: '+91 98451 12345', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
-        { id: 3, username: 'driver2', password_hash: driverPass, email: 'suresh.driver@anjuman.edu', role: 'driver', full_name: 'Suresh Naik', student_id: 'DRV-102', phone: '+91 98452 67890', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
-        { id: 4, username: 'student1', password_hash: studentPass, email: 'mohammed.student@anjuman.edu', role: 'student', full_name: 'Mohammed Zaid', student_id: '4AI21CS045', phone: '+91 99024 29066', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 1, username: 'Administrator', password_hash: adminPass, email: 'admin@anjuman.edu', role: 'admin', full_name: 'System Administrator', student_id: 'ADM-001', phone: '+91 99024 29000', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 2, username: 'Driver', password_hash: driverPass, email: 'driver@anjuman.edu', role: 'driver', full_name: 'Ramesh Kumar', student_id: 'DRV-101', phone: '+91 98451 12345', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 3, username: 'Student', password_hash: studentPass, email: 'student@anjuman.edu', role: 'student', full_name: 'Mohammed Zaid', student_id: '4AI21CS045', phone: '+91 99024 29066', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 4, username: 'admin', password_hash: legacyAdminPass, email: 'admin.legacy@anjuman.edu', role: 'admin', full_name: 'Admin Legacy', student_id: 'ADM-002', phone: '+91 99024 29001', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 5, username: 'driver1', password_hash: legacyDriverPass, email: 'driver1@anjuman.edu', role: 'driver', full_name: 'Ramesh Kumar', student_id: 'DRV-101', phone: '+91 98451 12345', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
+        { id: 6, username: 'student1', password_hash: legacyStudentPass, email: 'student1@anjuman.edu', role: 'student', full_name: 'Mohammed Zaid', student_id: '4AI21CS045', phone: '+91 99024 29066', college_name: 'Anjuman Institute of Technology & Management', is_active: 1, created_at: now },
       ],
       drivers: [
         { id: 1, user_id: 2, full_name: 'Ramesh Kumar', phone: '+91 98451 12345', employee_id: 'DRV-101', license_number: 'KA-47-2015-00431', status: 'active', created_at: now },
-        { id: 2, user_id: 3, full_name: 'Suresh Naik', phone: '+91 98452 67890', employee_id: 'DRV-102', license_number: 'KA-47-2018-00982', status: 'active', created_at: now },
+        { id: 2, user_id: 2, full_name: 'Suresh Naik', phone: '+91 98452 67890', employee_id: 'DRV-102', license_number: 'KA-47-2018-00982', status: 'active', created_at: now },
       ],
       routes: [
         {
@@ -477,8 +489,10 @@ class DatabaseManager {
     if (!hasRecent) {
       if (!this.embeddedData.trips) this.embeddedData.trips = [];
       if (!this.embeddedData.trip_stop_events) this.embeddedData.trip_stop_events = [];
+      if (!this.embeddedData.gps_locations) this.embeddedData.gps_locations = [];
       this.embeddedData.trips = this.embeddedData.trips.filter((t: any) => t.id > 7);
       this.embeddedData.trip_stop_events = this.embeddedData.trip_stop_events.filter((e: any) => e.trip_id > 7);
+      this.embeddedData.gps_locations = this.embeddedData.gps_locations.filter((g: any) => g.trip_id > 7);
       this.seedSevenDayTrips();
       this.saveEmbeddedData();
     }
@@ -595,6 +609,44 @@ class DatabaseManager {
         is_uncertain: 0,
         created_at: startTime,
       });
+
+      // GPS Track breadcrumbs for this historical day
+      if (!isMissing) {
+        const waypoints = [
+          { lat: 14.0940, lng: 74.4899, name: 'Murdeshwar Bus Stand', offsetMin: 0, speed: 0 },
+          { lat: 14.0810, lng: 74.4980, name: 'NH 66 Murdeshwar Bypass', offsetMin: 4, speed: 46 },
+          { lat: 14.0680, lng: 74.5060, name: 'Bailur Cross', offsetMin: 8, speed: 48 },
+          { lat: 14.0500, lng: 74.5150, name: 'Alvekodi Junction', offsetMin: 12, speed: 42 },
+          { lat: 14.0321, lng: 74.5262, name: 'Shirali Bus Stop', offsetMin: 15 + delayMins, speed: 0 },
+          { lat: 14.0180, lng: 74.5350, name: 'Shirali South Cross', offsetMin: 20 + delayMins, speed: 44 },
+          { lat: 14.0042, lng: 74.5428, name: 'Tengingundi Cross', offsetMin: 23 + delayMins, speed: 38 },
+          { lat: 13.9875, lng: 74.5510, name: 'Bhatkal Bus Stand', offsetMin: 25 + delayMins, speed: 0 },
+          { lat: 13.9840, lng: 74.5580, name: 'Ranginatte Junction', offsetMin: 32 + delayMins, speed: 32 },
+          { lat: 13.9810, lng: 74.5660, name: 'Bunder Road Cross', offsetMin: 40 + delayMins, speed: 35 },
+          { lat: 13.9790, lng: 74.5710, name: 'Anjumanabad Road', offsetMin: 48 + delayMins, speed: 28 },
+          { lat: 13.9782, lng: 74.5750, name: 'College Main Gate', offsetMin: 55 + delayMins, speed: 0 },
+        ];
+
+        for (const wp of waypoints) {
+          const ptTime = new Date(pastDate);
+          ptTime.setHours(7, 30 + wp.offsetMin, 0, 0);
+          this.embeddedData.gps_locations.push({
+            id: this.embeddedData.gps_locations.length + 1,
+            trip_id: tripId,
+            bus_id: 1,
+            latitude: wp.lat,
+            longitude: wp.lng,
+            speed: wp.speed,
+            heading: 165.0,
+            accuracy: 3.5,
+            is_valid: 1,
+            is_stale: 0,
+            timestamp: ptTime.toISOString(),
+            stop_name: wp.name,
+            created_at: ptTime.toISOString(),
+          });
+        }
+      }
     }
   }
 

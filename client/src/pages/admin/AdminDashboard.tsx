@@ -125,6 +125,27 @@ export const AdminDashboard: React.FC = () => {
   const [editDriverStatus, setEditDriverStatus] = useState<Driver['status']>('active');
   const [editDriverAssignedBusId, setEditDriverAssignedBusId] = useState<number | ''>('');
 
+  // ================= STUDENT MANAGEMENT MODALS =================
+  const [showAddStudentModal, setShowAddStudentModal] = useState<boolean>(false);
+  const [newStudentUsername, setNewStudentUsername] = useState<string>('');
+  const [newStudentPassword, setNewStudentPassword] = useState<string>('');
+  const [newStudentFullName, setNewStudentFullName] = useState<string>('');
+  const [newStudentId, setNewStudentId] = useState<string>('');
+  const [newStudentPhone, setNewStudentPhone] = useState<string>('');
+  const [newStudentEmail, setNewStudentEmail] = useState<string>('');
+  const [newStudentPreferredBusId, setNewStudentPreferredBusId] = useState<number | ''>('');
+  const [newStudentPreferredPickupPointId, setNewStudentPreferredPickupPointId] = useState<number | ''>('');
+
+  const [editingStudent, setEditingStudent] = useState<StudentUser | null>(null);
+  const [editStudentFullName, setEditStudentFullName] = useState<string>('');
+  const [editStudentId, setEditStudentId] = useState<string>('');
+  const [editStudentPhone, setEditStudentPhone] = useState<string>('');
+  const [editStudentEmail, setEditStudentEmail] = useState<string>('');
+  const [editStudentPassword, setEditStudentPassword] = useState<string>('');
+  const [editStudentIsActive, setEditStudentIsActive] = useState<number>(1);
+  const [editStudentPreferredBusId, setEditStudentPreferredBusId] = useState<number | ''>('');
+  const [editStudentPreferredPickupPointId, setEditStudentPreferredPickupPointId] = useState<number | ''>('');
+
   // ================= PICKUP POINT MANAGEMENT MODALS =================
   const [showAddStopModal, setShowAddStopModal] = useState<boolean>(false);
   const [newStopName, setNewStopName] = useState<string>('');
@@ -412,6 +433,94 @@ export const AdminDashboard: React.FC = () => {
           loadDashboardData();
         } catch (e: any) {
           showToast('error', `Failed deactivating driver: ${e.message}`);
+        }
+      },
+    });
+  };
+
+  // ================= STUDENT CRUD HANDLERS =================
+  const handleAddStudent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newStudentUsername.trim() || !newStudentFullName.trim()) {
+      showToast('error', 'Username and Full Name are required');
+      return;
+    }
+
+    try {
+      await api.admin.createUser({
+        username: newStudentUsername.trim(),
+        password: newStudentPassword.trim() || 'Student123',
+        fullName: newStudentFullName.trim(),
+        role: 'student',
+        studentId: newStudentId.trim() || undefined,
+        phone: newStudentPhone.trim() || undefined,
+        email: newStudentEmail.trim() || undefined,
+        preferredBusId: newStudentPreferredBusId ? Number(newStudentPreferredBusId) : undefined,
+        preferredPickupPointId: newStudentPreferredPickupPointId ? Number(newStudentPreferredPickupPointId) : undefined,
+      });
+      setShowAddStudentModal(false);
+      setNewStudentUsername('');
+      setNewStudentPassword('');
+      setNewStudentFullName('');
+      setNewStudentId('');
+      setNewStudentPhone('');
+      setNewStudentEmail('');
+      setNewStudentPreferredBusId('');
+      setNewStudentPreferredPickupPointId('');
+      showToast('success', 'Student account registered and saved to Supabase!');
+      loadDashboardData();
+    } catch (e: any) {
+      showToast('error', `Error registering student: ${e.message}`);
+    }
+  };
+
+  const openEditStudentModal = (student: StudentUser) => {
+    setEditingStudent(student);
+    setEditStudentFullName(student.full_name || '');
+    setEditStudentId(student.student_id || '');
+    setEditStudentPhone(student.phone || '');
+    setEditStudentEmail(student.email || '');
+    setEditStudentPassword('');
+    setEditStudentIsActive(student.is_active ?? 1);
+    setEditStudentPreferredBusId(student.preferred_bus_id || '');
+    setEditStudentPreferredPickupPointId(student.preferred_pickup_point_id || '');
+  };
+
+  const handleUpdateStudent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingStudent) return;
+
+    try {
+      await api.admin.updateUser(editingStudent.id, {
+        fullName: editStudentFullName.trim(),
+        studentId: editStudentId.trim(),
+        phone: editStudentPhone.trim(),
+        email: editStudentEmail.trim(),
+        isActive: editStudentIsActive,
+        password: editStudentPassword.trim() || undefined,
+        preferredBusId: editStudentPreferredBusId ? Number(editStudentPreferredBusId) : null,
+        preferredPickupPointId: editStudentPreferredPickupPointId ? Number(editStudentPreferredPickupPointId) : null,
+      });
+      setEditingStudent(null);
+      showToast('success', `Student account ${editingStudent.username} updated successfully!`);
+      loadDashboardData();
+    } catch (e: any) {
+      showToast('error', `Error updating student: ${e.message}`);
+    }
+  };
+
+  const confirmDeleteStudent = (student: StudentUser) => {
+    setConfirmModal({
+      title: 'Delete Student Account',
+      message: `Are you sure you want to delete student account '${student.username}' (${student.full_name})? This action cannot be undone.`,
+      confirmText: 'Delete Student',
+      onConfirm: async () => {
+        try {
+          await api.admin.deleteUser(student.id);
+          showToast('success', `Student ${student.username} deleted successfully`);
+          loadDashboardData();
+        } catch (e: any) {
+          showToast('error', `Failed deleting student: ${e.message}`);
         }
       },
     });
@@ -1082,15 +1191,10 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
-                <button
-                  type="button"
-                  onClick={handleSyncSupabase}
-                  disabled={isSyncingSupabase}
-                  className="px-4 py-2 bg-brand-accent hover:bg-[#5b95c3] text-white rounded-xl text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5 disabled:opacity-50 whitespace-nowrap"
-                >
-                  <UploadCloud className={`w-4 h-4 ${isSyncingSupabase ? 'animate-spin' : ''}`} />
-                  <span>{isSyncingSupabase ? 'Syncing to Supabase...' : 'Sync Database to Supabase'}</span>
-                </button>
+                <div className="px-3.5 py-2 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm whitespace-nowrap">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+                  <span>Automatic Supabase Sync: Active</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1851,15 +1955,25 @@ export const AdminDashboard: React.FC = () => {
               </p>
             </div>
 
-            <div className="relative">
-              <Search className="w-4 h-4 text-brand-gray absolute left-3 top-2.5" />
-              <input
-                type="text"
-                placeholder="Search students..."
-                value={studentSearch}
-                onChange={(e) => setStudentSearch(e.target.value)}
-                className="pl-9 pr-3 py-1.5 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
-              />
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search className="w-4 h-4 text-brand-gray absolute left-3 top-2.5" />
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  value={studentSearch}
+                  onChange={(e) => setStudentSearch(e.target.value)}
+                  className="pl-9 pr-3 py-1.5 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl text-brand-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                />
+              </div>
+
+              <button
+                onClick={() => setShowAddStudentModal(true)}
+                className="bg-brand-accent hover:bg-[#5b95c3] text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm flex items-center gap-1.5 transition-colors whitespace-nowrap"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Student</span>
+              </button>
             </div>
           </div>
 
@@ -1869,11 +1983,12 @@ export const AdminDashboard: React.FC = () => {
                 <tr>
                   <th className="p-3.5">Student ID</th>
                   <th className="p-3.5">Full Name</th>
-                  <th className="p-3.5">Email</th>
+                  <th className="p-3.5">Username</th>
                   <th className="p-3.5">Phone</th>
-                  <th className="p-3.5">College</th>
                   <th className="p-3.5">Preferred Bus</th>
                   <th className="p-3.5">Pickup Point</th>
+                  <th className="p-3.5">Status</th>
+                  <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -1881,16 +1996,50 @@ export const AdminDashboard: React.FC = () => {
                   <tr key={s.id} className="hover:bg-brand-cream/30 transition-colors">
                     <td className="p-3.5 font-mono font-bold text-brand-accent">{s.student_id || 'N/A'}</td>
                     <td className="p-3.5 font-bold text-brand-navy">{s.full_name}</td>
-                    <td className="p-3.5 text-brand-gray">{s.email || 'N/A'}</td>
+                    <td className="p-3.5 text-brand-gray font-mono">@{s.username}</td>
                     <td className="p-3.5 font-mono">{s.phone || 'N/A'}</td>
-                    <td className="p-3.5 text-brand-gray">{s.college_name || 'Anjuman College'}</td>
-                    <td className="p-3.5 font-semibold">{s.bus_number || 'Default'}</td>
+                    <td className="p-3.5 font-semibold">
+                      {s.bus_number ? (
+                        <span className="px-2 py-0.5 bg-brand-secondary text-brand-navy rounded-lg font-bold">
+                          {s.bus_number}
+                        </span>
+                      ) : (
+                        <span className="text-brand-gray italic">Default</span>
+                      )}
+                    </td>
                     <td className="p-3.5 font-medium">{s.pickup_point_name || 'Bhatkal Bus Stand'}</td>
+                    <td className="p-3.5">
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold capitalize ${
+                          s.is_active === 1
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : 'bg-gray-100 text-gray-600'
+                        }`}
+                      >
+                        {s.is_active === 1 ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    <td className="p-3.5 text-right whitespace-nowrap">
+                      <button
+                        onClick={() => openEditStudentModal(s)}
+                        className="p-1.5 text-brand-accent hover:text-brand-navy hover:bg-brand-secondary rounded-lg transition-colors mr-1"
+                        title="Edit Student Account"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => confirmDeleteStudent(s)}
+                        className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Delete Student Account"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
                 {filteredStudents.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-brand-gray italic">
+                    <td colSpan={8} className="p-8 text-center text-brand-gray italic">
                       No matching students found.
                     </td>
                   </tr>
@@ -2493,6 +2642,272 @@ export const AdminDashboard: React.FC = () => {
                   className="px-4 py-2 text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white rounded-xl shadow-sm"
                 >
                   Update Driver
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL: ADD STUDENT ================= */}
+      {showAddStudentModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 border border-brand-primary shadow-elevated animate-scaleUp my-8 max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between pb-3 border-b border-brand-secondary flex-shrink-0">
+              <h3 className="font-bold text-brand-navy text-base flex items-center gap-2">
+                <Users className="w-5 h-5 text-brand-accent" />
+                <span>Register New Student</span>
+              </h3>
+              <button onClick={() => setShowAddStudentModal(false)} className="text-brand-gray hover:text-brand-navy">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddStudent} className="overflow-y-auto pr-1 flex-1 py-4 space-y-3.5">
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Zaid Mohammed"
+                  value={newStudentFullName}
+                  onChange={(e) => setNewStudentFullName(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Username (Login ID)</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. zaid_m"
+                  value={newStudentUsername}
+                  onChange={(e) => setNewStudentUsername(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Initial Password</label>
+                <input
+                  type="password"
+                  placeholder="Defaults to Student123"
+                  value={newStudentPassword}
+                  onChange={(e) => setNewStudentPassword(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Student ID / USN</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 4AI24CS045"
+                  value={newStudentId}
+                  onChange={(e) => setNewStudentId(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-mono uppercase"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Phone Number</label>
+                <input
+                  type="tel"
+                  placeholder="+91 98451 00000"
+                  value={newStudentPhone}
+                  onChange={(e) => setNewStudentPhone(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Email Address</label>
+                <input
+                  type="email"
+                  placeholder="student@aitm.edu.in"
+                  value={newStudentEmail}
+                  onChange={(e) => setNewStudentEmail(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Preferred Bus</label>
+                <select
+                  value={newStudentPreferredBusId}
+                  onChange={(e) => setNewStudentPreferredBusId(e.target.value ? Number(e.target.value) : '')}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                >
+                  <option value="">-- Select Bus --</option>
+                  {buses.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.bus_number} ({b.bus_name})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Preferred Pickup Point</label>
+                <select
+                  value={newStudentPreferredPickupPointId}
+                  onChange={(e) => setNewStudentPreferredPickupPointId(e.target.value ? Number(e.target.value) : '')}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                >
+                  <option value="">-- Select Pickup Point --</option>
+                  {pickupPoints.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} {p.landmark ? `(${p.landmark})` : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-brand-secondary">
+                <button
+                  type="button"
+                  onClick={() => setShowAddStudentModal(false)}
+                  className="px-4 py-2 text-xs font-semibold text-brand-gray hover:text-brand-navy"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white rounded-xl shadow-sm"
+                >
+                  Register Student
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL: EDIT STUDENT ================= */}
+      {editingStudent && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 border border-brand-primary shadow-elevated animate-scaleUp my-8 max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between pb-3 border-b border-brand-secondary flex-shrink-0">
+              <h3 className="font-bold text-brand-navy text-base flex items-center gap-2">
+                <Edit className="w-5 h-5 text-brand-accent" />
+                <span>Edit Student: @{editingStudent.username}</span>
+              </h3>
+              <button onClick={() => setEditingStudent(null)} className="text-brand-gray hover:text-brand-navy">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateStudent} className="overflow-y-auto pr-1 flex-1 py-4 space-y-3.5">
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={editStudentFullName}
+                  onChange={(e) => setEditStudentFullName(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Student ID / USN</label>
+                <input
+                  type="text"
+                  value={editStudentId}
+                  onChange={(e) => setEditStudentId(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-mono uppercase"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Phone Number</label>
+                <input
+                  type="tel"
+                  value={editStudentPhone}
+                  onChange={(e) => setEditStudentPhone(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Email Address</label>
+                <input
+                  type="email"
+                  value={editStudentEmail}
+                  onChange={(e) => setEditStudentEmail(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Reset Password (Optional)</label>
+                <input
+                  type="password"
+                  placeholder="Leave blank to keep unchanged"
+                  value={editStudentPassword}
+                  onChange={(e) => setEditStudentPassword(e.target.value)}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Preferred Bus</label>
+                <select
+                  value={editStudentPreferredBusId}
+                  onChange={(e) => setEditStudentPreferredBusId(e.target.value ? Number(e.target.value) : '')}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                >
+                  <option value="">-- Select Bus --</option>
+                  {buses.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.bus_number} ({b.bus_name})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Preferred Pickup Point</label>
+                <select
+                  value={editStudentPreferredPickupPointId}
+                  onChange={(e) => setEditStudentPreferredPickupPointId(e.target.value ? Number(e.target.value) : '')}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                >
+                  <option value="">-- Select Pickup Point --</option>
+                  {pickupPoints.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} {p.landmark ? `(${p.landmark})` : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-brand-navy mb-1 uppercase">Account Status</label>
+                <select
+                  value={editStudentIsActive}
+                  onChange={(e) => setEditStudentIsActive(Number(e.target.value))}
+                  className="w-full p-2 text-xs bg-brand-cream/50 border border-brand-primary/60 rounded-xl"
+                >
+                  <option value={1}>Active</option>
+                  <option value={0}>Deactivated (Suspended)</option>
+                </select>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-brand-secondary">
+                <button
+                  type="button"
+                  onClick={() => setEditingStudent(null)}
+                  className="px-4 py-2 text-xs font-semibold text-brand-gray hover:text-brand-navy"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-xs font-bold bg-brand-primary hover:bg-brand-accent text-brand-navy hover:text-white rounded-xl shadow-sm"
+                >
+                  Update Student
                 </button>
               </div>
             </form>
