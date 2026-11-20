@@ -22,28 +22,30 @@ router.post('/start', authenticateJWT, requireRole(['driver', 'admin']), async (
       return;
     }
 
-    // Authorization check: if logged in as driver, verify driver is assigned to this bus
-    if (req.user?.role === 'driver') {
-      const userDriverId = req.user.driverId;
-      if (userDriverId && bus.assigned_driver_id && bus.assigned_driver_id !== userDriverId) {
-        res.status(403).json({
-          success: false,
-          error: `Access denied: You are assigned to Bus ID ${req.user.assignedBusId || 'another bus'}, not Bus ${bus.bus_number}.`,
-        });
-        return;
-      }
+    // Verify the selected bus has a driver and route configured by the administrator
+    if (!bus.assigned_driver_id) {
+      res.status(400).json({
+        success: false,
+        error: `Cannot start trip: Bus ${bus.bus_number} has no driver assigned by the administrator.`,
+      });
+      return;
     }
 
-    const assignedDriverId = req.user?.role === 'driver' && req.user.driverId
-      ? req.user.driverId
-      : driverId
-      ? parseInt(driverId, 10)
-      : (bus.assigned_driver_id || 1);
+    if (!bus.assigned_route_id) {
+      res.status(400).json({
+        success: false,
+        error: `Cannot start trip: Bus ${bus.bus_number} has no route assigned by the administrator.`,
+      });
+      return;
+    }
+
+    const assignedDriverId = bus.assigned_driver_id;
+    const assignedRouteId = bus.assigned_route_id;
 
     const trip = await TripService.startTrip({
       busId: bus.id,
       driverId: assignedDriverId,
-      routeId: routeId ? parseInt(routeId, 10) : (bus.assigned_route_id || 1),
+      routeId: assignedRouteId,
       isDemo: Boolean(isDemo),
       initialLat,
       initialLng,

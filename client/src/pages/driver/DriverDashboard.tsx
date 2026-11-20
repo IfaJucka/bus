@@ -13,6 +13,7 @@ import {
   Radio,
   Send,
   Bus as BusIcon,
+  User as UserIcon,
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
@@ -219,14 +220,43 @@ export const DriverDashboard: React.FC = () => {
     }
   }, [selectedBusId]);
 
+  const selectedBus = buses.find((b) => Number(b.id) === Number(selectedBusId));
+  const selectedRoute =
+    routes.find((r) => Number(r.id) === Number(selectedRouteId)) ||
+    (selectedBus?.assigned_route_id ? routes.find((r) => Number(r.id) === Number(selectedBus.assigned_route_id)) : null);
+
+  const handleBusChange = (newBusId: number) => {
+    if (isTripActive) {
+      alert('Please end the current active trip before selecting a different bus.');
+      return;
+    }
+    setSelectedBusId(newBusId);
+    const matched = buses.find((b) => Number(b.id) === Number(newBusId));
+    if (matched?.assigned_route_id) {
+      setSelectedRouteId(matched.assigned_route_id);
+    } else {
+      setSelectedRouteId(0);
+    }
+  };
+
   // Handle Trip Start
   const handleStartTrip = async () => {
-    if (!selectedBusId) {
+    if (!selectedBus) {
       alert('Please select a bus before starting the trip.');
       return;
     }
-    if (!selectedRouteId) {
-      alert('Please select an assigned route before starting the trip.');
+
+    if (!selectedBus.assigned_driver_id) {
+      alert(
+        `Cannot start trip: Bus ${selectedBus.bus_number} (${selectedBus.bus_name}) has no driver assigned by the administrator. Please assign a driver in the Admin Portal.`
+      );
+      return;
+    }
+
+    if (!selectedBus.assigned_route_id) {
+      alert(
+        `Cannot start trip: Bus ${selectedBus.bus_number} (${selectedBus.bus_name}) has no route assigned by the administrator. Please assign a route in the Admin Portal.`
+      );
       return;
     }
 
@@ -256,9 +286,9 @@ export const DriverDashboard: React.FC = () => {
       }
 
       const res = await api.tracking.start({
-        busId: selectedBusId,
-        driverId: user?.driverId || 1,
-        routeId: selectedRouteId,
+        busId: selectedBus.id,
+        driverId: selectedBus.assigned_driver_id,
+        routeId: selectedBus.assigned_route_id,
         isDemo: isDemoMode,
       });
 
@@ -484,9 +514,6 @@ export const DriverDashboard: React.FC = () => {
     }
   };
 
-  const selectedBus = buses.find((b) => b.id === selectedBusId);
-  const selectedRoute = routes.find((r) => r.id === selectedRouteId);
-
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-20">
       {/* Driver Header */}
@@ -513,29 +540,24 @@ export const DriverDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Bus & Route Selection */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-5 border-t border-brand-secondary">
+        {/* Bus & Driver & Route Selection / Display */}
+        <div className="space-y-4 mt-6 pt-5 border-t border-brand-secondary">
+          {/* Bus Dropdown */}
           <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-bold text-brand-navy uppercase">Vehicle</label>
-              {user?.role === 'driver' && user.assignedBusId && (
-                <span className="text-[10px] bg-brand-secondary text-brand-navy px-1.5 py-0.5 rounded font-bold border border-brand-primary/50">
-                  Assigned
-                </span>
-              )}
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-bold text-brand-navy uppercase flex items-center gap-1.5">
+                <BusIcon className="w-3.5 h-3.5 text-brand-navy" />
+                Select Bus / Vehicle
+              </label>
+              <span className="text-[10px] text-gray-500 font-semibold">
+                {buses.length} active {buses.length === 1 ? 'bus' : 'buses'} available
+              </span>
             </div>
             <select
               value={selectedBusId}
-              disabled={isTripActive || user?.role === 'driver'}
-              onChange={(e) => {
-                const bId = parseInt(e.target.value, 10);
-                setSelectedBusId(bId);
-                const matched = buses.find((b) => Number(b.id) === Number(bId));
-                if (matched?.assigned_route_id) {
-                  setSelectedRouteId(matched.assigned_route_id);
-                }
-              }}
-              className="w-full px-3 py-2 text-xs border border-brand-primary rounded-xl bg-brand-cream/40 font-bold text-brand-navy disabled:opacity-85 disabled:cursor-not-allowed"
+              disabled={isTripActive}
+              onChange={(e) => handleBusChange(parseInt(e.target.value, 10))}
+              className="w-full px-3.5 py-2.5 text-sm border border-brand-primary rounded-xl bg-brand-cream/40 font-bold text-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-primary disabled:opacity-75 disabled:cursor-not-allowed transition-all shadow-sm"
             >
               {buses.map((b) => (
                 <option key={b.id} value={b.id}>
@@ -543,23 +565,82 @@ export const DriverDashboard: React.FC = () => {
                 </option>
               ))}
             </select>
+            {isTripActive && (
+              <p className="text-[11px] text-amber-700 mt-1 font-medium">
+                * Bus selection is locked while a trip is active. End current trip to switch buses.
+              </p>
+            )}
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-brand-navy uppercase mb-1">Assigned Route</label>
-            <select
-              value={selectedRouteId}
-              disabled={isTripActive}
-              onChange={(e) => setSelectedRouteId(parseInt(e.target.value, 10))}
-              className="w-full px-3 py-2 text-xs border border-brand-primary rounded-xl bg-brand-cream/40 font-bold text-brand-navy"
-            >
-              {routes.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.route_name}
-                </option>
-              ))}
-            </select>
+          {/* Assigned Driver & Route Details (Auto-fetched & Read-Only) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            {/* Assigned Driver Box */}
+            <div className="bg-brand-cream/30 border border-brand-primary/60 rounded-2xl p-3.5">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-bold text-brand-navy uppercase flex items-center gap-1">
+                  <UserIcon className="w-3.5 h-3.5 text-brand-navy" />
+                  Assigned Driver
+                </span>
+                <span className="text-[9px] bg-brand-secondary text-brand-navy px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-brand-primary/40">
+                  Read-Only
+                </span>
+              </div>
+              <div className="text-sm font-extrabold text-brand-navy mt-1">
+                {selectedBus?.driver_name ? (
+                  <div className="flex items-center justify-between">
+                    <span>{selectedBus.driver_name}</span>
+                    {selectedBus.driver_phone && (
+                      <span className="text-xs font-semibold text-gray-500 font-mono">
+                        {selectedBus.driver_phone}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <span className="text-xs font-bold text-amber-700 italic">No driver assigned by admin</span>
+                )}
+              </div>
+            </div>
+
+            {/* Assigned Route Box */}
+            <div className="bg-brand-cream/30 border border-brand-primary/60 rounded-2xl p-3.5">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-bold text-brand-navy uppercase flex items-center gap-1">
+                  <Navigation className="w-3.5 h-3.5 text-brand-navy" />
+                  Assigned Route
+                </span>
+                <span className="text-[9px] bg-brand-secondary text-brand-navy px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-brand-primary/40">
+                  Read-Only
+                </span>
+              </div>
+              <div className="text-sm font-extrabold text-brand-navy mt-1">
+                {selectedBus?.route_name ? (
+                  <div>
+                    <span>{selectedBus.route_name}</span>
+                    {selectedBus.start_point && selectedBus.destination && (
+                      <p className="text-[11px] font-medium text-gray-500 mt-0.5">
+                        {selectedBus.start_point} &rarr; {selectedBus.destination}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <span className="text-xs font-bold text-amber-700 italic">No route assigned by admin</span>
+                )}
+              </div>
+            </div>
           </div>
+
+          {/* Warning Banner if unassigned */}
+          {(!selectedBus?.assigned_driver_id || !selectedBus?.assigned_route_id) && (
+            <div className="bg-amber-50 border border-amber-300 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-900 font-medium">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-bold">Admin Assignment Required</p>
+                <p className="text-[11px] text-amber-800 mt-0.5">
+                  This bus does not have {(!selectedBus?.assigned_driver_id && !selectedBus?.assigned_route_id) ? 'an assigned driver and route' : !selectedBus?.assigned_driver_id ? 'an assigned driver' : 'an assigned route'}. The fleet administrator must assign them in the Admin Portal before a trip can be started.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

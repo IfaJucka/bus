@@ -57,8 +57,8 @@ export class BusService {
     const routes = db.getTable<any>('routes');
 
     return buses.map((b) => {
-      const driver = drivers.find((d) => d.id === b.assigned_driver_id);
-      const route = routes.find((r) => r.id === b.assigned_route_id);
+      const driver = drivers.find((d) => Number(d.id) === Number(b.assigned_driver_id));
+      const route = routes.find((r) => Number(r.id) === Number(b.assigned_route_id));
       const stale = isGpsStale(b.last_gps_timestamp);
 
       return {
