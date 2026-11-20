@@ -1,13 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { BusService } from '../services/busService';
-import { authenticateJWT, requireRole } from '../middleware/auth';
+import { authenticateJWT, requireRole, optionalAuth, AuthenticatedRequest } from '../middleware/auth';
 
 const router = Router();
 
-// GET /api/buses
-router.get('/', async (req: Request, res: Response) => {
+// GET /api/buses (Public sees active buses; authenticated Admin sees all buses)
+router.get('/', optionalAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const buses = await BusService.getAllBuses();
+    const isAdmin = req.user?.role === 'admin';
+    const buses = await BusService.getAllBuses(isAdmin);
     res.json({ success: true, count: buses.length, buses });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });

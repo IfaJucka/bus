@@ -231,22 +231,43 @@ export const AdminDashboard: React.FC = () => {
     setIsLoading(true);
     try {
       const [busList, driverList, routeList, pointsList, complaintList, tripList, studentList, sbStatus] = await Promise.all([
-        api.buses.getAll(),
-        api.drivers.getAll(),
-        api.routes.getAll(),
-        api.pickupPoints.getAll(),
-        api.complaints.getAll(),
-        api.trips.getAll(),
-        api.auth.getStudents().catch(() => []),
+        api.buses.getAll().catch((err) => {
+          console.warn('[Admin] Bus load warning:', err.message);
+          return [];
+        }),
+        api.drivers.getAll().catch((err) => {
+          console.warn('[Admin] Driver load warning:', err.message);
+          return [];
+        }),
+        api.routes.getAll().catch((err) => {
+          console.warn('[Admin] Route load warning:', err.message);
+          return [];
+        }),
+        api.pickupPoints.getAll().catch((err) => {
+          console.warn('[Admin] Pickup points load warning:', err.message);
+          return [];
+        }),
+        api.complaints.getAll().catch((err) => {
+          console.warn('[Admin] Complaints load warning:', err.message);
+          return [];
+        }),
+        api.trips.getAll().catch((err) => {
+          console.warn('[Admin] Trips load warning:', err.message);
+          return [];
+        }),
+        api.auth.getStudents().catch((err) => {
+          console.warn('[Admin] Students load warning:', err.message);
+          return [];
+        }),
         api.admin.getSupabaseStatus().catch(() => null),
       ]);
 
-      setBuses(busList);
-      setDrivers(driverList);
-      setRoutes(routeList);
-      setPickupPoints(pointsList);
-      setComplaints(complaintList);
-      setTrips(tripList);
+      setBuses(busList || []);
+      setDrivers(driverList || []);
+      setRoutes(routeList || []);
+      setPickupPoints(pointsList || []);
+      setComplaints(complaintList || []);
+      setTrips(tripList || []);
       setStudents(studentList || []);
       if (sbStatus && sbStatus.supabase) {
         setSupabaseStatus(sbStatus.supabase);

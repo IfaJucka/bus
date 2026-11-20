@@ -97,6 +97,20 @@
       "is_active": 1,
       "created_at": "2026-11-20T11:17:02.835+00:00",
       "updated_at": "2026-11-20T11:17:48.884974+00:00"
+    },
+    {
+      "id": 8,
+      "username": "ifa",
+      "password_hash": "$2a$10$C1b2soM9x8iyRJzhI3OiB.uT4MKprvtjAxm/NcBgyMS42NPQ0SGRa",
+      "email": null,
+      "role": "student",
+      "full_name": "ifa",
+      "student_id": "2ab24ci025",
+      "phone": "9090898765",
+      "college_name": "Anjuman Institute of Technology & Management",
+      "is_active": 1,
+      "created_at": "2026-11-20T11:56:11.411+00:00",
+      "updated_at": "2026-11-20T11:56:12.621038+00:00"
     }
   ],
   "drivers": [
@@ -372,16 +386,16 @@
       "capacity": 52,
       "assigned_driver_id": 1,
       "assigned_route_id": 1,
-      "status": "running_on_time",
-      "gps_status": "active",
-      "last_latitude": 14.1064404,
-      "last_longitude": 74.4929874,
+      "status": "trip_completed",
+      "gps_status": "offline",
+      "last_latitude": 14.106242,
+      "last_longitude": 74.492966,
       "last_speed": 0,
       "last_heading": 0,
-      "last_gps_timestamp": "2026-11-20T10:52:24.923+00:00",
+      "last_gps_timestamp": "2026-11-20T12:05:47.539+00:00",
       "is_active": 1,
       "created_at": "2026-11-12T17:11:32.117288+00:00",
-      "updated_at": "2026-11-20T10:53:10.446+00:00"
+      "updated_at": "2026-11-20T12:06:17.235+00:00"
     }
   ],
   "route_schedules": [
@@ -437,15 +451,29 @@
   "student_pickup_preferences": [
     {
       "id": 1,
-      "user_id": 4,
-      "student_identifier": "4AI21CS045",
+      "user_id": 7,
+      "student_identifier": "Student",
       "bus_id": 1,
       "route_id": 1,
       "pickup_point_id": 2,
       "notification_5min_enabled": 1,
       "notification_delay_enabled": 1,
       "notification_trip_start_enabled": 1,
-      "created_at": "2026-11-12T15:56:03.449Z"
+      "created_at": "2026-11-20T11:18:15.890235+00:00",
+      "updated_at": "2026-11-20T11:18:15.890235+00:00"
+    },
+    {
+      "id": 2,
+      "user_id": 8,
+      "student_identifier": "2ab24ci025",
+      "bus_id": 1,
+      "route_id": 1,
+      "pickup_point_id": 2,
+      "notification_5min_enabled": 1,
+      "notification_delay_enabled": 1,
+      "notification_trip_start_enabled": 1,
+      "created_at": "2026-11-20T11:56:11.498+00:00",
+      "updated_at": "2026-11-20T11:56:12.620884+00:00"
     }
   ],
   "notifications": [
@@ -480,6 +508,21 @@
       "created_at": "2026-11-13T10:08:46.125+00:00"
     },
     {
+      "id": 20,
+      "user_id": null,
+      "student_identifier": "*",
+      "bus_id": 1,
+      "route_id": 1,
+      "trip_id": 16,
+      "pickup_point_id": null,
+      "title": "Bus KA-47-A-1234 Started Trip",
+      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
+      "category": "trip_started",
+      "is_read": 1,
+      "metadata": null,
+      "created_at": "2026-11-14T03:56:17.3+00:00"
+    },
+    {
       "id": 19,
       "user_id": null,
       "student_identifier": "4AI21CS045",
@@ -493,21 +536,6 @@
       "is_read": 1,
       "metadata": "{\"etaMinutes\":4,\"targetStopName\":\"Bhatkal Bus Stand\"}",
       "created_at": "2026-11-14T03:39:54.882+00:00"
-    },
-    {
-      "id": 20,
-      "user_id": null,
-      "student_identifier": "*",
-      "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 16,
-      "pickup_point_id": null,
-      "title": "Bus KA-47-A-1234 Started Trip",
-      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
-      "category": "trip_started",
-      "is_read": 0,
-      "metadata": null,
-      "created_at": "2026-11-14T03:56:17.3+00:00"
     },
     {
       "id": 21,
@@ -540,21 +568,6 @@
       "created_at": "2026-11-14T05:54:45.099+00:00"
     },
     {
-      "id": 24,
-      "user_id": null,
-      "student_identifier": "*",
-      "bus_id": 1,
-      "route_id": 1,
-      "trip_id": 18,
-      "pickup_point_id": null,
-      "title": "Bus KA-47-A-1234 Started Trip",
-      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
-      "category": "trip_started",
-      "is_read": 0,
-      "metadata": null,
-      "created_at": "2026-11-14T06:08:20.631+00:00"
-    },
-    {
       "id": 25,
       "user_id": 4,
       "student_identifier": "4AI21CS045",
@@ -570,6 +583,21 @@
       "created_at": "2026-11-14T06:08:21.419+00:00"
     },
     {
+      "id": 24,
+      "user_id": null,
+      "student_identifier": "*",
+      "bus_id": 1,
+      "route_id": 1,
+      "trip_id": 18,
+      "pickup_point_id": null,
+      "title": "Bus KA-47-A-1234 Started Trip",
+      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
+      "category": "trip_started",
+      "is_read": 1,
+      "metadata": null,
+      "created_at": "2026-11-14T06:08:20.631+00:00"
+    },
+    {
       "id": 26,
       "user_id": null,
       "student_identifier": "*",
@@ -580,7 +608,7 @@
       "title": "Bus KA-47-A-1234 Started Trip",
       "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
       "category": "trip_started",
-      "is_read": 0,
+      "is_read": 1,
       "metadata": null,
       "created_at": "2026-11-15T03:16:34.568+00:00"
     },
@@ -613,6 +641,21 @@
       "is_read": 0,
       "metadata": null,
       "created_at": "2026-11-15T05:43:53.862+00:00"
+    },
+    {
+      "id": 30,
+      "user_id": null,
+      "student_identifier": "*",
+      "bus_id": 1,
+      "route_id": 1,
+      "trip_id": 21,
+      "pickup_point_id": null,
+      "title": "Bus KA-47-A-1234 Started Trip",
+      "message": "College Bus 01 has departed from Murdeshwar Bus Stand towards College Main Gate. Live GPS tracking is active.",
+      "category": "trip_started",
+      "is_read": 0,
+      "metadata": null,
+      "created_at": "2026-11-20T12:05:47.556+00:00"
     }
   ],
   "push_subscriptions": [],
@@ -1015,6 +1058,144 @@
       "updated_at": "2026-11-12T15:56:04.567+00:00"
     },
     {
+      "id": 14,
+      "bus_id": 1,
+      "driver_id": 1,
+      "route_id": 1,
+      "trip_date": "2026-11-13",
+      "start_time": "2026-11-13T10:09:22.137+00:00",
+      "end_time": "2026-11-13T10:09:25.694+00:00",
+      "status": "completed",
+      "start_lat": 14.106242,
+      "start_lng": 74.492966,
+      "end_lat": 14.106242,
+      "end_lng": 74.492966,
+      "delay_mins": 0,
+      "delay_reason": null,
+      "route_snapshot": {
+        "stops": [
+          {
+            "landmark": "Near Temple Arch, NH 66",
+            "latitude": 14.094,
+            "sequence": 1,
+            "longitude": 74.4899,
+            "stop_name": "Murdeshwar Bus Stand",
+            "pickup_point_id": 1,
+            "scheduled_arrival_time": "07:30:00",
+            "scheduled_departure_time": "07:35:00"
+          },
+          {
+            "landmark": "Near Al-Kausar Hospital",
+            "latitude": 14.0321,
+            "sequence": 2,
+            "longitude": 74.5262,
+            "stop_name": "Shirali Bus Stop",
+            "pickup_point_id": 3,
+            "scheduled_arrival_time": "07:45:00",
+            "scheduled_departure_time": "07:50:00"
+          },
+          {
+            "landmark": "Main KSRTC Bus Stand",
+            "latitude": 13.9875,
+            "sequence": 3,
+            "longitude": 74.551,
+            "stop_name": "Bhatkal Bus Stand",
+            "pickup_point_id": 2,
+            "scheduled_arrival_time": "07:55:00",
+            "scheduled_departure_time": "08:00:00"
+          },
+          {
+            "landmark": "Anjuman College Campus Entrance",
+            "latitude": 13.9782,
+            "sequence": 4,
+            "longitude": 74.575,
+            "stop_name": "College Main Gate",
+            "pickup_point_id": 4,
+            "scheduled_arrival_time": "08:25:00",
+            "scheduled_departure_time": "08:30:00"
+          }
+        ],
+        "version": 1,
+        "route_id": 1,
+        "route_name": "Murdeshwar to College",
+        "destination": "College Main Gate",
+        "start_point": "Murdeshwar Bus Stand",
+        "road_geometry": null
+      },
+      "is_demo": 0,
+      "created_at": "2026-11-13T10:09:22.137+00:00",
+      "updated_at": "2026-11-13T10:09:25.694+00:00"
+    },
+    {
+      "id": 15,
+      "bus_id": 1,
+      "driver_id": 1,
+      "route_id": 1,
+      "trip_date": "2026-11-14",
+      "start_time": "2026-11-14T03:39:48.349+00:00",
+      "end_time": "2026-11-14T03:56:12.936+00:00",
+      "status": "completed",
+      "start_lat": 14.106242,
+      "start_lng": 74.492966,
+      "end_lat": 13.996316,
+      "end_lng": 74.552737,
+      "delay_mins": 0,
+      "delay_reason": null,
+      "route_snapshot": {
+        "stops": [
+          {
+            "landmark": "Near Temple Arch, NH 66",
+            "latitude": 14.094,
+            "sequence": 1,
+            "longitude": 74.4899,
+            "stop_name": "Murdeshwar Bus Stand",
+            "pickup_point_id": 1,
+            "scheduled_arrival_time": "07:30:00",
+            "scheduled_departure_time": "07:35:00"
+          },
+          {
+            "landmark": "Near Al-Kausar Hospital",
+            "latitude": 14.0321,
+            "sequence": 2,
+            "longitude": 74.5262,
+            "stop_name": "Shirali Bus Stop",
+            "pickup_point_id": 3,
+            "scheduled_arrival_time": "07:45:00",
+            "scheduled_departure_time": "07:50:00"
+          },
+          {
+            "landmark": "Main KSRTC Bus Stand",
+            "latitude": 13.9875,
+            "sequence": 3,
+            "longitude": 74.551,
+            "stop_name": "Bhatkal Bus Stand",
+            "pickup_point_id": 2,
+            "scheduled_arrival_time": "07:55:00",
+            "scheduled_departure_time": "08:00:00"
+          },
+          {
+            "landmark": "Anjuman College Campus Entrance",
+            "latitude": 13.9782,
+            "sequence": 4,
+            "longitude": 74.575,
+            "stop_name": "College Main Gate",
+            "pickup_point_id": 4,
+            "scheduled_arrival_time": "08:25:00",
+            "scheduled_departure_time": "08:30:00"
+          }
+        ],
+        "version": 1,
+        "route_id": 1,
+        "route_name": "Murdeshwar to College",
+        "destination": "College Main Gate",
+        "start_point": "Murdeshwar Bus Stand",
+        "road_geometry": null
+      },
+      "is_demo": 0,
+      "created_at": "2026-11-14T03:39:48.349+00:00",
+      "updated_at": "2026-11-14T03:56:12.936+00:00"
+    },
+    {
       "id": 9,
       "bus_id": 1,
       "driver_id": 1,
@@ -1360,144 +1541,6 @@
       "updated_at": "2026-11-13T10:09:20.191+00:00"
     },
     {
-      "id": 14,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-13",
-      "start_time": "2026-11-13T10:09:22.137+00:00",
-      "end_time": "2026-11-13T10:09:25.694+00:00",
-      "status": "completed",
-      "start_lat": 14.106242,
-      "start_lng": 74.492966,
-      "end_lat": 14.106242,
-      "end_lng": 74.492966,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-13T10:09:22.137+00:00",
-      "updated_at": "2026-11-13T10:09:25.694+00:00"
-    },
-    {
-      "id": 15,
-      "bus_id": 1,
-      "driver_id": 1,
-      "route_id": 1,
-      "trip_date": "2026-11-14",
-      "start_time": "2026-11-14T03:39:48.349+00:00",
-      "end_time": "2026-11-14T03:56:12.936+00:00",
-      "status": "completed",
-      "start_lat": 14.106242,
-      "start_lng": 74.492966,
-      "end_lat": 13.996316,
-      "end_lng": 74.552737,
-      "delay_mins": 0,
-      "delay_reason": null,
-      "route_snapshot": {
-        "stops": [
-          {
-            "landmark": "Near Temple Arch, NH 66",
-            "latitude": 14.094,
-            "sequence": 1,
-            "longitude": 74.4899,
-            "stop_name": "Murdeshwar Bus Stand",
-            "pickup_point_id": 1,
-            "scheduled_arrival_time": "07:30:00",
-            "scheduled_departure_time": "07:35:00"
-          },
-          {
-            "landmark": "Near Al-Kausar Hospital",
-            "latitude": 14.0321,
-            "sequence": 2,
-            "longitude": 74.5262,
-            "stop_name": "Shirali Bus Stop",
-            "pickup_point_id": 3,
-            "scheduled_arrival_time": "07:45:00",
-            "scheduled_departure_time": "07:50:00"
-          },
-          {
-            "landmark": "Main KSRTC Bus Stand",
-            "latitude": 13.9875,
-            "sequence": 3,
-            "longitude": 74.551,
-            "stop_name": "Bhatkal Bus Stand",
-            "pickup_point_id": 2,
-            "scheduled_arrival_time": "07:55:00",
-            "scheduled_departure_time": "08:00:00"
-          },
-          {
-            "landmark": "Anjuman College Campus Entrance",
-            "latitude": 13.9782,
-            "sequence": 4,
-            "longitude": 74.575,
-            "stop_name": "College Main Gate",
-            "pickup_point_id": 4,
-            "scheduled_arrival_time": "08:25:00",
-            "scheduled_departure_time": "08:30:00"
-          }
-        ],
-        "version": 1,
-        "route_id": 1,
-        "route_name": "Murdeshwar to College",
-        "destination": "College Main Gate",
-        "start_point": "Murdeshwar Bus Stand",
-        "road_geometry": null
-      },
-      "is_demo": 0,
-      "created_at": "2026-11-14T03:39:48.349+00:00",
-      "updated_at": "2026-11-14T03:56:12.936+00:00"
-    },
-    {
       "id": 16,
       "bus_id": 1,
       "driver_id": 1,
@@ -1780,12 +1823,12 @@
       "route_id": 1,
       "trip_date": "2026-11-15",
       "start_time": "2026-11-15T05:43:50.704+00:00",
-      "end_time": null,
-      "status": "in_progress",
+      "end_time": "2026-11-20T12:05:43.797+00:00",
+      "status": "completed",
       "start_lat": 13.9963793,
       "start_lng": 74.5531007,
-      "end_lat": null,
-      "end_lng": null,
+      "end_lat": 14.106242,
+      "end_lng": 74.492966,
       "delay_mins": 0,
       "delay_reason": null,
       "route_snapshot": {
@@ -1840,7 +1883,76 @@
       },
       "is_demo": 0,
       "created_at": "2026-11-15T05:43:50.704+00:00",
-      "updated_at": "2026-11-15T05:43:51.438697+00:00"
+      "updated_at": "2026-11-20T12:05:43.797+00:00"
+    },
+    {
+      "id": 21,
+      "bus_id": 1,
+      "driver_id": 1,
+      "route_id": 1,
+      "trip_date": "2026-11-20",
+      "start_time": "2026-11-20T12:05:47.539+00:00",
+      "end_time": "2026-11-20T12:06:17.232+00:00",
+      "status": "completed",
+      "start_lat": 14.106242,
+      "start_lng": 74.492966,
+      "end_lat": 14.106242,
+      "end_lng": 74.492966,
+      "delay_mins": 0,
+      "delay_reason": null,
+      "route_snapshot": {
+        "stops": [
+          {
+            "landmark": "Near Temple Arch, NH 66",
+            "latitude": 14.094,
+            "sequence": 1,
+            "longitude": 74.4899,
+            "stop_name": "Murdeshwar Bus Stand",
+            "pickup_point_id": 1,
+            "scheduled_arrival_time": "07:30:00",
+            "scheduled_departure_time": "07:35:00"
+          },
+          {
+            "landmark": "Near Al-Kausar Hospital",
+            "latitude": 14.0321,
+            "sequence": 2,
+            "longitude": 74.5262,
+            "stop_name": "Shirali Bus Stop",
+            "pickup_point_id": 3,
+            "scheduled_arrival_time": "07:45:00",
+            "scheduled_departure_time": "07:50:00"
+          },
+          {
+            "landmark": "Main KSRTC Bus Stand",
+            "latitude": 13.9875,
+            "sequence": 3,
+            "longitude": 74.551,
+            "stop_name": "Bhatkal Bus Stand",
+            "pickup_point_id": 2,
+            "scheduled_arrival_time": "07:55:00",
+            "scheduled_departure_time": "08:00:00"
+          },
+          {
+            "landmark": "Anjuman College Campus Entrance",
+            "latitude": 13.9782,
+            "sequence": 4,
+            "longitude": 74.575,
+            "stop_name": "College Main Gate",
+            "pickup_point_id": 4,
+            "scheduled_arrival_time": "08:25:00",
+            "scheduled_departure_time": "08:30:00"
+          }
+        ],
+        "version": 1,
+        "route_id": 1,
+        "route_name": "Murdeshwar to College",
+        "destination": "College Main Gate",
+        "start_point": "Murdeshwar Bus Stand",
+        "road_geometry": null
+      },
+      "is_demo": 0,
+      "created_at": "2026-11-20T12:05:47.539+00:00",
+      "updated_at": "2026-11-20T12:06:17.232+00:00"
     }
   ],
   "gps_locations": [
@@ -8683,9 +8795,230 @@
       "is_stale": 0,
       "timestamp": "2026-11-20T10:52:24.923+00:00",
       "created_at": "2026-11-20T10:53:10.443+00:00"
+    },
+    {
+      "id": 461,
+      "trip_id": 20,
+      "bus_id": 1,
+      "latitude": 14.106242,
+      "longitude": 74.492966,
+      "speed": 0,
+      "heading": 0,
+      "accuracy": 212,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:04:56.569+00:00",
+      "created_at": "2026-11-20T12:05:42.308+00:00"
+    },
+    {
+      "id": 463,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 1.7,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:06.369+00:00",
+      "created_at": "2026-11-20T12:05:52.44+00:00"
+    },
+    {
+      "id": 464,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 1.7,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:06.297+00:00",
+      "created_at": "2026-11-20T12:05:52.936+00:00"
+    },
+    {
+      "id": 462,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 1.7,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:06.298+00:00",
+      "created_at": "2026-11-20T12:05:52.426+00:00"
+    },
+    {
+      "id": 465,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 1.9,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:09.863+00:00",
+      "created_at": "2026-11-20T12:05:58.151+00:00"
+    },
+    {
+      "id": 466,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 2.1,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:13.365+00:00",
+      "created_at": "2026-11-20T12:05:59.543+00:00"
+    },
+    {
+      "id": 467,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.1064404,
+      "longitude": 74.4929874,
+      "speed": 2.3,
+      "heading": 0,
+      "accuracy": 187,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:16.865+00:00",
+      "created_at": "2026-11-20T12:06:02.841+00:00"
+    },
+    {
+      "id": 468,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.10789,
+      "longitude": 74.493144,
+      "speed": 44,
+      "heading": 0,
+      "accuracy": 500,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:19.685+00:00",
+      "created_at": "2026-11-20T12:06:05.533+00:00"
+    },
+    {
+      "id": 469,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.10789,
+      "longitude": 74.493144,
+      "speed": 44,
+      "heading": 0,
+      "accuracy": 500,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:20.364+00:00",
+      "created_at": "2026-11-20T12:06:05.882+00:00"
+    },
+    {
+      "id": 470,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.10789,
+      "longitude": 74.493144,
+      "speed": 44,
+      "heading": 0,
+      "accuracy": 500,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:23.862+00:00",
+      "created_at": "2026-11-20T12:06:09.203+00:00"
+    },
+    {
+      "id": 471,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.10789,
+      "longitude": 74.493144,
+      "speed": 44,
+      "heading": 0,
+      "accuracy": 500,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:27.368+00:00",
+      "created_at": "2026-11-20T12:06:13.365+00:00"
+    },
+    {
+      "id": 472,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.106937,
+      "longitude": 74.492966,
+      "speed": 40,
+      "heading": 0,
+      "accuracy": 72,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:29.265+00:00",
+      "created_at": "2026-11-20T12:06:14.404+00:00"
+    },
+    {
+      "id": 473,
+      "trip_id": 21,
+      "bus_id": 1,
+      "latitude": 14.106937,
+      "longitude": 74.492966,
+      "speed": 40,
+      "heading": 0,
+      "accuracy": 72,
+      "altitude": null,
+      "is_valid": 1,
+      "is_stale": 0,
+      "timestamp": "2026-11-20T12:05:30.867+00:00",
+      "created_at": "2026-11-20T12:06:16.015+00:00"
     }
   ],
   "trip_stop_events": [
+    {
+      "id": 66,
+      "trip_id": 21,
+      "route_stop_id": 3,
+      "pickup_point_id": 2,
+      "scheduled_time": "07:55:00",
+      "actual_arrival_time": null,
+      "actual_departure_time": null,
+      "delay_minutes": 0,
+      "status": "scheduled",
+      "is_uncertain": 0,
+      "created_at": "2026-11-20T12:05:47.548+00:00"
+    },
+    {
+      "id": 67,
+      "trip_id": 21,
+      "route_stop_id": 4,
+      "pickup_point_id": 4,
+      "scheduled_time": "08:25:00",
+      "actual_arrival_time": null,
+      "actual_departure_time": null,
+      "delay_minutes": 0,
+      "status": "scheduled",
+      "is_uncertain": 0,
+      "created_at": "2026-11-20T12:05:47.55+00:00"
+    },
     {
       "id": 1,
       "trip_id": 7,

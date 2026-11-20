@@ -291,6 +291,7 @@ ALTER TABLE public.trip_stop_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.push_subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.complaints ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.student_pickup_preferences ENABLE ROW LEVEL SECURITY;
 
 -- Service role full access
 CREATE POLICY service_role_all_users ON public.users FOR ALL TO service_role USING (true) WITH CHECK (true);
@@ -305,15 +306,17 @@ CREATE POLICY service_role_all_events ON public.trip_stop_events FOR ALL TO serv
 CREATE POLICY service_role_all_notif ON public.notifications FOR ALL TO service_role USING (true) WITH CHECK (true);
 CREATE POLICY service_role_all_push ON public.push_subscriptions FOR ALL TO service_role USING (true) WITH CHECK (true);
 CREATE POLICY service_role_all_complaints ON public.complaints FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY service_role_all_prefs ON public.student_pickup_preferences FOR ALL TO service_role USING (true) WITH CHECK (true);
 
 -- Public/Anon Read-Only access to active operational records
-CREATE POLICY anon_read_buses ON public.buses FOR SELECT TO anon, authenticated USING (is_active = 1);
-CREATE POLICY anon_read_routes ON public.routes FOR SELECT TO anon, authenticated USING (status = 'active');
-CREATE POLICY anon_read_pickup ON public.pickup_points FOR SELECT TO anon, authenticated USING (is_active = 1);
+CREATE POLICY anon_read_buses ON public.buses FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY anon_read_routes ON public.routes FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY anon_read_pickup ON public.pickup_points FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY anon_read_stops ON public.route_stops FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY anon_read_trips ON public.trips FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY anon_read_stop_events ON public.trip_stop_events FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY anon_read_drivers ON public.drivers FOR SELECT TO anon, authenticated USING (status = 'active');
+CREATE POLICY anon_read_drivers ON public.drivers FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY anon_read_prefs ON public.student_pickup_preferences FOR SELECT TO anon, authenticated USING (true);
 
 -- ============================================================================
 -- INITIAL SEED DATA

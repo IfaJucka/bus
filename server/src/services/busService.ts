@@ -26,7 +26,7 @@ export interface BusRecord {
 }
 
 export class BusService {
-  public static async getAllBuses(): Promise<BusRecord[]> {
+  public static async getAllBuses(includeInactive: boolean = false): Promise<BusRecord[]> {
     if (db.mode === 'mysql' && db.getPool()) {
       const sql = `
         SELECT 
@@ -39,7 +39,7 @@ export class BusService {
         FROM buses b
         LEFT JOIN drivers d ON b.assigned_driver_id = d.id
         LEFT JOIN routes r ON b.assigned_route_id = r.id
-        WHERE b.is_active = 1
+        ${includeInactive ? '' : 'WHERE b.is_active = 1'}
         ORDER BY b.id ASC
       `;
       const rows: any = await db.query(sql);
@@ -50,7 +50,9 @@ export class BusService {
       }));
     }
 
-    const buses = db.getTable<any>('buses').filter((b) => b.is_active === 1);
+    const buses = includeInactive
+      ? db.getTable<any>('buses')
+      : db.getTable<any>('buses').filter((b) => b.is_active === 1);
     const drivers = db.getTable<any>('drivers');
     const routes = db.getTable<any>('routes');
 

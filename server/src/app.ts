@@ -68,7 +68,17 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', authRoutes);
+
+// Backward compatibility: forward POST /api/login and POST /api/register to authRoutes without shadowing other /api resources
+app.post('/api/login', (req: Request, res: Response, next: NextFunction) => {
+  req.url = '/login';
+  authRoutes(req, res, next);
+});
+app.post('/api/register', (req: Request, res: Response, next: NextFunction) => {
+  req.url = '/register';
+  authRoutes(req, res, next);
+});
+
 app.use('/api/buses', busRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/routes', routeRoutes);

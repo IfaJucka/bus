@@ -79,12 +79,16 @@ export const api = {
   // Buses
   buses: {
     getAll: async (): Promise<Bus[]> => {
-      const res = await fetch(`${API_BASE}/buses`);
+      const res = await fetch(`${API_BASE}/buses`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ buses: Bus[] }>(res);
       return data.buses;
     },
     getById: async (id: number): Promise<Bus> => {
-      const res = await fetch(`${API_BASE}/buses/${id}`);
+      const res = await fetch(`${API_BASE}/buses/${id}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ bus: Bus }>(res);
       return data.bus;
     },
@@ -118,7 +122,9 @@ export const api = {
   // Drivers
   drivers: {
     getAll: async (): Promise<Driver[]> => {
-      const res = await fetch(`${API_BASE}/drivers`);
+      const res = await fetch(`${API_BASE}/drivers`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ drivers: Driver[] }>(res);
       return data.drivers;
     },
@@ -152,12 +158,16 @@ export const api = {
   // Routes
   routes: {
     getAll: async (): Promise<Route[]> => {
-      const res = await fetch(`${API_BASE}/routes`);
+      const res = await fetch(`${API_BASE}/routes`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ routes: Route[] }>(res);
       return data.routes;
     },
     getById: async (id: number): Promise<Route> => {
-      const res = await fetch(`${API_BASE}/routes/${id}`);
+      const res = await fetch(`${API_BASE}/routes/${id}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ route: Route }>(res);
       return data.route;
     },
@@ -194,7 +204,7 @@ export const api = {
     }> => {
       const res = await fetch(`${API_BASE}/routes/calculate-road-path`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
         body: JSON.stringify({ stops }),
       });
       return handleResponse(res);
@@ -204,7 +214,9 @@ export const api = {
   // Pickup Points
   pickupPoints: {
     getAll: async (): Promise<PickupPoint[]> => {
-      const res = await fetch(`${API_BASE}/pickup-points`);
+      const res = await fetch(`${API_BASE}/pickup-points`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ pickupPoints: PickupPoint[] }>(res);
       return data.pickupPoints;
     },
@@ -271,11 +283,15 @@ export const api = {
       return handleResponse(res);
     },
     getBusTracking: async (busId: number): Promise<{ bus: Bus; activeTrip: Trip | null }> => {
-      const res = await fetch(`${API_BASE}/tracking/bus/${busId}`);
+      const res = await fetch(`${API_BASE}/tracking/bus/${busId}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse(res);
     },
     getStatus: async (busId: number): Promise<any> => {
-      const res = await fetch(`${API_BASE}/tracking/status/${busId}`);
+      const res = await fetch(`${API_BASE}/tracking/status/${busId}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse(res);
     },
   },
@@ -283,17 +299,23 @@ export const api = {
   // Trips
   trips: {
     getAll: async (): Promise<Trip[]> => {
-      const res = await fetch(`${API_BASE}/trips`);
+      const res = await fetch(`${API_BASE}/trips`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ trips: Trip[] }>(res);
       return data.trips;
     },
     getById: async (id: number): Promise<Trip> => {
-      const res = await fetch(`${API_BASE}/trips/${id}`);
+      const res = await fetch(`${API_BASE}/trips/${id}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ trip: Trip }>(res);
       return data.trip;
     },
     getStopEvents: async (tripId: number): Promise<any[]> => {
-      const res = await fetch(`${API_BASE}/trips/${tripId}/stop-events`);
+      const res = await fetch(`${API_BASE}/trips/${tripId}/stop-events`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ events: any[] }>(res);
       return data.events || [];
     },
@@ -310,7 +332,9 @@ export const api = {
   // ETA
   eta: {
     getETA: async (busId: number, stopId: number): Promise<ETAData> => {
-      const res = await fetch(`${API_BASE}/eta/bus/${busId}/stop/${stopId}`);
+      const res = await fetch(`${API_BASE}/eta/bus/${busId}/stop/${stopId}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse<ETAData>(res);
     },
   },
@@ -318,21 +342,29 @@ export const api = {
   // History
   history: {
     getArrivals: async (busId: number, pickupPointId: number, days: number = 7): Promise<{ rows: HistoricalArrivalRow[]; stats: WeeklySummaryStats }> => {
-      const res = await fetch(`${API_BASE}/history/arrivals?busId=${busId}&pickupPointId=${pickupPointId}&days=${days}`);
+      const res = await fetch(`${API_BASE}/history/arrivals?busId=${busId}&pickupPointId=${pickupPointId}&days=${days}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse(res);
     },
     getBusHistory: async (busId: number): Promise<Trip[]> => {
-      const res = await fetch(`${API_BASE}/history/bus/${busId}`);
+      const res = await fetch(`${API_BASE}/history/bus/${busId}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ trips: Trip[] }>(res);
       return data.trips;
     },
     getWeeklySummary: async (busId: number, pickupPointId: number): Promise<WeeklySummaryStats> => {
-      const res = await fetch(`${API_BASE}/history/weekly-summary?busId=${busId}&pickupPointId=${pickupPointId}`);
+      const res = await fetch(`${API_BASE}/history/weekly-summary?busId=${busId}&pickupPointId=${pickupPointId}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ stats: WeeklySummaryStats }>(res);
       return data.stats;
     },
     getDayRoute: async (busId: number, date: string): Promise<any> => {
-      const res = await fetch(`${API_BASE}/history/day-route?busId=${busId}&date=${encodeURIComponent(date)}`);
+      const res = await fetch(`${API_BASE}/history/day-route?busId=${busId}&date=${encodeURIComponent(date)}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse(res);
     },
   },
@@ -341,7 +373,9 @@ export const api = {
   notifications: {
     getAll: async (studentId?: string): Promise<NotificationItem[]> => {
       const url = studentId ? `${API_BASE}/notifications?studentId=${encodeURIComponent(studentId)}` : `${API_BASE}/notifications`;
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ notifications: NotificationItem[] }>(res);
       return data.notifications;
     },
@@ -371,13 +405,15 @@ export const api = {
     savePreferences: async (payload: any): Promise<any> => {
       const res = await fetch(`${API_BASE}/notifications/preferences`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
         body: JSON.stringify(payload),
       });
       return handleResponse(res);
     },
     getPreferences: async (studentId: string): Promise<any> => {
-      const res = await fetch(`${API_BASE}/notifications/preferences/${encodeURIComponent(studentId)}`);
+      const res = await fetch(`${API_BASE}/notifications/preferences/${encodeURIComponent(studentId)}`, {
+        headers: getAuthHeader(),
+      });
       return handleResponse(res);
     },
   },
@@ -387,19 +423,23 @@ export const api = {
     submit: async (payload: any): Promise<{ complaint: Complaint; message: string }> => {
       const res = await fetch(`${API_BASE}/complaints`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
         body: JSON.stringify(payload),
       });
       return handleResponse(res);
     },
     getAll: async (status?: string): Promise<Complaint[]> => {
       const url = status && status !== 'All' ? `${API_BASE}/complaints?status=${encodeURIComponent(status)}` : `${API_BASE}/complaints`;
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ complaints: Complaint[] }>(res);
       return data.complaints;
     },
     getByRef: async (refNo: string): Promise<Complaint> => {
-      const res = await fetch(`${API_BASE}/complaints/ref/${encodeURIComponent(refNo)}`);
+      const res = await fetch(`${API_BASE}/complaints/ref/${encodeURIComponent(refNo)}`, {
+        headers: getAuthHeader(),
+      });
       const data = await handleResponse<{ complaint: Complaint }>(res);
       return data.complaint;
     },
